@@ -6,6 +6,8 @@
  */
 
 #include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -14,9 +16,9 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-    #include <stdio.h>
-#include <stdlib.h>
 
-    return 0;
+    printf("Hello world !\n");
+    
+    return EXIT_SUCCESS;
 }
 

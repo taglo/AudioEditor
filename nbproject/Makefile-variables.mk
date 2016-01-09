@@ -7,21 +7,21 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=MinGW_Qt-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW_Qt-Windows
+CND_PLATFORM_Debug=MinGW-Windows
+CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW-Windows
 CND_ARTIFACT_NAME_Debug=audioeditor
-CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW_Qt-Windows/audioeditor
-CND_PACKAGE_DIR_Debug=dist/Debug/MinGW_Qt-Windows/package
+CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW-Windows/audioeditor
+CND_PACKAGE_DIR_Debug=dist/Debug/MinGW-Windows/package
 CND_PACKAGE_NAME_Debug=audioeditor.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/MinGW_Qt-Windows/package/audioeditor.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/MinGW-Windows/package/audioeditor.tar
 # Release configuration
-CND_PLATFORM_Release=MinGW_Qt-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/MinGW_Qt-Windows
+CND_PLATFORM_Release=MinGW-Windows
+CND_ARTIFACT_DIR_Release=dist/Release/MinGW-Windows
 CND_ARTIFACT_NAME_Release=audioeditor
-CND_ARTIFACT_PATH_Release=dist/Release/MinGW_Qt-Windows/audioeditor
-CND_PACKAGE_DIR_Release=dist/Release/MinGW_Qt-Windows/package
+CND_ARTIFACT_PATH_Release=dist/Release/MinGW-Windows/audioeditor
+CND_PACKAGE_DIR_Release=dist/Release/MinGW-Windows/package
 CND_PACKAGE_NAME_Release=audioeditor.tar
-CND_PACKAGE_PATH_Release=dist/Release/MinGW_Qt-Windows/package/audioeditor.tar
+CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/audioeditor.tar
 #
 # include compiler specific variables
 #
