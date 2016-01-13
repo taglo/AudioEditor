@@ -18,7 +18,7 @@ using namespace std;
 int main(int argc, char** argv) {
     
     Sample spla(3000);
-    spla.setConstant(1).fadeOut().saveToFile("test.raw");
+    spla.setConstant(1).fadeOut().saveToFile("test.wav");
 
 
 
