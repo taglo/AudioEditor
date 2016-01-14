@@ -4,11 +4,13 @@
  *
  * Created on 9 janvier 2016, 15:12
  */
-#pragma once
-#include <cstdlib>
-#include <stdio.h>
-#include <stdlib.h>
+//#pragma once
+
+#include <iostream>
+
 #include "Sample.h"
+
+//#include "Tests.cpp"
 
 using namespace std;
 
@@ -16,14 +18,15 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    
+
+
     Sample spla(3000);
     spla.setConstant(1).fadeOut().saveToFile("test.wav");
 
 
 
-    printf("Hello world !\n");
+    cout << "Ok." << endl;
 
-    return EXIT_SUCCESS;
+
 }
 

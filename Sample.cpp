@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once
 #include <cstdlib>
 #include <cstring>
 #include "Sample.h"
@@ -181,10 +181,6 @@ Sample& Sample::setConstant(double cst = 0) {
     for (int i = fxIStart; i < fxIEnd; i++) {
         data[i] = cst;
     }
-
-    /*
-    memset(data + fxIStart, cst, fxLength()*sizeof(double));
-     */
     return *this;
 }
 

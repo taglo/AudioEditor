@@ -20,6 +20,7 @@ public:
 	//void init(int length);
 
 	Sample& fxRange(int iStart, int iEnd);	//todo : fxRangeInStep, class SoundEdit
+        
 	Sample& fxRangeReset();
 	int fxLength();
 
