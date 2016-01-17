@@ -8,7 +8,8 @@
 
 #include <iostream>
 
-#include "Sample.h"
+#include "src/Sample.h"
+
 
 //#include "Tests.cpp"
 
@@ -22,8 +23,6 @@ int main(int argc, char** argv) {
 
     Sample spla(3000);
     spla.setConstant(1).fadeOut().saveToFile("test.wav");
-
-
 
     cout << "Ok." << endl;
 

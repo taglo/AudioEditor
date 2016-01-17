@@ -1,3 +1,3 @@
-build/Debug/MinGW-Windows/main.o: main.cpp Sample.h
+build/Debug/MinGW-Windows/main.o: main.cpp src/Sample.h
 
-Sample.h:
+src/Sample.h:

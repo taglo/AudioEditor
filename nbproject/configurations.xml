@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
-      <itemPath>Sample.h</itemPath>
-    </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
@@ -13,9 +8,15 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>Edit.cpp</itemPath>
-      <itemPath>File.cpp</itemPath>
-      <itemPath>Sample.cpp</itemPath>
+      <logicalFolder name="f1" displayName="src" projectFiles="true">
+        <itemPath>src/Buffer.cpp</itemPath>
+        <itemPath>src/Edit.cpp</itemPath>
+        <itemPath>src/File.cpp</itemPath>
+        <itemPath>src/Sample.cpp</itemPath>
+        <itemPath>src/Sample.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="test" projectFiles="true">
+      </logicalFolder>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -29,6 +30,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>test/BenchmarkCopyNewVsBuffer.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -43,15 +45,19 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
-      <item path="Edit.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="File.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sample.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sample.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Buffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Edit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/File.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Sample.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Sample.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="test/BenchmarkCopyNewVsBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -74,15 +80,19 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Edit.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="File.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sample.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sample.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Buffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Edit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/File.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Sample.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Sample.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="test/BenchmarkCopyNewVsBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -58,6 +58,7 @@ public:
 private:
 	static int bufferLength;
 	static double *buffer;
+        //Buffer
 	void copyToBuffer(double *dataIn, int iIn, int iBuffer, int copyLength);
 	void copyFromBuffer(double *dataOut, int iOut, int iBuffer, int copyLength);
 	void setBufferMinLength(int minLength);
