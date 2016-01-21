@@ -1,4 +1,4 @@
-//#include "SoundEditor.h"
+#pragma once
 
 class Sample
 {

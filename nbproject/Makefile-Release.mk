@@ -35,10 +35,12 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/example/AdditiveSinus.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/Buffer.o \
 	${OBJECTDIR}/src/Edit.o \
 	${OBJECTDIR}/src/File.o \
+	${OBJECTDIR}/src/Generator.o \
 	${OBJECTDIR}/src/Sample.o
 
 
@@ -66,6 +68,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/audioeditor.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/audioeditor ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/example/AdditiveSinus.o: example/AdditiveSinus.cpp 
+	${MKDIR} -p ${OBJECTDIR}/example
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example/AdditiveSinus.o example/AdditiveSinus.cpp
+
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -85,6 +92,11 @@ ${OBJECTDIR}/src/File.o: src/File.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/File.o src/File.cpp
+
+${OBJECTDIR}/src/Generator.o: src/Generator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Generator.o src/Generator.cpp
 
 ${OBJECTDIR}/src/Sample.o: src/Sample.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
