@@ -10,9 +10,12 @@
             <file>file:/F:/dev/c++netbeans/AudioEditor/README.md</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Edit.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/AdditiveSinus.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Buffer.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Generator.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/main.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/File.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/AdditiveSinus.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/Makefile</file>
         </group>
