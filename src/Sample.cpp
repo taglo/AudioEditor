@@ -63,7 +63,11 @@ Sample& Sample::operator*(const double amplitude){
 }
  */
 
-
+/**
+ *  sample          ---------------
+ *  newLength       |       |
+ *  out             |-------|
+ */
 Sample& Sample::changeLength(int newLength) {
     //todo : regrouper
     //int copyLength = (newLength > length) ? length : newLength;
@@ -136,6 +140,20 @@ Sample& Sample::fxRange(int iStart, int iEnd) {
 Sample& Sample::fxRangeReset() {
     fxIStart = 0;
     fxIEnd = length;
+    return *this;
+}
+
+Sample& Sample::fxRangeCheck() {
+
+    if (fxIStart < fxIEnd) {
+        int iTmp = fxIStart;
+        fxIStart = fxIEnd;
+        fxIEnd = iTmp;
+    }
+    if (fxIEnd > length) {
+        fxIEnd = length;
+    }
+
     return *this;
 }
 

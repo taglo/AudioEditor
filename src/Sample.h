@@ -23,6 +23,7 @@ public:
 	Sample& fxRange(int iStart, int iEnd);	//todo : fxRangeInStep, class SoundEdit
         
 	Sample& fxRangeReset();
+        Sample& fxRangeCheck();
 	int fxLength();
 
 	Sample& setConstant(double cst);

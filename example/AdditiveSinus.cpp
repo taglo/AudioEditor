@@ -42,10 +42,11 @@ void AdditiveSinus::generate() {
     gen23();
     gen24();
     gen25();
+    gen26();
      *  */
 
 
-    gen26();
+    gen27();
 
     /*
         Sample splBase(44100);
@@ -1237,6 +1238,51 @@ void AdditiveSinus::gen26() {
 
     splBase.saveToFile("AdditiveSinus_gen26.wav");
     cout << "ok gen26" << endl;
+    cout << k << " iteration" << endl;
+
+}
+
+void AdditiveSinus::gen27() {
+
+
+    Sample splBase(4*44100);
+    Sample splSine(4*44100);
+
+    double phase = 0;
+
+    double fq = 20;
+
+
+    int k = 0;
+    double x, x2, x3, x4;
+
+    do {
+
+        x = (double) k / 1000;
+        x2 = x*x;
+        x3 = x2*x;
+        x4 = x3*x;
+
+        phase += (102+k) / 103;
+        fq += 5 + fabs(1.43 - 5.23 * x4 + 3.61 * x3 + 3.43 * x2 - 5.13 * x);
+
+
+        splSine.genSine(fq, phase, pow(1.0 / fq, 1.0 / 11.0));
+
+        splBase.mix(splSine);
+
+        k++;
+        
+    } while (fq < 22000);
+
+    splBase.fxRangeReset().fxIStart = 3*44100;
+    splBase.fadeOut();
+    splBase.fxRange(0, 2000).fadeIn().fxRangeReset();
+
+    splBase.normalize(0.8);
+
+    splBase.saveToFile("AdditiveSinus_gen27.wav");
+    cout << "ok gen27" << endl;
     cout << k << " iteration" << endl;
 
 }
