@@ -62,6 +62,7 @@ Sample& Sample::genSineSplFM(Sample& splIn, double f, double phase, double ampli
 	return *this;
 }
 
+
 Sample& Sample::genSaw(double fq, double phase, double amplitude)
 {
 
