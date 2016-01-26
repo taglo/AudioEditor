@@ -3,7 +3,7 @@
 #include <cstring>
 #include <string>
 #include <sstream>
-#include <iostream>
+
 #include <stdlib.h>
 
 #define _USE_MATH_DEFINES

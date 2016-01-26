@@ -41,7 +41,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Edit.o \
 	${OBJECTDIR}/src/File.o \
 	${OBJECTDIR}/src/Generator.o \
-	${OBJECTDIR}/src/Sample.o
+	${OBJECTDIR}/src/Sample.o \
+	${OBJECTDIR}/test/Test1.o
 
 
 # C Compiler Flags
@@ -102,6 +103,11 @@ ${OBJECTDIR}/src/Sample.o: src/Sample.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sample.o src/Sample.cpp
+
+${OBJECTDIR}/test/Test1.o: test/Test1.cpp 
+	${MKDIR} -p ${OBJECTDIR}/test
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/test/Test1.o test/Test1.cpp
 
 # Subprojects
 .build-subprojects:

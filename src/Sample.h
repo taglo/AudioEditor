@@ -51,6 +51,8 @@ public:
 	Sample& genSineSplFM(Sample& splIn, double f = 440.0, double phase = 0.5, double amplitude = 1,  double fmAmp = 0.10);
 	Sample& genSaw(double f = 440.0, double phase = 0.5, double amplitude = 1);
 
+        Sample& genWhiteNoise(double amplitude = 1);
+        
 	double maxAmplitude();
 
 	Sample& mix(Sample& splIn, double amplitude = 1);
