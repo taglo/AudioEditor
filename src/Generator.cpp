@@ -75,8 +75,10 @@ Sample& Sample::genSaw(double fq, double phase, double amplitude) {
     }
     return *this;
 }
+//http://www.firstpr.com.au/dsp/pink-noise/
 
 Sample& Sample::genWhiteNoise(double amplitude) {
+
     double lower_bound = -amplitude;
     double upper_bound = amplitude;
 
@@ -85,7 +87,29 @@ Sample& Sample::genWhiteNoise(double amplitude) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         Sample::data[i] += unif(re);
-
     }
     return *this;
 }
+
+Sample& Sample::genBrownNoise(double amplitude, double intensity) {
+
+    double lower_bound = -intensity;
+    double upper_bound = intensity;
+    double bn = 0, cbn;
+
+    std::uniform_real_distribution<double> unif(lower_bound, upper_bound);
+    std::mt19937_64 re((std::time(0)));
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        cbn = unif(re);
+
+        bn += cbn;
+        if (bn > amplitude || (bn < -amplitude)) {
+            bn -= cbn ;
+        }
+        Sample::data[i] += bn;
+    }
+    return *this;
+}
+
+
