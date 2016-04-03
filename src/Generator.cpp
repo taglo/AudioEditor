@@ -105,9 +105,62 @@ Sample& Sample::genBrownNoise(double amplitude, double intensity) {
 
         bn += cbn;
         if (bn > amplitude || (bn < -amplitude)) {
+            bn -= cbn;
+        }
+        Sample::data[i] += bn;
+    }
+    return *this;
+}
+
+int inline CTZ(int num) {
+    int i = 0;
+    while (((num >> i)&1) == 0 && i<sizeof (int)) i++;
+    return i;
+}
+
+Sample& Sample::genPinkNoise(double amplitude) {
+
+    int count = 1;
+
+    int nOperator = 8;
+    int nOperator1 = nOperator - 1;
+
+    double pinkStore[nOperator];
+    double  pink = 0;
+    int k;
+
+    std::uniform_real_distribution<double> unif(-amplitude, amplitude);
+    std::mt19937_64 re((std::time(0)));
+
+    for (int i = 0; i < nOperator; i++) {
+        pinkStore[i] =0;// unif(re);
+        //pink += pinkStore[i];
+
+    }
+    for (int i = fxIStart; i < fxIEnd; i++) {
+
+        k = CTZ(count);
+        k = k&nOperator1;
+
+        
+        pink -= pinkStore[k];
+
+        pinkStore[k] = unif(re);
+        pink += pinkStore[k];
+        
+        Sample::data[i] += (pink + unif(re))/16;
+
+        /*
+        cbn = unif(re);
+
+        bn += cbn;
+        if (bn > amplitude || (bn < -amplitude)) {
             bn -= cbn ;
         }
         Sample::data[i] += bn;
+         */
+
+        count++;
     }
     return *this;
 }

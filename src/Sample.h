@@ -52,8 +52,12 @@ public:
 	Sample& genSaw(double f = 440.0, double phase = 0.5, double amplitude = 1);
 
         Sample& genWhiteNoise(double amplitude = 1);
+        Sample& genPinkNoise(double amplitude = 1);
         Sample& genBrownNoise(double amplitude = 1, double intensity = 0.1);
          
+        //Effect
+        Sample& clip(double maxValue = 1,double minValue = -1);
+        
 	double maxAmplitude();
 
 	Sample& mix(Sample& splIn, double amplitude = 1);

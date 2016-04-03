@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/Buffer.o \
 	${OBJECTDIR}/src/Edit.o \
+	${OBJECTDIR}/src/Effect.o \
 	${OBJECTDIR}/src/File.o \
 	${OBJECTDIR}/src/Generator.o \
 	${OBJECTDIR}/src/Sample.o \
@@ -88,6 +89,11 @@ ${OBJECTDIR}/src/Edit.o: src/Edit.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Edit.o src/Edit.cpp
+
+${OBJECTDIR}/src/Effect.o: src/Effect.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Effect.o src/Effect.cpp
 
 ${OBJECTDIR}/src/File.o: src/File.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
