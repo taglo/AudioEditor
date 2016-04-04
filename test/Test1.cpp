@@ -21,6 +21,7 @@ void Test1::generate() {
     cout << "OK white noise.wav"<< endl;
 
     spl.genSine(55,0,1).clip(0.5,-0.5).saveToFile("test clip.wav").fadeOut().amplify(2).clip(0.7,-0.7).saveToFile("test clip 2.wav");
+    cout << "OK clip"<< endl;
     
     Sample spl2(44100);
     spl2.genBrownNoise(0.5,0.01).saveToFile("brown noise 0.01 .wav").setConstant(0);
@@ -33,5 +34,9 @@ void Test1::generate() {
     Sample spl3(64);
     spl3.genPinkNoise(0.5).saveToFile("pink noise.wav");
     cout << "OK pink noise.wav"<< endl; 
-    
+
+    spl.setConstant(0).genSquare(55,0.5,0.5,0.25).saveToFile("test square w0.25.wav");
+    spl.setConstant(0).genSquare(55,0.5,0.5,0.5).saveToFile("test square w0.5.wav");
+    spl.setConstant(0).genSquare(55,0.5,0.5,0.75).saveToFile("test square w0.75.wav");
+    cout << "OK clip"<< endl;    
 }

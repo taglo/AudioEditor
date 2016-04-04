@@ -75,6 +75,31 @@ Sample& Sample::genSaw(double fq, double phase, double amplitude) {
     }
     return *this;
 }
+
+Sample& Sample::genSquare(double fq, double phase, double amplitude, double width) {
+
+    double phaseInc = fq * 2 / samplerate;
+    phase *= 2;
+    //phase -= 1;
+
+    double mAmplitude = -amplitude;
+    double mWidth = width * 2 - 1;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        
+        if(phase<mWidth){
+            Sample::data[i] +=  amplitude;
+        }else{
+            Sample::data[i] +=  mAmplitude;
+        }
+        phase += phaseInc;
+        if (phase > 1) {
+            phase -= 2;
+        }
+    }
+    return *this;
+}
+
 //http://www.firstpr.com.au/dsp/pink-noise/
 
 Sample& Sample::genWhiteNoise(double amplitude) {
@@ -126,14 +151,14 @@ Sample& Sample::genPinkNoise(double amplitude) {
     int nOperator1 = nOperator - 1;
 
     double pinkStore[nOperator];
-    double  pink = 0;
+    double pink = 0;
     int k;
 
     std::uniform_real_distribution<double> unif(-amplitude, amplitude);
     std::mt19937_64 re((std::time(0)));
 
     for (int i = 0; i < nOperator; i++) {
-        pinkStore[i] =0;// unif(re);
+        pinkStore[i] = 0; // unif(re);
         //pink += pinkStore[i];
 
     }
@@ -142,13 +167,13 @@ Sample& Sample::genPinkNoise(double amplitude) {
         k = CTZ(count);
         k = k&nOperator1;
 
-        
+
         pink -= pinkStore[k];
 
         pinkStore[k] = unif(re);
         pink += pinkStore[k];
-        
-        Sample::data[i] += (pink + unif(re))/16;
+
+        Sample::data[i] += (pink + unif(re)) / 16;
 
         /*
         cbn = unif(re);
