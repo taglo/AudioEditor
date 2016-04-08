@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/example/AdditiveSinus.o \
+	${OBJECTDIR}/example/GranularSquare.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/Buffer.o \
 	${OBJECTDIR}/src/Edit.o \
@@ -74,6 +75,11 @@ ${OBJECTDIR}/example/AdditiveSinus.o: example/AdditiveSinus.cpp
 	${MKDIR} -p ${OBJECTDIR}/example
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example/AdditiveSinus.o example/AdditiveSinus.cpp
+
+${OBJECTDIR}/example/GranularSquare.o: example/GranularSquare.cpp 
+	${MKDIR} -p ${OBJECTDIR}/example
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example/GranularSquare.o example/GranularSquare.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}

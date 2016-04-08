@@ -18,6 +18,7 @@ struct RiffHeader {
     int Subchunk2Size; // Sampled data length
 };
 
+
 Sample& Sample::saveToFile(const char* filename) {
 
     float *dataF;

@@ -10,6 +10,7 @@
 
 #include "src/Sample.h"
 #include "example/AdditiveSinus.h"
+#include "example/GranularSquare.h"
 #include "test/Test1.h"
 
 //#include "Tests.cpp"
@@ -43,10 +44,13 @@ std::default_random_engine re(rd());
 
        rng.seed(100);
      */
-
+    GranularSquare granularSquare;
+    granularSquare.generate();
+    
+    /*
     Test1 test;
     test.generate();
-
+*/
     /*
     AdditiveSinus additiveSinus;
     additiveSinus.generate();
