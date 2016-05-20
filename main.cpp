@@ -33,7 +33,13 @@ int main(int argc, char** argv) {
         cout << "Ok." << endl;
      */
 
-    
+        Sample spla(30000);
+        spla.genSine(55,0,0.5);
+
+        Sample splb(15000);
+        spla.strech(splb);
+        splb.saveToFile("strech.wav");
+        cout << "Ok." << endl;    
 
     
     /*

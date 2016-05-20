@@ -48,14 +48,18 @@ public:
     Sample& genSine(double f = 440.0, double phase = 0.5, double amplitude = 1);
     Sample& genSineSplFM(Sample& splIn, double f = 440.0, double phase = 0.5, double amplitude = 1, double fmAmp = 0.10);
     Sample& genSaw(double f = 440.0, double phase = 0.5, double amplitude = 1);
-    Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width=0.5);
+    Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width = 0.5);
 
     Sample& genWhiteNoise(double amplitude = 1);
     Sample& genPinkNoise(double amplitude = 1);
     Sample& genBrownNoise(double amplitude = 1, double intensity = 0.1);
 
+    Sample& genWaveform(Sample& splWf, double f, double phase, double amplitude, double fmAmp);
+
     //Effect
     Sample& clip(double maxValue = 1, double minValue = -1);
+
+    Sample& strech(Sample& splOut);
 
     double maxAmplitude();
 
@@ -72,5 +76,6 @@ private:
     void setBufferMinLength(int minLength);
     Sample& prepareForSplIn(Sample& splIn, int& jRead, int& iMixEnd);
 
+    double hermite1(double x, double y0, double y1, double y2, double y3);
 
 };

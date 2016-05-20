@@ -78,23 +78,23 @@ Sample& Sample::genSaw(double fq, double phase, double amplitude) {
 
 Sample& Sample::genSquare(double fq, double phase, double amplitude, double width) {
 
-    double phaseInc = fq * 2 / samplerate;
-    phase *= 2;
-    //phase -= 1;
+    double phaseInc = fq / samplerate;
+    //phase = (phase-0.5)*2;
 
     double mAmplitude = -amplitude;
-    double mWidth = width * 2 - 1;
+    
+    //double mWidth = (width -0.5)*2;
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         
-        if(phase<mWidth){
+        if(phase<width){
             Sample::data[i] +=  amplitude;
         }else{
             Sample::data[i] +=  mAmplitude;
         }
         phase += phaseInc;
         if (phase > 1) {
-            phase -= 2;
+            phase -= 1;
         }
     }
     return *this;
@@ -141,6 +141,15 @@ int inline CTZ(int num) {
     int i = 0;
     while (((num >> i)&1) == 0 && i<sizeof (int)) i++;
     return i;
+}
+
+Sample& Sample::genWaveform(Sample& splWf, double f, double phase, double amplitude, double fmAmp) {
+
+    double t;
+    
+    //todo
+    
+    return *this;
 }
 
 Sample& Sample::genPinkNoise(double amplitude) {

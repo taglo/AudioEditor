@@ -20,6 +20,7 @@
         <itemPath>src/Effect.cpp</itemPath>
         <itemPath>src/File.cpp</itemPath>
         <itemPath>src/Generator.cpp</itemPath>
+        <itemPath>src/Helper.cpp</itemPath>
         <itemPath>src/Sample.cpp</itemPath>
         <itemPath>src/Sample.h</itemPath>
       </logicalFolder>
@@ -74,6 +75,8 @@
       </item>
       <item path="src/Generator.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Helper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Sample.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Sample.h" ex="false" tool="3" flavor2="0">
@@ -122,6 +125,8 @@
       <item path="src/File.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Generator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Helper.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Sample.cpp" ex="false" tool="1" flavor2="0">
       </item>

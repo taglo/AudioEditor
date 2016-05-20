@@ -43,6 +43,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Effect.o \
 	${OBJECTDIR}/src/File.o \
 	${OBJECTDIR}/src/Generator.o \
+	${OBJECTDIR}/src/Helper.o \
 	${OBJECTDIR}/src/Sample.o \
 	${OBJECTDIR}/test/Test1.o
 
@@ -110,6 +111,11 @@ ${OBJECTDIR}/src/Generator.o: src/Generator.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Generator.o src/Generator.cpp
+
+${OBJECTDIR}/src/Helper.o: src/Helper.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Helper.o src/Helper.cpp
 
 ${OBJECTDIR}/src/Sample.o: src/Sample.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
