@@ -24,7 +24,42 @@ using namespace std;
 #include <random>
 #include <ctime>
 
+void testWf() {
+    Sample splWf(1000);
+
+    splWf.genSaw(44.1, 0, 1).saveToFile("splwf source.wav");
+
+    Sample spla(44100);
+
+    spla.genWaveform(splWf, 10, 0, 0.5).saveToFile("test wf 10hz.wav").setConstant(0);
+
+    spla.genWaveform(splWf, 100, 0, 0.5).saveToFile("test wf 100hz.wav");
+
+}
+
+void testWfMultiFun() {
+
+    Sample splWf(1000);
+    Sample spla(441000);
+
+    for (int i = 0; i < 20; i++) {
+        double v = ((double) i) / 20;
+
+        splWf.genSaw(44.1+v*3.2, 0, 0.2).normalize(0.7);
+        
+        spla.genWaveform(splWf, 50+v*(1.2+v*0.31), v, 0.5);
+        
+    }
+    
+    spla.normalize(0.9).saveToFile("testWfMultiFun.wav");
+
+}
+
 int main(int argc, char** argv) {
+
+    testWfMultiFun();
+    //testWf();
+    return 0;
 
     /*
         Sample spla(3000);
@@ -32,16 +67,41 @@ int main(int argc, char** argv) {
 
         cout << "Ok." << endl;
      */
+    double amp;
 
-        Sample spla(30000);
-        spla.genSine(55,0,0.5);
 
-        Sample splb(15000);
+    Sample spla(40000);
+    spla.genSine(55, 0, 0.5);
+
+    Sample splb(15000);
+    spla.strech(splb);
+    splb.saveToFile("strech.wav");
+    cout << "Ok." << endl;
+
+    spla.setConstant(0);
+    spla.genSine(305, 0, 0.5);
+
+    spla.genPulse(302, 0, 0.25);
+
+    spla.genPulse(290.59, 0, -0.25).fadeOut();
+
+    splb.changeLength(29000).setConstant(0);
+
+    splb.fxIEnd = 9000;
+    amp = 0.75;
+    for (int i = 0; i < 10; i++) {
+
         spla.strech(splb);
-        splb.saveToFile("strech.wav");
-        cout << "Ok." << endl;    
+        spla.fxIStart = i * 71;
+        spla.mix(splb, amp).fxRangeReset().normalize(0.9).clip(0.7);
 
-    
+        splb.fxIEnd += 500 - i*i;
+        amp *= 0.9;
+    }
+
+    spla.saveToFile("multi strech.wav");
+
+
     /*
   double a_random_double = unif(re);
   
@@ -52,14 +112,15 @@ std::default_random_engine re(rd());
      */
     GranularSquare granularSquare;
     granularSquare.generate();
-    
+
     /*
     Test1 test;
     test.generate();
-*/
+     */
     /*
     AdditiveSinus additiveSinus;
     additiveSinus.generate();
      */
 }
+
 
