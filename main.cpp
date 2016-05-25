@@ -45,19 +45,86 @@ void testWfMultiFun() {
     for (int i = 0; i < 20; i++) {
         double v = ((double) i) / 20;
 
-        splWf.genSaw(44.1+v*3.2, 0, 0.2).normalize(0.7);
-        
-        spla.genWaveform(splWf, 50+v*(1.2+v*0.31), v, 0.5);
-        
+        splWf.genSaw(44.1 + v * 3.2, 0, 0.2).normalize(0.7);
+
+        spla.genWaveform(splWf, 50 + v * (1.2 + v * 0.31), v, 0.5);
+
     }
-    
+
     spla.normalize(0.9).saveToFile("testWfMultiFun.wav");
+
+}
+
+void testSineFm() {
+
+
+    Sample spla(441000);
+    Sample splFm(441000);
+
+    for (int i = 0; i < 20; i++) {
+
+        double v = ((double) i) / 20;
+
+        splFm.genSine(0.1 + 0.2 * v, v, 0.5).normalize(0.9);
+
+        //(Sample& splIn, double f, double phase, double amplitude, double fmAmp)
+        spla.genSineSplFM(splFm, 55 * v * 20, 0.3 * v*v, 0.3, 505 * v);
+
+    }
+
+    spla.normalize(0.9).saveToFile("testSineFm.wav");
+
+}
+
+void testWfEnv() {
+
+    Sample splWf(1000);
+    splWf.genSaw(44.1, 0, 1);
+
+
+    Sample splEnv(441000);
+    splEnv.genSine(1, 0.5, 0.25).genSine(1.1, 0.5, 0.25).addConstant(0.5).fadeOut();
+
+    Sample spla(441000);
+
+    spla.genWaveformEnv(splWf, splEnv, 110, 55, 0, 0.75).saveToFile("testWfEnv.wav");
+
+
+    splEnv.setConstant(1).fadeOut();
+
+    spla.setConstant(0).genWaveformEnv(splWf, splEnv, 110, 110, 0, 0.75).saveToFile("testWfEnv220v110.wav");
+}
+
+void testFilter() {
+
+    Sample spl1(44100);
+    Sample spl2(44100);
+
+    spl1.genWhiteNoise(0.5);
+
+    spl1.copy(spl2);
+    spl2.filterLowPass(200, 0.5) .saveToFile("test low pass 200 0.5.wav");
+
+    spl1.copy(spl2);
+    spl2.filterLowPass(200, 1) .saveToFile("test low pass 200 1.wav");
+
+    spl1.copy(spl2);
+    spl2.filterLowPass(500, 3) .saveToFile("test low pass 500 3.wav");
+
+    spl1.copy(spl2);
+    spl2.filterLowPass(500, 10) .saveToFile("test low pass 500 10.wav");
+
 
 }
 
 int main(int argc, char** argv) {
 
-    testWfMultiFun();
+    testFilter();
+
+    //testWfEnv();
+
+    //testSineFm();
+    //testWfMultiFun();
     //testWf();
     return 0;
 

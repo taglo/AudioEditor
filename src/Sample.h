@@ -24,7 +24,8 @@ public:
     Sample& fxRangeCheck();
     int fxLength();
 
-    Sample& setConstant(double cst);
+    Sample& setConstant(double cst = 0);
+    Sample& addConstant(double cst = 0);
     Sample& changeLength(int newLength);
 
     //Edit
@@ -54,16 +55,22 @@ public:
     Sample& genPinkNoise(double amplitude = 1);
     Sample& genBrownNoise(double amplitude = 1, double intensity = 0.1);
 
-    Sample& genWaveform(Sample& splWf, double f, double phase, double amplitude, double fmAmp);
+    Sample& genPulse(double fq, double phase, double amplitude);
+
+    Sample& genWaveform(Sample& splWf, double f = 110, double phase = 0, double amplitude = 1);
+    Sample& genWaveformEnv(Sample& splWf, Sample& splEnv, double f = 110, double fmAmp = 55, double phase = 0, double amplitude = 1);
 
     //Effect
     Sample& clip(double maxValue = 1, double minValue = -1);
 
-    Sample& strech(Sample& splOut);
+    Sample& strech(Sample & splOut);
+
+
+    Sample& filterLowPass(double f, double q);
 
     double maxAmplitude();
 
-    Sample& mix(Sample& splIn, double amplitude = 1);
+    Sample & mix(Sample& splIn, double amplitude = 1);
 
     ~Sample();
 
@@ -74,7 +81,7 @@ private:
     void copyToBuffer(double *dataIn, int iIn, int iBuffer, int copyLength);
     void copyFromBuffer(double *dataOut, int iOut, int iBuffer, int copyLength);
     void setBufferMinLength(int minLength);
-    Sample& prepareForSplIn(Sample& splIn, int& jRead, int& iMixEnd);
+    Sample & prepareForSplIn(Sample& splIn, int& jRead, int& iMixEnd);
 
     double hermite1(double x, double y0, double y1, double y2, double y3);
 

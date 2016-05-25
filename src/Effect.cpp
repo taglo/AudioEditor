@@ -1,4 +1,7 @@
+#include <windef.h>
+
 #include "Sample.h"
+#include "helper/rbjFilter.h"
 
 Sample& Sample::clip(double maxValue, double minValue) {
 
@@ -32,11 +35,28 @@ Sample& Sample::strech(Sample& splOut) {
         y0 = data[iRead];
 
         splOut.data[i] = hermite1(jRead - (double) iRead, y0, y1, y2, y3);
-        
+
         jRead += pitch;
 
     }
-    
+
+    return *this;
+
+}
+
+Sample& Sample::filterLowPass(double f, double q) {
+
+    RbjFilter filter;
+    //void calc_filter_coeffs(int const type, double const frequency, double const sample_rate, double const q, double const db_gain, bool q_is_bandwidth) {
+
+
+    filter.calc_filter_coeffs(0, f, (double) samplerate, q, 0, false);
+
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        data[i] = filter.filter(data[i]);
+    }
+
     return *this;
 
 }

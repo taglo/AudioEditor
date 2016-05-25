@@ -161,10 +161,18 @@ int Sample::fxLength() {
     return fxIEnd - fxIStart;
 }
 
-Sample& Sample::setConstant(double cst = 0) {
+Sample& Sample::setConstant(double cst ) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         data[i] = cst;
+    }
+    return *this;
+}
+
+Sample& Sample::addConstant(double cst) {
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        data[i] += cst;
     }
     return *this;
 }

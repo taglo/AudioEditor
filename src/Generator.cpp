@@ -76,21 +76,39 @@ Sample& Sample::genSaw(double fq, double phase, double amplitude) {
     return *this;
 }
 
+Sample& Sample::genPulse(double fq, double phase, double amplitude) {
+
+    double phaseInc = fq * 2 / samplerate;
+
+    phase *= 2;
+    //phase -= 1;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+
+        phase += phaseInc;
+        if (phase > 1) {
+            Sample::data[i] += amplitude;
+            phase -= 2;
+        }
+    }
+    return *this;
+}
+
 Sample& Sample::genSquare(double fq, double phase, double amplitude, double width) {
 
     double phaseInc = fq / samplerate;
     //phase = (phase-0.5)*2;
 
     double mAmplitude = -amplitude;
-    
+
     //double mWidth = (width -0.5)*2;
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        
-        if(phase<width){
-            Sample::data[i] +=  amplitude;
-        }else{
-            Sample::data[i] +=  mAmplitude;
+
+        if (phase < width) {
+            Sample::data[i] += amplitude;
+        } else {
+            Sample::data[i] += mAmplitude;
         }
         phase += phaseInc;
         if (phase > 1) {
@@ -143,12 +161,78 @@ int inline CTZ(int num) {
     return i;
 }
 
-Sample& Sample::genWaveform(Sample& splWf, double f, double phase, double amplitude, double fmAmp) {
+//Sample& fEnv, double fmAmp,
 
-    double t;
-    
-    //todo
-    
+Sample& Sample::genWaveformEnv(Sample& splWf, Sample& splEnv, double f, double fmAmp, double phase, double amplitude) {
+
+    double y0 = 0, y1 = 0, y2 = 0, y3 = 0;
+
+    //double pitch = ((double) fxLength()) / ((double) splOut.fxLength());
+
+    double jRead = (double) splWf.fxIStart;
+    double period = (double) splWf.fxLength();
+
+    double pitch = period / (((double) samplerate) / f);
+    double pitchAmp = period / (((double) samplerate) / fmAmp);
+
+    jRead += period*phase;
+    int iRead = 0, iEnv = splEnv.fxIStart;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+
+        y3 = y2;
+        y2 = y1;
+        y1 = y0;
+
+        iRead = (int) jRead;
+        y0 = splWf.data[iRead];
+
+        data[i] += hermite1(jRead - (double) iRead, y0, y1, y2, y3) * amplitude;
+
+        jRead += pitch + pitchAmp * splEnv.data[iEnv];
+
+        if (jRead > splWf.fxIEnd) {
+            jRead -= period;
+        }
+        iEnv++;
+    }
+
+    return *this;
+}
+
+Sample& Sample::genWaveform(Sample& splWf, double f, double phase, double amplitude) {
+
+    double y0 = 0, y1 = 0, y2 = 0, y3 = 0;
+
+    //double pitch = ((double) fxLength()) / ((double) splOut.fxLength());
+
+    double jRead = (double) splWf.fxIStart;
+    double period = (double) splWf.fxLength();
+
+    double pitch = period / (((double) samplerate) / f);
+
+    jRead += period*phase;
+    int iRead = 0;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+
+        y3 = y2;
+        y2 = y1;
+        y1 = y0;
+
+        iRead = (int) jRead;
+        y0 = splWf.data[iRead];
+
+        data[i] += hermite1(jRead - (double) iRead, y0, y1, y2, y3) * amplitude;
+
+        jRead += pitch;
+
+        if (jRead > splWf.fxIEnd) {
+            jRead -= period;
+        }
+
+    }
+
     return *this;
 }
 
