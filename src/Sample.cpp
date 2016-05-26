@@ -226,7 +226,7 @@ Sample& Sample::fadeAntiClick(int fadeLength) {
 
     fxIStart = iFxE;
     fxIEnd = iFxE + fadeLength;
-    if (fxIStart > length) fxIStart = length;
+    if (fxIEnd > length) fxIEnd = length;
     fadeIn();
 
     fxIStart = iFxS;

@@ -103,23 +103,53 @@ void testFilter() {
     spl1.genWhiteNoise(0.5);
 
     spl1.copy(spl2);
-    spl2.filterLowPass(200, 0.5) .saveToFile("test low pass 200 0.5.wav");
+    spl2.filterLowPass(200, 0.5, 1).normalize(0.9) .saveToFile("test low pass 200 0.5 1 pass.wav");
 
     spl1.copy(spl2);
-    spl2.filterLowPass(200, 1) .saveToFile("test low pass 200 1.wav");
+    spl2.filterLowPass(200, 0.5, 2).normalize(0.9) .saveToFile("test low pass 200 0.5 2 pass.wav");
 
     spl1.copy(spl2);
-    spl2.filterLowPass(500, 3) .saveToFile("test low pass 500 3.wav");
+    spl2.filterLowPass(200, 0.5, 4).normalize(0.9) .saveToFile("test low pass 200 0.5 4 pass.wav");
 
     spl1.copy(spl2);
-    spl2.filterLowPass(500, 10) .saveToFile("test low pass 500 10.wav");
+    spl2.filterLowPass(200, 4, 1).normalize(0.9) .saveToFile("test low pass 200 4 1 pass.wav");
 
+    spl1.copy(spl2);
+    spl2.filterLowPass(200, 4, 2).normalize(0.9) .saveToFile("test low pass 200 4 2 pass.wav");
+
+    spl1.copy(spl2);
+    spl2.filterLowPass(200, 4, 4).normalize(0.9) .saveToFile("test low pass 200 4 4 pass.wav");
+}
+
+void testFilter2() {
+    Sample spl1(44100);
+    Sample spl2(44100);
+    Sample spl3(44100);
+
+    spl1.genSaw(55, 0.5, 0.5); //.fadeAntiClick(5000); //.saveToFile("testFilter2 saw source.wav");
+
+    for (int nPass = 1; nPass < 10; nPass += 2) {
+        for ( double q = 0.5; q < 4; q += 0.5) {
+            spl1.copy(spl2);
+            spl2.filterLowPass(220, q, nPass).normalize(0.9).fadeAntiClick(5000);
+            spl3.mix(spl2, 1);
+            spl3.fxIStart += 44100;
+        }
+    }
+
+
+
+    spl3.fxRangeReset();
+
+    spl3.saveToFile("testFilter2 z progressif.wav");
 
 }
 
 int main(int argc, char** argv) {
 
-    testFilter();
+    testFilter2();
+
+    //testFilter();
 
     //testWfEnv();
 

@@ -16,6 +16,8 @@
 
 class RbjFilter {
 public:
+    // filter coeffs
+    double b0a0, b1a0, b2a0, a1a0, a2a0;
 
     RbjFilter() {
         // reset filter coeffs
@@ -30,12 +32,12 @@ public:
         ou2 = 0.0;
         in1 = 0.0;
         in2 = 0.0;
-        
+
     };
 
     double filter(double in0) {
         // filter
-        double const yn = b0a0 * in0 + b1a0 * in1 + b2a0 * in2 - a1a0 * ou1 - a2a0*ou2;
+        double yn = b0a0 * in0 + b1a0 * in1 + b2a0 * in2 - a1a0 * ou1 - a2a0*ou2;
 
         // push in/out buffers
         in2 = in1;
@@ -47,26 +49,34 @@ public:
         return yn;
     };
 
-    void calc_filter_coeffs(int const type, double const frequency, double const sample_rate, double const q, double const db_gain, bool q_is_bandwidth) {
+    void copy_filter_coeffs(RbjFilter filterIn) {
+        b0a0 = filterIn.b0a0;
+        b1a0 = filterIn.b1a0;
+        b2a0 = filterIn.b2a0;
+        a1a0 = filterIn.a1a0;
+        a2a0 = filterIn.a2a0;
+    }
+
+    void calc_filter_coeffs(int type, double frequency, double sample_rate, double q, double db_gain, bool q_is_bandwidth) {
         // temp pi
-        double const temp_pi = 3.1415926535897932384626433832795;
+        double temp_pi = 3.1415926535897932384626433832795;
 
         // temp coef vars
         double alpha, a0, a1, a2, b0, b1, b2;
 
         // peaking, lowshelf and hishelf
         if (type >= 6) {
-            double const A = pow(10.0, (db_gain / 40.0));
-            double const omega = 2.0 * temp_pi * frequency / sample_rate;
-            double const tsin = sin(omega);
-            double const tcos = cos(omega);
+            double A = pow(10.0, (db_gain / 40.0));
+            double omega = 2.0 * temp_pi * frequency / sample_rate;
+            double tsin = sin(omega);
+            double tcos = cos(omega);
 
             if (q_is_bandwidth)
                 alpha = tsin * sinh(log(2.0) / 2.0 * q * omega / tsin);
             else
                 alpha = tsin / (2.0 * q);
 
-            double const beta = sqrt(A) / q;
+            double beta = sqrt(A) / q;
 
             // peaking
             if (type == 6) {
@@ -99,9 +109,9 @@ public:
             }
         } else {
             // other filters
-            double const omega = 2.0 * temp_pi * frequency / sample_rate;
-            double const tsin = sin(omega);
-            double const tcos = cos(omega);
+            double omega = 2.0 * temp_pi * frequency / sample_rate;
+            double tsin = sin(omega);
+            double tcos = cos(omega);
 
             if (q_is_bandwidth)
                 alpha = tsin * sinh(log(2.0) / 2.0 * q * omega / tsin);
@@ -180,8 +190,7 @@ public:
 
 private:
 
-    // filter coeffs
-    double b0a0, b1a0, b2a0, a1a0, a2a0;
+
 
     // in/out history
     double ou1, ou2, in1, in2;

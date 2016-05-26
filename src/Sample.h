@@ -66,7 +66,7 @@ public:
     Sample& strech(Sample & splOut);
 
 
-    Sample& filterLowPass(double f, double q);
+    Sample& filterLowPass(double f = 220, double q = 1, int nPass = 1);
 
     double maxAmplitude();
 
@@ -85,4 +85,6 @@ private:
 
     double hermite1(double x, double y0, double y1, double y2, double y3);
 
+    Sample& filterRbj(int type, double f = 220, double q = 1, int nPass = 1);
+    
 };

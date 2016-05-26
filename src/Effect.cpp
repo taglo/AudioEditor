@@ -44,19 +44,25 @@ Sample& Sample::strech(Sample& splOut) {
 
 }
 
-Sample& Sample::filterLowPass(double f, double q) {
+Sample& Sample::filterLowPass(double f, double q, int nPass) {
 
-    RbjFilter filter;
-    //void calc_filter_coeffs(int const type, double const frequency, double const sample_rate, double const q, double const db_gain, bool q_is_bandwidth) {
+    RbjFilter* rbjFilter = new RbjFilter[nPass];
 
+    rbjFilter[0].calc_filter_coeffs(0, f, (double) samplerate, q, 0, false);
 
-    filter.calc_filter_coeffs(0, f, (double) samplerate, q, 0, false);
-
+    for (int j = 1; j < nPass; j++) {
+        rbjFilter[j].copy_filter_coeffs(rbjFilter[0]);
+    }
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        data[i] = filter.filter(data[i]);
+        for (int j = 0; j < nPass; j++) {
+            data[i] = rbjFilter[j].filter(data[i]);
+        }
     }
+
+    delete[] rbjFilter;
 
     return *this;
 
 }
+
