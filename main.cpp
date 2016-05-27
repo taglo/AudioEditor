@@ -129,7 +129,7 @@ void testFilter2() {
     spl1.genSaw(55, 0.5, 0.5); //.fadeAntiClick(5000); //.saveToFile("testFilter2 saw source.wav");
 
     for (int nPass = 1; nPass < 10; nPass += 2) {
-        for ( double q = 0.5; q < 4; q += 0.5) {
+        for (double q = 0.5; q < 4; q += 0.5) {
             spl1.copy(spl2);
             spl2.filterLowPass(220, q, nPass).normalize(0.9).fadeAntiClick(5000);
             spl3.mix(spl2, 1);
@@ -145,9 +145,46 @@ void testFilter2() {
 
 }
 
+void testMx() {
+
+    //enveloppe
+    double nsTot=64;
+    
+    Sample::tempo = 123.0;
+
+    Sample splEnvSrc(4.0);
+
+    Sample splEnv(4.0);
+    splEnvSrc.setConstantDynamic(1, 0).fadeAntiClick(350);
+    splEnvSrc.saveToFile("env src.wav");
+    int k = 0;
+    for (double smix = 0; smix < nsTot; smix += 4) {
+        splEnvSrc.clip(0.95, -0.9).normalize(1).fade(1, 0.27);
+        splEnvSrc.saveToFile("env src test1.wav");
+
+        splEnv.fxRangeStep(smix, smix + 4.0);
+        splEnv.mix(splEnvSrc, 0.9);
+        k++;
+        if ((k) % 3 == 0) {
+            smix -= 1;
+        }
+        if ((k) % 5 == 0) {
+            smix -= 3;
+        }        
+    }
+    splEnv.fxRangeReset(). saveToFile("env dyna clip.wav");
+
+    Sample splSaw(nsTot);
+    splSaw.genSaw(55, 0, 0.5).filterLowPassFEnv(55, splEnv, 2500, 1, 4);
+    splSaw.normalize(0.8);
+    splSaw.saveToFile("saw dyna low filt.wav");
+}
+
 int main(int argc, char** argv) {
 
-    testFilter2();
+    testMx();
+
+    //testFilter2();
 
     //testFilter();
 
