@@ -148,8 +148,8 @@ void testFilter2() {
 void testMx() {
 
     //enveloppe
-    double nsTot=64;
-    
+    double nsTot = 64;
+
     Sample::tempo = 123.0;
 
     Sample splEnvSrc(4.0);
@@ -170,7 +170,7 @@ void testMx() {
         }
         if ((k) % 5 == 0) {
             smix -= 3;
-        }        
+        }
     }
     splEnv.fxRangeReset(). saveToFile("env dyna clip.wav");
 
@@ -178,11 +178,83 @@ void testMx() {
     splSaw.genSaw(55, 0, 0.5).filterLowPassFEnv(55, splEnv, 2500, 1, 4);
     splSaw.normalize(0.8);
     splSaw.saveToFile("saw dyna low filt.wav");
+
+}
+
+void testMx2() {
+
+    //enveloppe
+    double nsTot = 64;
+
+    Sample::tempo = 120.0;
+
+    Sample splEnv1(nsTot);
+    Sample splEnv2(nsTot);
+
+    splEnv1.genSine(4, 0.5, 1);
+    splEnv1.fxRangeStep(0, 32).fadeOut().fxRangeStep(32, 64).fadeIn();
+    splEnv1.fxRangeReset().fade(0.8, 1).clip(0.8, -0.8);
+
+    splEnv2.genSine(8, 0.5, 1);
+    splEnv2.fxRangeStep(0, 32).fadeIn().fxRangeStep(32, 64).fadeOut();
+    splEnv2.fxRangeReset().fade(1, 0.8).clip(0.8, -0.8);
+
+    splEnv1.mix(splEnv2, 1);
+
+
+    Sample splSaw(nsTot);
+    double phase = 0.111;
+    for (double f = 55; f < 56; f += 0.09123) {
+        splSaw.genSaw(f, phase, 1);
+        phase += 0.0789;
+    }
+    splSaw.clip(1, -1).normalize(0.9);
+    splSaw.filterLowPassFEnv(200, splEnv1, 200, 1, 4);
+
+    splSaw.normalize(0.8);
+
+    splSaw.saveToFile("saw dyna low filt testMx2.wav");
+
+}
+
+void genKickA() {
+
+    //enveloppe
+    double nsTot = 4;
+
+    Sample::tempo = 147;
+
+    Sample splSrc(1031);
+    for (int i = 0; i < splSrc.fxIEnd; i++) {
+        double di = ((double) i)/25;
+        splSrc.data[i] = 1 / (1 + di * di * di);
+    }
+    splSrc.saveToFile("env src strech.wav");
+    Sample splEnv(nsTot);
+    splSrc.strech(splEnv);
+
+    splEnv.normalize(1).fadeOut(); //.fadeOut();
+
+    splEnv.saveToFile("spl env strech.wav");
+
+    Sample splKick(nsTot);
+    splKick.genSineFEnv(50, splEnv, 450, 0, 1);
+
+    splKick.fadeOut();
+    splKick.fxRangeStep(1, 4).fadeOut();
+
+    splKick.fxRangeStep(2, 4).fadeOut().fxRangeReset();
+    splKick.saveToFile("kickA.wav");
+
 }
 
 int main(int argc, char** argv) {
 
-    testMx();
+    genKickA();
+
+    //testMx2();
+
+    // testMx();
 
     //testFilter2();
 
