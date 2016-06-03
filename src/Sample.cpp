@@ -16,6 +16,18 @@ int Sample::bufferLength = 44100 * 10;
 double* Sample::buffer = new double[441000];
 string Sample::filePath = "F:\\sounds\\";
 
+Sample::Sample() {
+    Sample::length = 1;
+    data = new double[1];
+
+    fxIStart = 0;
+    fxIEnd = 1;
+
+    samplerate = 44100;
+
+    setConstant(0);
+}
+
 Sample::Sample(int length) {
     Sample::length = length;
     data = new double[length];

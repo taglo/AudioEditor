@@ -14,8 +14,9 @@ public:
     static double tempo;
     static string filePath;
 
-    Sample(int length = 0);
-    Sample(double nStep = 0);
+    Sample();
+    Sample(int length);
+    Sample(double nStep);
     Sample(const Sample& other);
     Sample& operator=(const Sample& other);
 

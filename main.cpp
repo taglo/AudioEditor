@@ -13,6 +13,7 @@
 #include "example/GranularSquare.h"
 #include "test/Test1.h"
 #include "example/GenSounds.h"
+#include "example/SongHardTech.h"
 
 //#include "Tests.cpp"
 
@@ -222,9 +223,13 @@ void testMx2() {
 
 int main(int argc, char** argv) {
 
-    GenSounds gSnd;
+    SongHardTech sng;
+    sng.generate();
     
-    gSnd.testLoad();
+            
+    //GenSounds gSnd;
+    
+    //gSnd.testLoad();
     //gSnd.genKickA();
     
 

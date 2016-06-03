@@ -45,6 +45,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>example/SongHardTech.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -71,6 +72,8 @@
       <item path="example/GranularSquare.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="example/GranularSquare.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="example/SongHardTech.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -126,6 +129,8 @@
       <item path="example/GranularSquare.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="example/GranularSquare.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="example/SongHardTech.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
