@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+using namespace std;
 
 class Sample {
 public:
@@ -10,21 +12,26 @@ public:
 
     static int samplerate;
     static double tempo;
-
+    static string filePath;
 
     Sample(int length = 0);
+    Sample(double nStep = 0);
     Sample(const Sample& other);
     Sample& operator=(const Sample& other);
 
     //void init(int length);
 
-    Sample& fxRange(int iStart, int iEnd); //todo : fxRangeInStep, class SoundEdit
+    Sample& fxRange(int iStart, int iEnd);
+    Sample& fxRangeStep(double stepStart = 0, double stepEnd = 0);
+
+
 
     Sample& fxRangeReset();
     Sample& fxRangeCheck();
     int fxLength();
 
     Sample& setConstant(double cst = 0);
+    Sample& setConstantDynamic(double cstStart = 1, double cstEnd = 0);
     Sample& addConstant(double cst = 0);
     Sample& changeLength(int newLength);
 
@@ -36,8 +43,8 @@ public:
     Sample& amplify(double amplitude);
 
     //File
-    Sample& saveToFile(const char* filename);
-
+    Sample& saveToFile(string filename);
+    Sample& loadFromFile(string filename);
 
     Sample& normalize(double amplitude = 1);
     Sample& fade(double ampStart, double ampEnd);
@@ -47,6 +54,7 @@ public:
 
     //Generator
     Sample& genSine(double f = 440.0, double phase = 0.5, double amplitude = 1);
+    Sample& genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, double amplitude);
     Sample& genSineSplFM(Sample& splIn, double f = 440.0, double phase = 0.5, double amplitude = 1, double fmAmp = 0.10);
     Sample& genSaw(double f = 440.0, double phase = 0.5, double amplitude = 1);
     Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width = 0.5);
@@ -67,6 +75,7 @@ public:
 
 
     Sample& filterLowPass(double f = 220, double q = 1, int nPass = 1);
+    Sample& filterLowPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
 
     double maxAmplitude();
 
@@ -81,10 +90,15 @@ private:
     void copyToBuffer(double *dataIn, int iIn, int iBuffer, int copyLength);
     void copyFromBuffer(double *dataOut, int iOut, int iBuffer, int copyLength);
     void setBufferMinLength(int minLength);
-    Sample & prepareForSplIn(Sample& splIn, int& jRead, int& iMixEnd);
+    Sample& prepareForSplIn(Sample& splIn, int& jRead, int& iMixEnd);
 
+    void getSampleForHermite(double iRead, int iMin, int iMax, double *dataIn, double& x, double& y0, double& y1, double& y2, double& y3);
     double hermite1(double x, double y0, double y1, double y2, double y3);
 
+
     Sample& filterRbj(int type, double f = 220, double q = 1, int nPass = 1);
-    
+
+    int stepToInt(double step);
+
+
 };

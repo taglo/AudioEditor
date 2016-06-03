@@ -4,6 +4,7 @@
 //#include <stdlib.h>
 #include "Sample.h"
 
+
 /*
 pour les filtres :
 https://github.com/vinniefalco/DSPFilters
@@ -13,9 +14,24 @@ int Sample::samplerate = 44100;
 double Sample::tempo = 120;
 int Sample::bufferLength = 44100 * 10;
 double* Sample::buffer = new double[441000];
+string Sample::filePath = "F:\\sounds\\";
 
 Sample::Sample(int length) {
     Sample::length = length;
+    data = new double[length];
+
+    fxIStart = 0;
+    fxIEnd = length;
+
+    samplerate = 44100;
+
+    setConstant(0);
+}
+
+Sample::Sample(double nStep) {
+    //todo réutiliser le normal ?
+    Sample::length = stepToInt(nStep);
+
     data = new double[length];
 
     fxIStart = 0;
@@ -137,6 +153,17 @@ Sample& Sample::fxRange(int iStart, int iEnd) {
     return *this;
 }
 
+Sample& Sample::fxRangeStep(double stepStart, double stepEnd) {
+    fxIStart = stepToInt(stepStart);
+    fxIEnd = stepToInt(stepEnd);
+
+    return *this;
+}
+
+int Sample::stepToInt(double step) {
+    return (int) ((240 / tempo)*((double) samplerate) *(step / 16));
+}
+
 Sample& Sample::fxRangeReset() {
     fxIStart = 0;
     fxIEnd = length;
@@ -161,10 +188,22 @@ int Sample::fxLength() {
     return fxIEnd - fxIStart;
 }
 
-Sample& Sample::setConstant(double cst ) {
+Sample& Sample::setConstant(double cst) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         data[i] = cst;
+    }
+    return *this;
+}
+
+Sample& Sample::setConstantDynamic(double cstStart, double cstEnd) {
+
+    double cstInc = (cstEnd - cstStart) / ((double) fxLength());
+    double cst = cstStart;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        data[i] = cst;
+        cst += cstInc;
     }
     return *this;
 }

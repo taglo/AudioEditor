@@ -11,6 +11,7 @@
       <logicalFolder name="f3" displayName="example" projectFiles="true">
         <itemPath>example/AdditiveSinus.cpp</itemPath>
         <itemPath>example/AdditiveSinus.h</itemPath>
+        <itemPath>example/GenSounds.h</itemPath>
         <itemPath>example/GranularSquare.cpp</itemPath>
         <itemPath>example/GranularSquare.h</itemPath>
       </logicalFolder>
@@ -65,6 +66,8 @@
       </item>
       <item path="example/AdditiveSinus.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="example/GenSounds.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="example/GranularSquare.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="example/GranularSquare.h" ex="false" tool="3" flavor2="0">
@@ -117,6 +120,8 @@
       <item path="example/AdditiveSinus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="example/AdditiveSinus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="example/GenSounds.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="example/GranularSquare.cpp" ex="false" tool="1" flavor2="0">
       </item>

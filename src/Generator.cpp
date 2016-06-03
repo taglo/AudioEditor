@@ -43,6 +43,24 @@ Sample& Sample::genSine(double fq, double phase, double amplitude) {
     return *this;
 }
 
+Sample& Sample::genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, double amplitude) {
+
+
+    int jRead = fEnv.fxIStart;
+
+
+    phase *= 2 * M_PI;
+
+    double phaseInc = f * 2 * M_PI / samplerate;
+    double phaseF = fAmp * 2 * M_PI / samplerate;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        data[i] += sin(phase) * amplitude;
+        phase += phaseInc + phaseF * fEnv.data[jRead++];
+    }
+    return *this;
+}
+
 Sample& Sample::genSineSplFM(Sample& splIn, double f, double phase, double amplitude, double fmAmp) {
     int jRead, iMixEnd;
     prepareForSplIn(splIn, jRead, iMixEnd);
