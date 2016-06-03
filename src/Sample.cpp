@@ -83,7 +83,10 @@ Sample::~Sample() {
 }
 
 
-
+Sample& Sample::changeLengthStep(double step){
+    changeLength(stepToInt(step));
+    return *this;
+}
 /*
 Sample& Sample::operator*(const double amplitude){
         Sample::amplify(amplitude);

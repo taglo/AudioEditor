@@ -29,12 +29,14 @@ public:
 
     Sample& fxRangeReset();
     Sample& fxRangeCheck();
+    
     int fxLength();
 
     Sample& setConstant(double cst = 0);
     Sample& setConstantDynamic(double cstStart = 1, double cstEnd = 0);
     Sample& addConstant(double cst = 0);
     Sample& changeLength(int newLength);
+    Sample& changeLengthStep(double step);
 
     //Edit
     Sample& copy(Sample& splOut);
@@ -82,6 +84,8 @@ public:
 
     Sample & mix(Sample& splIn, double amplitude = 1);
 
+
+    
     ~Sample();
 
 private:
@@ -98,8 +102,9 @@ private:
 
 
     Sample& filterRbj(int type, double f = 220, double q = 1, int nPass = 1);
-
+    //util
     int stepToInt(double step);
+    
 
 
 };
