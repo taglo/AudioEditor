@@ -12,6 +12,7 @@
 #include "example/AdditiveSinus.h"
 #include "example/GranularSquare.h"
 #include "test/Test1.h"
+#include "example/GenSounds.h"
 
 //#include "Tests.cpp"
 
@@ -217,40 +218,15 @@ void testMx2() {
 
 }
 
-void genKickA() {
 
-    //enveloppe
-    double nsTot = 4;
-
-    Sample::tempo = 147;
-
-    Sample splSrc(1031);
-    for (int i = 0; i < splSrc.fxIEnd; i++) {
-        double di = ((double) i)/25;
-        splSrc.data[i] = 1 / (1 + di * di * di);
-    }
-    splSrc.saveToFile("env src strech.wav");
-    Sample splEnv(nsTot);
-    splSrc.strech(splEnv);
-
-    splEnv.normalize(1).fadeOut(); //.fadeOut();
-
-    splEnv.saveToFile("spl env strech.wav");
-
-    Sample splKick(nsTot);
-    splKick.genSineFEnv(50, splEnv, 450, 0, 1);
-
-    splKick.fadeOut();
-    splKick.fxRangeStep(1, 4).fadeOut();
-
-    splKick.fxRangeStep(2, 4).fadeOut().fxRangeReset();
-    splKick.saveToFile("kickA.wav");
-
-}
 
 int main(int argc, char** argv) {
 
-    genKickA();
+    GenSounds gSnd;
+    
+    gSnd.testLoad();
+    //gSnd.genKickA();
+    
 
     //testMx2();
 
