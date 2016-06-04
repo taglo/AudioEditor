@@ -1,8 +1,4 @@
-#define _USE_MATH_DEFINES
-#include <cmath>
 #include "Sample.h"
-#include <random>
-#include <ctime>
 
 Sample& Sample::genSine(double fq, double phase, double amplitude) {
     /*
@@ -136,13 +132,13 @@ Sample& Sample::genSquare(double fq, double phase, double amplitude, double widt
 
 //http://www.firstpr.com.au/dsp/pink-noise/
 
-Sample& Sample::genWhiteNoise(double amplitude) {
+Sample& Sample::genWhiteNoise(double amplitude,int seed) {
 
     double lower_bound = -amplitude;
     double upper_bound = amplitude;
 
     std::uniform_real_distribution<double> unif(lower_bound, upper_bound);
-    std::mt19937_64 re((std::time(0)));
+    std::mt19937_64 re(seed);
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         Sample::data[i] += unif(re);

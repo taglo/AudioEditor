@@ -17,7 +17,7 @@ Test1::Test1() {
 void Test1::generate() {
 
     Sample spl(44100);
-    spl.genWhiteNoise(0.2).saveToFile("white noise.wav");
+    spl.genWhiteNoise(0.2, 456789).saveToFile("white noise.wav");
     cout << "OK white noise.wav" << endl;
 
     spl.genSine(55, 0, 1).clip(0.5, -0.5).saveToFile("test clip.wav").fadeOut().amplify(2).clip(0.7, -0.7).saveToFile("test clip 2.wav");

@@ -14,9 +14,11 @@
         <itemPath>example/GenSounds.h</itemPath>
         <itemPath>example/GranularSquare.cpp</itemPath>
         <itemPath>example/GranularSquare.h</itemPath>
+        <itemPath>example/SongHardTech.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="src" projectFiles="true">
         <logicalFolder name="f1" displayName="helper" projectFiles="true">
+          <itemPath>src/helper/Rng.h</itemPath>
           <itemPath>src/helper/rbjFilter.h</itemPath>
         </logicalFolder>
         <itemPath>src/Buffer.cpp</itemPath>
@@ -45,7 +47,6 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <itemPath>example/SongHardTech.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -92,6 +93,8 @@
       <item path="src/Sample.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Sample.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/helper/Rng.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/helper/rbjFilter.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -149,6 +152,8 @@
       <item path="src/Sample.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Sample.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/helper/Rng.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/helper/rbjFilter.h" ex="false" tool="3" flavor2="0">
       </item>

@@ -34,8 +34,9 @@ public:
 
         genKickTrack();
         genBassTrack();
-//todo suite affine hihat, gen hihat track sur track[2]
-        
+
+        //todo suite affine hihat, gen hihat track sur track[2]
+        //cf http://joesul.li/van/synthesizing-hi-hats/
         /*
         for(int i=0;i<10;i++){
             track[0].loadFromFile("track0.wav").saveToFile("track0");
@@ -135,7 +136,7 @@ private:
         double nsTot = 5;
         splHihat.changeLengthStep(nsTot).fxRangeReset();
 
-        splHihat.genWhiteNoise(0.1).fadeOut(); //todo seed
+        splHihat.genWhiteNoise(0.1, 723).fadeOut(); //todo seed
 
         //todo hi pass
         splHihat.fxRangeStep(1, nsTot).fadeOut();
@@ -143,29 +144,50 @@ private:
 
         splHihat.fxRangeReset();
 
-        /*
-        double fq = 62.43;
+        splHihat.saveToFile("hihat A.wav");
+
+        uniform_real_distribution<double> unif(120.0, 530.0);
+        mt19937_64 re(666777);
+
+        double fq = 0;
         double phase = 0;
         double width = 0;
+        
         for (int i = 0; i < 31; i++) {
-            phase += -1 / 31;
-            width += 1 / 7;
+            phase += 1.0 / 2.203;
+            width += 1.0 / 7.431;
             if (width > 1) {
-                width = phase;
+                width = phase / 16;
             }
-            splHihat.genSquare(fq, phase, 0.3, 0.5);
-            double di = (double) i;
-            fq += di * 70.1 + di * di * 5.1+6.23;
-            if (fq > 160) {
-                fq -= 85;
-            }
+            fq=unif(re);
+            splHihat.genSquare(fq, phase, 0.3, width);
+
+
         }
-        */
+
+        splHihat.filterHiPass(400, 1.89, 1);
+        splHihat.fxRangeStep(0.0, 0.05).fadeIn();
+        splHihat.fxRangeReset();
+
         splHihat.normalize(0.3);
         splHihat.fxRangeStep(1, nsTot).fadeOut();
         splHihat.fxRangeStep(4, nsTot).fadeOut();
+        splHihat.fxRangeReset();
 
-        splHihat.fxRangeReset(); //todo : bug save to file avec un range
+        splHihat.normalize(0.3);
+        splHihat.saveToFile("hihat B.wav");
+
+        splHihat.filterBandPass(9000, 0.89, 1);
+        splHihat.normalize(0.3);
+        splHihat.saveToFile("hihat C.wav");
+
+        splHihat.filterHiPass(3000, 1.189, 1);
+        splHihat.filterHiPass(4000, 1.89, 1);
+        splHihat.filterHiPass(6000, 1.089, 1);
+
+
+        splHihat.normalize(0.3);
+
         splHihat.saveToFile("hihat.wav");
 
     }

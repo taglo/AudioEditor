@@ -26,6 +26,129 @@ using namespace std;
 #include <random>
 #include <ctime>
 
+
+
+int main(int argc, char** argv) {
+
+    /*
+    Rng r(1234,-1.0,1.0);
+    
+    cout << "Seed 1234" << endl;
+    cout << "Random value: " << r.next() << endl;
+    cout << "Random value: " << r.next() << endl;
+    cout << "Random value: " << r.next() << endl;
+    
+    Rng rb(12345,-1.0,1.0);
+    
+    cout << "Seed 12345" << endl;
+    cout << "Random value: " << rb.next() << endl;
+    cout << "Random value: " << rb.next() << endl;
+    cout << "Random value: " << rb.next() << endl;
+    
+    Rng rc(1234,-1.0,1.0);
+    
+    cout << "Seed 1234" << endl;
+    cout << "Random value: " << rc.next() << endl;
+    cout << "Random value: " << rc.next() << endl;
+    cout << "Random value: " << rc.next() << endl;
+    
+    Rng rd(12345,-1.0,100.0);
+    
+    cout << "Seed 12345" << endl;
+    cout << "Random value: " << rd.next() << endl;
+    cout << "Random value: " << rd.next() << endl;
+    cout << "Random value: " << rd.next() << endl;
+    */
+    
+    SongHardTech sng;
+    sng.generate();
+    
+            
+    //GenSounds gSnd;
+    
+    //gSnd.testLoad();
+    //gSnd.genKickA();
+    
+
+    //testMx2();
+
+    // testMx();
+
+    //testFilter2();
+
+    //testFilter();
+
+    //testWfEnv();
+
+    //testSineFm();
+    //testWfMultiFun();
+    //testWf();
+    return 0;
+
+    /*
+        Sample spla(3000);
+        spla.setConstant(1).fadeOut().saveToFile("test.wav");
+
+        cout << "Ok." << endl;
+     */
+    double amp;
+
+
+    Sample spla(40000);
+    spla.genSine(55, 0, 0.5);
+
+    Sample splb(15000);
+    spla.strech(splb);
+    splb.saveToFile("strech.wav");
+    cout << "Ok." << endl;
+
+    spla.setConstant(0);
+    spla.genSine(305, 0, 0.5);
+
+    spla.genPulse(302, 0, 0.25);
+
+    spla.genPulse(290.59, 0, -0.25).fadeOut();
+
+    splb.changeLength(29000).setConstant(0);
+
+    splb.fxIEnd = 9000;
+    amp = 0.75;
+    for (int i = 0; i < 10; i++) {
+
+        spla.strech(splb);
+        spla.fxIStart = i * 71;
+        spla.mix(splb, amp).fxRangeReset().normalize(0.9).clip(0.7);
+
+        splb.fxIEnd += 500 - i*i;
+        amp *= 0.9;
+    }
+
+    spla.saveToFile("multi strech.wav");
+
+
+    /*
+  double a_random_double = unif(re);
+  
+    std::mt19937_64 rd(100);
+std::default_random_engine re(rd()); 
+
+       rng.seed(100);
+     */
+    GranularSquare granularSquare;
+    granularSquare.generate();
+
+    /*
+    Test1 test;
+    test.generate();
+     */
+    /*
+    AdditiveSinus additiveSinus;
+    additiveSinus.generate();
+     */
+}
+
+
+
 void testWf() {
     Sample splWf(1000);
 
@@ -102,7 +225,7 @@ void testFilter() {
     Sample spl1(44100);
     Sample spl2(44100);
 
-    spl1.genWhiteNoise(0.5);
+    spl1.genWhiteNoise(0.5,75012365);
 
     spl1.copy(spl2);
     spl2.filterLowPass(200, 0.5, 1).normalize(0.9) .saveToFile("test low pass 200 0.5 1 pass.wav");
@@ -218,96 +341,3 @@ void testMx2() {
     splSaw.saveToFile("saw dyna low filt testMx2.wav");
 
 }
-
-
-
-int main(int argc, char** argv) {
-
-    SongHardTech sng;
-    sng.generate();
-    
-            
-    //GenSounds gSnd;
-    
-    //gSnd.testLoad();
-    //gSnd.genKickA();
-    
-
-    //testMx2();
-
-    // testMx();
-
-    //testFilter2();
-
-    //testFilter();
-
-    //testWfEnv();
-
-    //testSineFm();
-    //testWfMultiFun();
-    //testWf();
-    return 0;
-
-    /*
-        Sample spla(3000);
-        spla.setConstant(1).fadeOut().saveToFile("test.wav");
-
-        cout << "Ok." << endl;
-     */
-    double amp;
-
-
-    Sample spla(40000);
-    spla.genSine(55, 0, 0.5);
-
-    Sample splb(15000);
-    spla.strech(splb);
-    splb.saveToFile("strech.wav");
-    cout << "Ok." << endl;
-
-    spla.setConstant(0);
-    spla.genSine(305, 0, 0.5);
-
-    spla.genPulse(302, 0, 0.25);
-
-    spla.genPulse(290.59, 0, -0.25).fadeOut();
-
-    splb.changeLength(29000).setConstant(0);
-
-    splb.fxIEnd = 9000;
-    amp = 0.75;
-    for (int i = 0; i < 10; i++) {
-
-        spla.strech(splb);
-        spla.fxIStart = i * 71;
-        spla.mix(splb, amp).fxRangeReset().normalize(0.9).clip(0.7);
-
-        splb.fxIEnd += 500 - i*i;
-        amp *= 0.9;
-    }
-
-    spla.saveToFile("multi strech.wav");
-
-
-    /*
-  double a_random_double = unif(re);
-  
-    std::mt19937_64 rd(100);
-std::default_random_engine re(rd()); 
-
-       rng.seed(100);
-     */
-    GranularSquare granularSquare;
-    granularSquare.generate();
-
-    /*
-    Test1 test;
-    test.generate();
-     */
-    /*
-    AdditiveSinus additiveSinus;
-    additiveSinus.generate();
-     */
-}
-
-

@@ -1,7 +1,7 @@
 #include <windef.h>
 
 #include "Sample.h"
-#include "helper/rbjFilter.h"
+
 
 Sample& Sample::clip(double maxValue, double minValue) {
 
@@ -25,16 +25,16 @@ Sample& Sample::strech(Sample& splOut) {
 
     double jRead = ((double) fxIStart) + 2;
 
-    int iRead = 0,iTmp;
+    int iRead = 0, iTmp;
     //double x, y0, y1, y0, y2, y0, y3;
 
 
     for (int i = splOut.fxIStart; i < splOut.fxIEnd; i++) {
 
         iRead = (int) jRead;
-        iTmp =iRead+ 1;
+        iTmp = iRead + 1;
 
-        splOut.data[i] = hermite1(jRead - ((double) iRead), data[iTmp--], data[iTmp--],  data[iTmp--],  data[iTmp]);
+        splOut.data[i] = hermite1(jRead - ((double) iRead), data[iTmp--], data[iTmp--], data[iTmp--], data[iTmp]);
 
         jRead += pitch;
 
@@ -71,11 +71,10 @@ void Sample::getSampleForHermite(double jRead, int iMin, int iMax, double *dataI
     }
 }
 
-Sample& Sample::filterLowPass(double f, double q, int nPass) {
-
+Sample& Sample::filterUtlRBJ(int type, double f, double q, int nPass) {
     RbjFilter* rbjFilter = new RbjFilter[nPass];
 
-    rbjFilter[0].calc_filter_coeffs(0, f, (double) samplerate, q, 0, false);
+    rbjFilter[0].calc_filter_coeffs(type, f, (double) samplerate, q, 0, false);
 
     for (int j = 1; j < nPass; j++) {
         rbjFilter[j].copy_filter_coeffs(rbjFilter[0]);
@@ -89,12 +88,9 @@ Sample& Sample::filterLowPass(double f, double q, int nPass) {
 
     delete[] rbjFilter;
 
-    return *this;
-
 }
 
-Sample& Sample::filterLowPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass) {
-
+Sample& Sample::filterUtlRBJFEnv(int type, double f, Sample& fEnv, double fAmp, double q, int nPass) {
     double fD;
     int jRead = fEnv.fxIStart;
 
@@ -105,7 +101,7 @@ Sample& Sample::filterLowPassFEnv(double f, Sample& fEnv, double fAmp, double q,
 
         fD = f + fEnv.data[jRead++] * fAmp;
 
-        rbjFilter[0].calc_filter_coeffs(0, fD, (double) samplerate, q, 0, false);
+        rbjFilter[0].calc_filter_coeffs(type, fD, (double) samplerate, q, 0, false);
 
         for (int j = 1; j < nPass; j++) {
             rbjFilter[j].copy_filter_coeffs(rbjFilter[0]);
@@ -117,6 +113,48 @@ Sample& Sample::filterLowPassFEnv(double f, Sample& fEnv, double fAmp, double q,
     }
 
     delete[] rbjFilter;
+}
+
+Sample& Sample::filterLowPass(double f, double q, int nPass) {
+
+    filterUtlRBJ(0, f, q, nPass);
+    return *this;
+
+}
+
+Sample& Sample::filterLowPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass) {
+
+    filterUtlRBJFEnv(0, f, fEnv, fAmp, q, nPass);
+
+    return *this;
+
+}
+
+Sample& Sample::filterBandPass(double f, double q, int nPass) {
+
+    filterUtlRBJ(2, f, q, nPass);
+    return *this;
+
+}
+
+Sample& Sample::filterBandPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass) {
+
+    filterUtlRBJFEnv(2, f, fEnv, fAmp, q, nPass);
+
+    return *this;
+
+}
+
+Sample& Sample::filterHiPass(double f, double q, int nPass) {
+
+    filterUtlRBJ(1, f, q, nPass);
+    return *this;
+
+}
+
+Sample& Sample::filterHiPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass) {
+
+    filterUtlRBJFEnv(1, f, fEnv, fAmp, q, nPass);
 
     return *this;
 

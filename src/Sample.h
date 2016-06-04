@@ -1,5 +1,12 @@
 #pragma once
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <random>
+#include <ctime>
 #include <string>
+#include "helper/rbjFilter.h"
+#include "helper/Rng.h"
+
 using namespace std;
 
 class Sample {
@@ -29,7 +36,7 @@ public:
 
     Sample& fxRangeReset();
     Sample& fxRangeCheck();
-    
+
     int fxLength();
 
     Sample& setConstant(double cst = 0);
@@ -62,7 +69,7 @@ public:
     Sample& genSaw(double f = 440.0, double phase = 0.5, double amplitude = 1);
     Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width = 0.5);
 
-    Sample& genWhiteNoise(double amplitude = 1);
+    Sample& genWhiteNoise(double amplitude ,int seed);
     Sample& genPinkNoise(double amplitude = 1);
     Sample& genBrownNoise(double amplitude = 1, double intensity = 0.1);
 
@@ -80,12 +87,18 @@ public:
     Sample& filterLowPass(double f = 220, double q = 1, int nPass = 1);
     Sample& filterLowPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
 
+    Sample& filterBandPass(double f = 220, double q = 1, int nPass = 1);
+    Sample& filterBandPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
+    
+    Sample& filterHiPass(double f = 220, double q = 1, int nPass = 1);
+    Sample& filterHiPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
+    
     double maxAmplitude();
 
     Sample & mix(Sample& splIn, double amplitude = 1);
 
 
-    
+
     ~Sample();
 
 private:
@@ -104,7 +117,10 @@ private:
     Sample& filterRbj(int type, double f = 220, double q = 1, int nPass = 1);
     //util
     int stepToInt(double step);
-    
+
+
+    Sample& filterUtlRBJ(int type, double f, double q, int nPass);
+    Sample& filterUtlRBJFEnv(int type, double f, Sample& fEnv, double fAmp, double q, int nPass);
 
 
 };
