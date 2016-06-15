@@ -18,6 +18,49 @@ class GenSounds {
     
 public:
 
+    void testDelay() {
+        Sample spl(40000);
+        
+        spl.data[0]=1;
+        spl.delay(500,0.9).saveToFile("test delay.wav");
+        
+    }
+    
+    void testNotch() {
+        Sample spl(40000);
+        Sample src(40000);
+        
+        src.genWhiteNoise(0.5,500);
+        
+        src.copy(spl);
+        spl.filterNotch(1000,1,1).saveToFile("testNotch 1000 1 1.wav");
+        
+        src.copy(spl);
+        spl.filterNotch(1000,1,2).saveToFile("testNotch 1000 1 2.wav");
+
+        src.copy(spl);
+        spl.filterNotch(1000,1,3).saveToFile("testNotch 1000 1 3.wav");
+        
+        src.copy(spl);
+        spl.filterNotch(1000,2,1).saveToFile("testNotch 1000 2 1.wav");
+        
+        src.copy(spl);
+        spl.filterNotch(1000,2,2).saveToFile("testNotch 1000 2 2.wav");
+
+        src.copy(spl);
+        spl.filterNotch(1000,2,3).saveToFile("testNotch 1000 2 3.wav");
+        
+        src.copy(spl);
+        spl.filterNotch(1000,2,3).saveToFile("testNotch 1000 4 3.wav");
+
+        src.copy(spl);
+        spl.filterNotch(1000,2,3).saveToFile("testNotch 1000 8 3.wav");
+
+        src.copy(spl);
+        spl.filterNotch(1000,2,3).saveToFile("testNotch 1000 16 3.wav");        
+        
+    }
+    
     void genKickA() {
 
         //enveloppe

@@ -7,13 +7,15 @@ using namespace std;
 class Rng {
 private:
     // Types
-    mt19937_64 re;
-    uniform_real_distribution<double> unif;
+    //mt19937_64 re;
+    //uniform_real_distribution<double> unif;
     //typedef variate_generator <Engine, Distribution> Generator;
 
     // To hold the generator
     //Generator* _gen;
-
+        uniform_real_distribution<double> unif;//(120.0, 530.0);
+        mt19937_64 re;//(666777);
+        
 public:
 
     Rng(int seed, double minVal, double maxVal) {

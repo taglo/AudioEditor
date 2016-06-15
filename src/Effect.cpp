@@ -2,7 +2,6 @@
 
 #include "Sample.h"
 
-
 Sample& Sample::clip(double maxValue, double minValue) {
 
 
@@ -69,6 +68,16 @@ void Sample::getSampleForHermite(double jRead, int iMin, int iMax, double *dataI
     } else {
         y3 = y2;
     }
+}
+
+Sample& Sample::delay(int length, double feedback) {
+    Delay delay(length, feedback);
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        data[i] = delay.tick(data[i]);
+    }
+    
+    return *this;
 }
 
 Sample& Sample::filterUtlRBJ(int type, double f, double q, int nPass) {
@@ -155,6 +164,21 @@ Sample& Sample::filterHiPass(double f, double q, int nPass) {
 Sample& Sample::filterHiPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass) {
 
     filterUtlRBJFEnv(1, f, fEnv, fAmp, q, nPass);
+
+    return *this;
+
+}
+
+Sample& Sample::filterNotch(double f, double q, int nPass) {
+
+    filterUtlRBJ(4, f, q, nPass);
+    return *this;
+
+}
+
+Sample& Sample::filterNotchEnv(double f, Sample& fEnv, double fAmp, double q, int nPass) {
+
+    filterUtlRBJFEnv(4, f, fEnv, fAmp, q, nPass);
 
     return *this;
 

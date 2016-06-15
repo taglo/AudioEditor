@@ -5,6 +5,7 @@
 #include <ctime>
 #include <string>
 #include "helper/rbjFilter.h"
+#include "helper/Delay.h"
 #include "helper/Rng.h"
 
 using namespace std;
@@ -83,7 +84,9 @@ public:
 
     Sample& strech(Sample & splOut);
 
+    Sample& delay(int length, double feedback);
 
+    
     Sample& filterLowPass(double f = 220, double q = 1, int nPass = 1);
     Sample& filterLowPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
 
@@ -92,6 +95,9 @@ public:
     
     Sample& filterHiPass(double f = 220, double q = 1, int nPass = 1);
     Sample& filterHiPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
+
+    Sample& filterNotch(double f = 220, double q = 1, int nPass = 1);
+    Sample& filterNotchEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
     
     double maxAmplitude();
 

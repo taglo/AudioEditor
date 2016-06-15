@@ -26,8 +26,6 @@ using namespace std;
 #include <random>
 #include <ctime>
 
-
-
 int main(int argc, char** argv) {
 
     /*
@@ -58,17 +56,19 @@ int main(int argc, char** argv) {
     cout << "Random value: " << rd.next() << endl;
     cout << "Random value: " << rd.next() << endl;
     cout << "Random value: " << rd.next() << endl;
-    */
-    
-    SongHardTech sng;
-    sng.generate();
-    
-            
-    //GenSounds gSnd;
-    
+     */
+
+
+   ///SongHardTech sng;
+   //sng.generate();
+
+
+     GenSounds gSnd;
+     gSnd.testDelay();
+
     //gSnd.testLoad();
     //gSnd.genKickA();
-    
+
 
     //testMx2();
 
@@ -147,8 +147,6 @@ std::default_random_engine re(rd());
      */
 }
 
-
-
 void testWf() {
     Sample splWf(1000);
 
@@ -225,7 +223,7 @@ void testFilter() {
     Sample spl1(44100);
     Sample spl2(44100);
 
-    spl1.genWhiteNoise(0.5,75012365);
+    spl1.genWhiteNoise(0.5, 75012365);
 
     spl1.copy(spl2);
     spl2.filterLowPass(200, 0.5, 1).normalize(0.9) .saveToFile("test low pass 200 0.5 1 pass.wav");
