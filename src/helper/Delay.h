@@ -21,21 +21,22 @@ private:
     int iBuffer;
 public:
 
-    double feedback;
-    int length;
+    double mDry, mFeedback;
+    int mLength;
 
     Delay() {
 
     }
 
-    Delay(int inLength, double inFeedback) {
-        length=inLength;
-        feedback=inFeedback;
+    Delay(int length, double dry, double feedback) {
+        mLength=length;
+        mDry=dry;
+        mFeedback=feedback;
         
         iBuffer = 0;
 
-        buffer = new double[length];
-        for (int i = 0; i < length; i++) {
+        buffer = new double[mLength];
+        for (int i = 0; i < mLength; i++) {
             buffer[i] = 0;
         }
 
@@ -44,12 +45,12 @@ public:
     double tick(double vin) {
         double vout;
 
-        vout = buffer[iBuffer] * feedback + vin;
+        vout = buffer[iBuffer] * mFeedback + vin * mDry;
 
         buffer[iBuffer] = vout;
 
         iBuffer++;
-        if (iBuffer == length) {
+        if (iBuffer == mLength) {
             iBuffer = 0;
         }
         return vout;

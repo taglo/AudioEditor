@@ -9,10 +9,15 @@
         <group>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/helper/rbjFilter.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/GenSounds.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/helper/Rng.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/AdditiveSinus.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/main.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/example/SongHardTech.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/GranularSquare.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/helper/Delay.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/GranularSquare.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Effect.cpp</file>
         </group>
     </open-files>

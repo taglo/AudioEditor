@@ -50,6 +50,7 @@ public:
     Sample& copy(Sample& splOut);
     Sample& cut(Sample& splOut);
     Sample& cut();
+    Sample& reverse();
 
     Sample& amplify(double amplitude);
 
@@ -70,7 +71,7 @@ public:
     Sample& genSaw(double f = 440.0, double phase = 0.5, double amplitude = 1);
     Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width = 0.5);
 
-    Sample& genWhiteNoise(double amplitude ,int seed);
+    Sample& genWhiteNoise(double amplitude, int seed);
     Sample& genPinkNoise(double amplitude = 1);
     Sample& genBrownNoise(double amplitude = 1, double intensity = 0.1);
 
@@ -84,21 +85,21 @@ public:
 
     Sample& strech(Sample & splOut);
 
-    Sample& delay(int length, double feedback);
+    Sample& delay(int length, double dry, double feedback);
 
-    
+
     Sample& filterLowPass(double f = 220, double q = 1, int nPass = 1);
     Sample& filterLowPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
 
     Sample& filterBandPass(double f = 220, double q = 1, int nPass = 1);
     Sample& filterBandPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
-    
+
     Sample& filterHiPass(double f = 220, double q = 1, int nPass = 1);
     Sample& filterHiPassFEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
 
     Sample& filterNotch(double f = 220, double q = 1, int nPass = 1);
     Sample& filterNotchEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
-    
+
     double maxAmplitude();
 
     Sample & mix(Sample& splIn, double amplitude = 1);

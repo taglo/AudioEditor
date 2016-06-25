@@ -16,6 +16,23 @@ Sample& Sample::copy(Sample& splOut) {
     return *this;
 }
 
+Sample& Sample::reverse() {
+
+    int j = fxIEnd - 1;
+    double bf;
+    int hLnt = fxIStart + (length >> 1) + 1;
+
+    for (int i = fxIStart; i < hLnt; i++) {
+        bf = data[i];
+        data[i] = data[j];
+        data[j--] = bf;
+
+    }
+
+
+    return *this;
+}
+
 Sample& Sample::cut() {
 
     int newLength = fxIStart + length - fxIEnd;

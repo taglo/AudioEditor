@@ -70,13 +70,13 @@ void Sample::getSampleForHermite(double jRead, int iMin, int iMax, double *dataI
     }
 }
 
-Sample& Sample::delay(int length, double feedback) {
-    Delay delay(length, feedback);
+Sample& Sample::delay(int length, double dry, double feedback) {
+    Delay delay(length, dry, feedback);
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         data[i] = delay.tick(data[i]);
     }
-    
+
     return *this;
 }
 
