@@ -6,10 +6,15 @@ Sample& Sample::clip(double maxValue, double minValue) {
 
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        if (data[i] > maxValue) {
-            data[i] = maxValue;
-        } else if (data[i] < minValue) {
-            data[i] = minValue;
+        if (dataL[i] > maxValue) {
+            dataL[i] = maxValue;
+        } else if (dataL[i] < minValue) {
+            dataL[i] = minValue;
+        }
+        if (dataR[i] > maxValue) {
+            dataR[i] = maxValue;
+        } else if (dataR[i] < minValue) {
+            dataR[i] = minValue;
         }
     }
 
@@ -19,21 +24,26 @@ Sample& Sample::clip(double maxValue, double minValue) {
 Sample& Sample::strech(Sample& splOut) {
 
 
-    double okLength = ((double) fxLength()) - 3;
+    double okLength = ((double) fxLength()) - 2;    //todo : pitch faux de 3/fxLength
     double pitch = okLength / ((double) splOut.fxLength());
 
     double jRead = ((double) fxIStart) + 2;
 
-    int iRead = 0, iTmp;
+    //int iRead = 0, iTmp;
     //double x, y0, y1, y0, y2, y0, y3;
 
 
     for (int i = splOut.fxIStart; i < splOut.fxIEnd; i++) {
 
-        iRead = (int) jRead;
-        iTmp = iRead + 1;
+        int x0 = (int) jRead;
 
-        splOut.data[i] = hermite1(jRead - ((double) iRead), data[iTmp--], data[iTmp--], data[iTmp--], data[iTmp]);
+        double frac_pos = jRead - ((double) x0);
+        int xm1 = x0 - 1;
+        int x1 = x0 + 1;
+        int x2 = x1 + 2;
+
+        splOut.dataL[i] = hermite4(frac_pos, dataL[xm1], dataL[x0], dataL[x1], dataL[x2]);
+        splOut.dataR[i] = hermite4(frac_pos, dataR[xm1], dataR[x0], dataR[x1], dataR[x2]);
 
         jRead += pitch;
 
@@ -74,7 +84,7 @@ Sample& Sample::delay(int length, double dry, double feedback) {
     Delay delay(length, dry, feedback);
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        data[i] = delay.tick(data[i]);
+        dataL[i] = delay.tick(dataL[i]);
     }
 
     return *this;
@@ -91,7 +101,7 @@ Sample& Sample::filterUtlRBJ(int type, double f, double q, int nPass) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         for (int j = 0; j < nPass; j++) {
-            data[i] = rbjFilter[j].filter(data[i]);
+            dataL[i] = rbjFilter[j].filter(dataL[i]);
         }
     }
 
@@ -108,7 +118,7 @@ Sample& Sample::filterUtlRBJFEnv(int type, double f, Sample& fEnv, double fAmp, 
 
     for (int i = fxIStart; i < fxIEnd; i++) {
 
-        fD = f + fEnv.data[jRead++] * fAmp;
+        fD = f + fEnv.dataL[jRead++] * fAmp;
 
         rbjFilter[0].calc_filter_coeffs(type, fD, (double) samplerate, q, 0, false);
 
@@ -117,7 +127,7 @@ Sample& Sample::filterUtlRBJFEnv(int type, double f, Sample& fEnv, double fAmp, 
         }
 
         for (int j = 0; j < nPass; j++) {
-            data[i] = rbjFilter[j].filter(data[i]);
+            dataL[i] = rbjFilter[j].filter(dataL[i]);
         }
     }
 

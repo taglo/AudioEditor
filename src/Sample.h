@@ -13,7 +13,8 @@ using namespace std;
 class Sample {
 public:
 
-    double *data;
+    double *dataL;
+    double *dataR;
     int length;
     int fxIStart;
     int fxIEnd;
@@ -24,10 +25,12 @@ public:
 
     Sample();
     Sample(int length);
-    Sample(double nStep);
+    //Sample(double nStep);
     Sample(const Sample& other);
     Sample& operator=(const Sample& other);
 
+    Sample& init(int length);
+    
     //void init(int length);
 
     Sample& fxRange(int iStart, int iEnd);
@@ -65,7 +68,8 @@ public:
     Sample& fadeAntiClick(int fadeLength = 100);
 
     //Generator
-    Sample& genSine(double f = 440.0, double phase = 0.5, double amplitude = 1);
+    Sample& genSine(double f = 440.0, double phase = 0.5, double ampL= 1, double ampR= 1);
+    
     Sample& genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, double amplitude);
     Sample& genSineSplFM(Sample& splIn, double f = 440.0, double phase = 0.5, double amplitude = 1, double fmAmp = 0.10);
     Sample& genSaw(double f = 440.0, double phase = 0.5, double amplitude = 1);
@@ -110,16 +114,18 @@ public:
 
 private:
     static int bufferLength;
-    static double *buffer;
+    static double *bufferL;
+    static double *bufferR;
+
     //Buffer
-    void copyToBuffer(double *dataIn, int iIn, int iBuffer, int copyLength);
-    void copyFromBuffer(double *dataOut, int iOut, int iBuffer, int copyLength);
+    void copyToBuffer(Sample splIn, int iIn, int iBuffer, int copyLength);
+    void copyFromBuffer(Sample splOut, int iOut, int iBuffer, int copyLength);
     void setBufferMinLength(int minLength);
     Sample& prepareForSplIn(Sample& splIn, int& jRead, int& iMixEnd);
 
     void getSampleForHermite(double iRead, int iMin, int iMax, double *dataIn, double& x, double& y0, double& y1, double& y2, double& y3);
     double hermite1(double x, double y0, double y1, double y2, double y3);
-
+    double hermite4(double frac_pos, double xm1, double x0, double x1, double x2);
 
     Sample& filterRbj(int type, double f = 220, double q = 1, int nPass = 1);
     //util

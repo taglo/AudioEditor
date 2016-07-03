@@ -1,6 +1,6 @@
 #include "Sample.h"
 
-Sample& Sample::genSine(double fq, double phase, double amplitude) {
+Sample& Sample::genSine(double fq, double phase, double ampL, double ampR) {
     /*
     Variables:
     ip = phase of the first output sample in radians
@@ -32,7 +32,8 @@ Sample& Sample::genSine(double fq, double phase, double amplitude) {
         y2 = y1;
         y1 = y0;
 
-        Sample::data[i] += y0 * amplitude;
+        Sample::dataL[i] += y0 * ampL;
+        Sample::dataR[i] += y0 * ampR;
 
     }
 
@@ -51,8 +52,8 @@ Sample& Sample::genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, d
     double phaseF = fAmp * 2 * M_PI / samplerate;
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        data[i] += sin(phase) * amplitude;
-        phase += phaseInc + phaseF * fEnv.data[jRead++];
+        dataL[i] += sin(phase) * amplitude;
+        phase += phaseInc + phaseF * fEnv.dataL[jRead++];
     }
     return *this;
 }
@@ -66,7 +67,7 @@ Sample& Sample::genSineSplFM(Sample& splIn, double f, double phase, double ampli
     double phaseInc = f * 2 * M_PI / samplerate;
 
     for (int i = fxIStart; i < iMixEnd; i++) {
-        Sample::data[i] += sin(phase + splIn.data[jRead++] * fmAmp) * amplitude;
+        Sample::dataL[i] += sin(phase + splIn.dataL[jRead++] * fmAmp) * amplitude;
         phase += phaseInc;
     }
     return *this;
@@ -79,7 +80,7 @@ Sample& Sample::genSaw(double fq, double phase, double amplitude) {
     //phase -= 1;
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        Sample::data[i] += phase * amplitude;
+        Sample::dataL[i] += phase * amplitude;
         phase += phaseInc;
         if (phase > 1) {
             phase -= 2;
@@ -99,7 +100,7 @@ Sample& Sample::genPulse(double fq, double phase, double amplitude) {
 
         phase += phaseInc;
         if (phase > 1) {
-            Sample::data[i] += amplitude;
+            Sample::dataL[i] += amplitude;
             phase -= 2;
         }
     }
@@ -118,9 +119,9 @@ Sample& Sample::genSquare(double fq, double phase, double amplitude, double widt
     for (int i = fxIStart; i < fxIEnd; i++) {
 
         if (phase < width) {
-            Sample::data[i] += amplitude;
+            Sample::dataL[i] += amplitude;
         } else {
-            Sample::data[i] += mAmplitude;
+            Sample::dataL[i] += mAmplitude;
         }
         phase += phaseInc;
         if (phase > 1) {
@@ -141,7 +142,7 @@ Sample& Sample::genWhiteNoise(double amplitude,int seed) {
     std::mt19937_64 re(seed);
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        Sample::data[i] += unif(re);
+        Sample::dataL[i] += unif(re);
     }
     return *this;
 }
@@ -162,7 +163,7 @@ Sample& Sample::genBrownNoise(double amplitude, double intensity) {
         if (bn > amplitude || (bn < -amplitude)) {
             bn -= cbn;
         }
-        Sample::data[i] += bn;
+        Sample::dataL[i] += bn;
     }
     return *this;
 }
@@ -197,11 +198,11 @@ Sample& Sample::genWaveformEnv(Sample& splWf, Sample& splEnv, double f, double f
         y1 = y0;
 
         iRead = (int) jRead;
-        y0 = splWf.data[iRead];
+        y0 = splWf.dataL[iRead];
 
-        data[i] += hermite1(jRead - (double) iRead, y0, y1, y2, y3) * amplitude;
+        dataL[i] += hermite1(jRead - (double) iRead, y0, y1, y2, y3) * amplitude;
 
-        jRead += pitch + pitchAmp * splEnv.data[iEnv];
+        jRead += pitch + pitchAmp * splEnv.dataL[iEnv];
 
         if (jRead > splWf.fxIEnd) {
             jRead -= period;
@@ -233,9 +234,9 @@ Sample& Sample::genWaveform(Sample& splWf, double f, double phase, double amplit
         y1 = y0;
 
         iRead = (int) jRead;
-        y0 = splWf.data[iRead];
+        y0 = splWf.dataL[iRead];
 
-        data[i] += hermite1(jRead - (double) iRead, y0, y1, y2, y3) * amplitude;
+        dataL[i] += hermite1(jRead - (double) iRead, y0, y1, y2, y3) * amplitude;
 
         jRead += pitch;
 
@@ -278,7 +279,7 @@ Sample& Sample::genPinkNoise(double amplitude) {
         pinkStore[k] = unif(re);
         pink += pinkStore[k];
 
-        Sample::data[i] += (pink + unif(re)) / 16;
+        Sample::dataL[i] += (pink + unif(re)) / 16;
 
         /*
         cbn = unif(re);

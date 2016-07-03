@@ -18,6 +18,20 @@ using namespace std;
 class GenSounds {
 public:
 
+    void testStereoA() {
+        Sample spl(44100);
+        spl.genSine(110, 0, 1, 0.1);
+        spl.genSine(220, 0, 0.1, 1);
+
+        spl.saveToFile("test stereo 1.wav");
+        
+        Sample spl2;
+        
+        spl2.loadFromFile("test stereo 1.wav").saveToFile("test load stereo.wav");
+        
+        
+    }
+
     void testReverse() {
         Sample spl(44100);
         spl.genSine().fadeOut().reverse().saveToFile("testReverse.wav");
@@ -32,18 +46,18 @@ public:
 
         spl[0].changeLength(lnt);
         for (int im = 0; im < lnt; im += 40712) {
-            spl[0].data[im] = 1;
+            spl[0].dataL[im] = 1;
         }
 
         spl[1].changeLength(lnt);
         for (int im = 0; im < lnt; im += 40812) {
-            spl[1].data[im] = -1;
+            spl[1].dataL[im] = -1;
         }
         double f = 100, fm, q;
 
         fm = 1.25;
         q = 14;
-        int j = 0,tgm=0;
+        int j = 0, tgm = 0;
 
         for (int i = 2; i < nIter; i++) {
 
@@ -76,13 +90,13 @@ public:
                 spl[i].fxRangeReset();
                 spl[j].fxRangeReset();
                 splTmp.fxRangeReset();
-                
+
             }
 
             spl[i].delay((i * 109013) % 24310, 1, 0.5).filterHiPass(100.0, 1, 1).normalize(0.9);
 
-            tgm+=416;
-            tgm=tgm%i;
+            tgm += 416;
+            tgm = tgm % i;
             spl[tgm].fxRangeReset().mix(spl[i], 1).reverse().fadeOut();
             splFinal.mix(spl[i], 1);
         }
@@ -95,7 +109,7 @@ public:
     void testDelay() {
         Sample spl(80000);
 
-        spl.data[0] = 1;
+        spl.dataL[0] = 1;
 
         double an = 0.1, dry, feedback;
         int length = 50;
@@ -163,7 +177,7 @@ public:
         Sample splSrc(1031);
         for (int i = 0; i < splSrc.fxIEnd; i++) {
             double di = ((double) i) / 25;
-            splSrc.data[i] = 1 / (1 + di * di * di);
+            splSrc.dataL[i] = 1 / (1 + di * di * di);
         }
         splSrc.saveToFile("env src strech.wav");
         Sample splEnv(nsTot);

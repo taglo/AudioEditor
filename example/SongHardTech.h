@@ -249,7 +249,7 @@ private:
 
         for (int i = 0; i < splSrc.fxIEnd; i++) {
             double di = ((double) i) / 31;
-            splSrc.data[i] = 1 / (1 + di * di);
+            splSrc.dataL[i] = 1 / (1 + di * di);
         }
         splSrc.saveToFile("env src strech.wav");
         Sample splEnv(nsTot);
@@ -281,7 +281,7 @@ private:
 
         for (int i = 0; i < splSrc.fxIEnd; i++) {
             double di = ((double) i) / 36;
-            splSrc.data[i] = 1 / (1 + di * di);
+            splSrc.dataL[i] = 1 / (1 + di * di);
         }
 
 

@@ -13,12 +13,15 @@ https://github.com/vinniefalco/DSPFilters
 int Sample::samplerate = 44100;
 double Sample::tempo = 120;
 int Sample::bufferLength = 44100 * 10;
-double* Sample::buffer = new double[441000];
+double* Sample::bufferL = new double[441000];
+double* Sample::bufferR = new double[441000];
 string Sample::filePath = "F:\\sounds\\";
 
 Sample::Sample() {
     Sample::length = 1;
-    data = new double[1];
+    
+    dataL = new double[1];
+    dataR = new double[1];
 
     fxIStart = 0;
     fxIEnd = 1;
@@ -30,8 +33,10 @@ Sample::Sample() {
 
 Sample::Sample(int length) {
     Sample::length = length;
-    data = new double[length];
-
+    
+    dataL = new double[length];
+    dataR = new double[length];
+    
     fxIStart = 0;
     fxIEnd = length;
 
@@ -40,11 +45,28 @@ Sample::Sample(int length) {
     setConstant(0);
 }
 
+Sample& Sample::init(int length) {
+
+    Sample::length = length;
+    
+    dataL = new double[length];
+    dataR = new double[length];
+    
+    fxIStart = 0;
+    fxIEnd = length;
+
+    samplerate = 44100;
+
+    setConstant(0);
+    
+    return *this;
+}
+/*
 Sample::Sample(double nStep) {
     //todo réutiliser le normal ?
     Sample::length = stepToInt(nStep);
 
-    data = new double[length];
+    dataL = new double[length];
 
     fxIStart = 0;
     fxIEnd = length;
@@ -53,33 +75,42 @@ Sample::Sample(double nStep) {
 
     setConstant(0);
 }
-
+*/
 Sample::Sample(const Sample& other) {
     Sample::length = other.length;
     Sample::samplerate = other.samplerate;
-    data = new double[length];
+    
+    dataL = new double[length];
+    dataR = new double[length];
     fxIStart = 0;
     fxIEnd = length;
     for (int i = 0; i < length; i++) {
-        data[i] = other.data[i];
+        dataL[i] = other.dataL[i];
+        dataR[i] = other.dataR[i];
     }
 }
 
 Sample& Sample::operator=(const Sample& other) {
     //todo : utiliser constructeur
+    
     Sample::length = other.length;
     Sample::samplerate = other.samplerate;
-    data = new double[length];
+    
+    dataL = new double[length];
+    dataR = new double[length];
+    
     fxIStart = other.fxIStart;
     fxIEnd = other.fxIEnd;
     for (int i = 0; i < length; i++) {
-        data[i] = other.data[i];
+        dataL[i] = other.dataL[i];
+        dataR[i] = other.dataR[i];
     }
     return *this;
 }
 
 Sample::~Sample() {
-    delete[] data;
+    delete[] dataL;
+    delete[] dataR;
 }
 
 
@@ -105,25 +136,25 @@ Sample& Sample::changeLength(int newLength) {
 
     if (newLength > length) {
         //allonge
-        copyToBuffer(data, 0, 0, length);
+        copyToBuffer(*this, 0, 0, length);
 
-        delete[] data;
-        data = new double[newLength];
+        delete[] dataL;
+        dataL = new double[newLength];
 
-        copyFromBuffer(data, 0, 0, length);
+        copyFromBuffer(*this, 0, 0, length);
 
         for (int i = length; i < newLength; i++) {
-            data[i] = 0;
+            dataL[i] = 0;
         }
     } else {
         //on raccourcis
 
-        copyToBuffer(data, 0, 0, newLength);
+        copyToBuffer(*this, 0, 0, newLength);
 
-        delete[] data;
-        data = new double[newLength];
+        delete[] dataL;
+        dataL = new double[newLength];
 
-        copyFromBuffer(data, 0, 0, newLength);
+        copyFromBuffer(*this, 0, 0, newLength);
 
         if (fxIStart < newLength) {
             fxIStart = 0;
@@ -156,7 +187,7 @@ Sample& Sample::mix(Sample& splIn, double amplitude) {
     prepareForSplIn(splIn, jRead, iMixEnd);
 
     for (int i = fxIStart; i < iMixEnd; i++) {
-        Sample::data[i] += splIn.data[jRead++] * amplitude;
+        Sample::dataL[i] += splIn.dataL[jRead++] * amplitude;
     }
 
     return *this;
@@ -176,6 +207,7 @@ Sample& Sample::fxRangeStep(double stepStart, double stepEnd) {
 }
 
 int Sample::stepToInt(double step) {
+    
     return (int) ((240 / tempo)*((double) samplerate) *(step / 16));
 }
 
@@ -206,7 +238,7 @@ int Sample::fxLength() {
 Sample& Sample::setConstant(double cst) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        data[i] = cst;
+        dataL[i] = cst;
     }
     return *this;
 }
@@ -217,7 +249,7 @@ Sample& Sample::setConstantDynamic(double cstStart, double cstEnd) {
     double cst = cstStart;
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        data[i] = cst;
+        dataL[i] = cst;
         cst += cstInc;
     }
     return *this;
@@ -226,14 +258,14 @@ Sample& Sample::setConstantDynamic(double cstStart, double cstEnd) {
 Sample& Sample::addConstant(double cst) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        data[i] += cst;
+        dataL[i] += cst;
     }
     return *this;
 }
 
 Sample& Sample::amplify(double amplitude) {
     for (int i = fxIStart; i < fxIEnd; i++) {
-        data[i] *= amplitude;
+        dataL[i] *= amplitude;
     }
     return *this;
 }
@@ -243,7 +275,7 @@ Sample& Sample::fade(double ampStart, double ampEnd) {
         ampEnd = (ampEnd - ampStart) / ((double) fxLength());
 
         for (int i = fxIStart; i < fxIEnd; i++) {
-            data[i] *= ampStart;
+            dataL[i] *= ampStart;
             ampStart += ampEnd;
         }
     }
@@ -292,10 +324,10 @@ Sample& Sample::fadeAntiClick(int fadeLength) {
 double Sample::maxAmplitude() {
     double ampMax = 0;
     for (int i = fxIStart; i < fxIEnd; i++) {
-        if (data[i] > ampMax) {
-            ampMax = data[i];
-        } else if ((-data[i]) > ampMax) {
-            ampMax = -data[i];
+        if (dataL[i] > ampMax) {
+            ampMax = dataL[i];
+        } else if ((-dataL[i]) > ampMax) {
+            ampMax = -dataL[i];
         }
     }
     return ampMax;

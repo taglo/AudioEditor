@@ -10,3 +10,19 @@ double Sample::hermite1(double x, double y0, double y1, double y2, double y3) {
 
     return ((c3 * x + c2) * x + c1) * x + c0;
 }
+
+
+// laurent de soras
+
+double Sample::hermite4(double frac_pos, double xm1, double x0, double x1, double x2) {
+
+    // xm1 ---> x[n-1] x0 ---> x[n] x1 ---> x[n+1] x2 ---> x[n+2] fractional position stands for a fraction between 0 and 1 to interpolate
+
+    double c = (x1 - xm1) * 0.5f;
+    double v = x0 - x1;
+    double w = c + v;
+    double a = w + v + (x2 - x0) * 0.5f;
+    double b_neg = w + a;
+
+    return ((((a * frac_pos) - b_neg) * frac_pos + c) * frac_pos + x0);
+}

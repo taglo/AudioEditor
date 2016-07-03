@@ -5,11 +5,13 @@ Sample& Sample::copy(Sample& splOut) {
 
     splOut.length = fxLength();
 
-    splOut.data = new double[splOut.length];
+    splOut.dataL = new double[splOut.length];
+        splOut.dataR = new double[splOut.length];
 
     int j = 0;
     for (int i = fxIStart; i < fxIEnd; i++) {
-        splOut.data[j++] = data[i];
+        splOut.dataL[j] = dataL[i];
+        splOut.dataR[j++] = dataR[i];
     }
     splOut.fxRangeReset();
 
@@ -23,10 +25,15 @@ Sample& Sample::reverse() {
     int hLnt = fxIStart + (length >> 1) + 1;
 
     for (int i = fxIStart; i < hLnt; i++) {
-        bf = data[i];
-        data[i] = data[j];
-        data[j--] = bf;
+        
+        bf = dataL[i];
+        dataL[i] = dataL[j];
+        dataL[j] = bf;
 
+        bf = dataR[i];
+        dataR[i] = dataR[j];
+        dataR[j--] = bf;
+        
     }
 
 
@@ -38,13 +45,14 @@ Sample& Sample::cut() {
     int newLength = fxIStart + length - fxIEnd;
     setBufferMinLength(newLength);
 
-    copyToBuffer(data, 0, 0, fxIStart);
-    copyToBuffer(data, fxIEnd, fxIStart, length - fxIEnd);
+    copyToBuffer(*this, 0, 0, fxIStart);
+    copyToBuffer(*this, fxIEnd, fxIStart, length - fxIEnd);
 
     length = newLength;
-    data = new double[length];
+    dataL = new double[length];
+    dataR = new double[length];
 
-    copyFromBuffer(data, 0, 0, length);
+    copyFromBuffer(*this, 0, 0, length);
 
     fxRangeReset();
 

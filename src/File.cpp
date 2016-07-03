@@ -28,18 +28,20 @@ Sample& Sample::saveToFile(std::string filename) {
 
     header.Subchunk1Size = 16;
     header.AudioFormat = 3;
-    header.NumOfChan = 1;
+    header.NumOfChan = 2;
     header.SamplesPerSec = Sample::samplerate;
     header.bytesPerSec = 4 * Sample::samplerate;
     header.blockAlign = 4;
     header.bitsPerSample = 32;
 
-    header.Subchunk2Size = fxLength()*4;
+    header.Subchunk2Size = header.NumOfChan * fxLength()*4;
 
-    dataF = new float[fxLength()];
+    dataF = new float[header.NumOfChan * fxLength()];
 
+    int j=0;
     for (int i = fxIStart; i < fxIEnd; i++) {
-        dataF[i] = (float) data[i];
+        dataF[j++] = (float) dataL[i];
+        dataF[j++] = (float) dataR[i];
     }
 
     string fOut = filePath + filename;
@@ -64,25 +66,28 @@ Sample& Sample::loadFromFile(std::string filename) {
 
     string fIn = filePath + filename;
 
-    ifstream infile(fIn,ios::binary	);
+    ifstream infile(fIn, ios::binary);
 
     RiffHeader header;
 
     infile.read((char*) &header, sizeof (RiffHeader));
 
     fxIStart = 0;
-    fxIEnd = header.Subchunk2Size / 4;
+    fxIEnd = header.Subchunk2Size / 8;
 
-    changeLength(fxIEnd);
 
-   // dataF = new float[fxIEnd];
+    init(fxIEnd);
+
+    // dataF = new float[fxIEnd];
 
     // infile.read((char*) &dataF,   fxIEnd * sizeof (float));
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         infile.read((char*) &dataF, sizeof (float));
+        dataL[i] = (double) dataF;
 
-        data[i] = (double) dataF;
+        infile.read((char*) &dataF, sizeof (float));
+        dataR[i] = (double) dataF;
         
     }
 
