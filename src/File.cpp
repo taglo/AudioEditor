@@ -30,7 +30,7 @@ Sample& Sample::saveToFile(std::string filename) {
     header.AudioFormat = 3;
     header.NumOfChan = 2;
     header.SamplesPerSec = Sample::samplerate;
-    header.bytesPerSec = 4 * Sample::samplerate;
+    header.bytesPerSec = header.NumOfChan*4 * Sample::samplerate;
     header.blockAlign = 4;
     header.bitsPerSample = 32;
 
@@ -50,7 +50,7 @@ Sample& Sample::saveToFile(std::string filename) {
 
     outfile.write(reinterpret_cast<char*> (&header), sizeof (RiffHeader));
 
-    outfile.write((char*) dataF, fxLength() * sizeof (float));
+    outfile.write((char*) dataF,2* fxLength() * sizeof (float));
 
     outfile.close();
 

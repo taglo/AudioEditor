@@ -26,9 +26,34 @@ public:
         spl.saveToFile("test stereo 1.wav");
         
         Sample spl2;
-        
         spl2.loadFromFile("test stereo 1.wav").saveToFile("test load stereo.wav");
         
+        spl.fadeStereo(0,1,1,0).saveToFile("test fade stereo.wav");
+        
+        spl.reverse().saveToFile("test reverse.wav");
+        
+        Sample splStrech(44100*2);
+        
+        spl.strech(splStrech);
+        splStrech.saveToFile("test strech.wav");
+        
+        splStrech.fxIEnd=44100/2;
+        splStrech.fadeAntiClick(1000);
+        
+        spl.strech(splStrech);
+        splStrech.saveToFile("test strech 2.wav");
+
+        splStrech.fxIEnd=44100/4;
+        splStrech.fadeAntiClick(1000);
+        
+        spl.strech(splStrech);
+        splStrech.saveToFile("test strech 3.wav"); 
+        
+        splStrech.fxRangeReset().saveToFile("test fadeAntiClick.wav"); 
+        
+        splStrech.normalize(0.5).saveToFile("test normalize.wav");
+        
+        splStrech.amplify(2,0.5).saveToFile("test amplify.wav");
         
     }
 

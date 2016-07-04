@@ -306,7 +306,7 @@ private:
         splBass.fxRangeStep(2.5, 3).fadeOut().fxRangeReset();
         splBass.fadeAntiClick(250);
 
-        splBass.amplify(0.5);
+        splBass.amplify(0.5,0.5);
         splBass.saveToFile("bass.wav");
     }
 

@@ -19,7 +19,7 @@ string Sample::filePath = "F:\\sounds\\";
 
 Sample::Sample() {
     Sample::length = 1;
-    
+
     dataL = new double[1];
     dataR = new double[1];
 
@@ -33,10 +33,10 @@ Sample::Sample() {
 
 Sample::Sample(int length) {
     Sample::length = length;
-    
+
     dataL = new double[length];
     dataR = new double[length];
-    
+
     fxIStart = 0;
     fxIEnd = length;
 
@@ -48,19 +48,20 @@ Sample::Sample(int length) {
 Sample& Sample::init(int length) {
 
     Sample::length = length;
-    
+
     dataL = new double[length];
     dataR = new double[length];
-    
+
     fxIStart = 0;
     fxIEnd = length;
 
     samplerate = 44100;
 
     setConstant(0);
-    
+
     return *this;
 }
+
 /*
 Sample::Sample(double nStep) {
     //todo réutiliser le normal ?
@@ -75,11 +76,11 @@ Sample::Sample(double nStep) {
 
     setConstant(0);
 }
-*/
+ */
 Sample::Sample(const Sample& other) {
     Sample::length = other.length;
     Sample::samplerate = other.samplerate;
-    
+
     dataL = new double[length];
     dataR = new double[length];
     fxIStart = 0;
@@ -92,13 +93,13 @@ Sample::Sample(const Sample& other) {
 
 Sample& Sample::operator=(const Sample& other) {
     //todo : utiliser constructeur
-    
+
     Sample::length = other.length;
     Sample::samplerate = other.samplerate;
-    
+
     dataL = new double[length];
     dataR = new double[length];
-    
+
     fxIStart = other.fxIStart;
     fxIEnd = other.fxIEnd;
     for (int i = 0; i < length; i++) {
@@ -113,8 +114,7 @@ Sample::~Sample() {
     delete[] dataR;
 }
 
-
-Sample& Sample::changeLengthStep(double step){
+Sample& Sample::changeLengthStep(double step) {
     changeLength(stepToInt(step));
     return *this;
 }
@@ -207,7 +207,7 @@ Sample& Sample::fxRangeStep(double stepStart, double stepEnd) {
 }
 
 int Sample::stepToInt(double step) {
-    
+
     return (int) ((240 / tempo)*((double) samplerate) *(step / 16));
 }
 
@@ -263,9 +263,10 @@ Sample& Sample::addConstant(double cst) {
     return *this;
 }
 
-Sample& Sample::amplify(double amplitude) {
+Sample& Sample::amplify(double amplitudeL,double amplitudeR) {
     for (int i = fxIStart; i < fxIEnd; i++) {
-        dataL[i] *= amplitude;
+        dataL[i] *= amplitudeL;
+        dataR[i] *= amplitudeR;
     }
     return *this;
 }
@@ -276,7 +277,27 @@ Sample& Sample::fade(double ampStart, double ampEnd) {
 
         for (int i = fxIStart; i < fxIEnd; i++) {
             dataL[i] *= ampStart;
+            dataR[i] *= ampStart;
+
             ampStart += ampEnd;
+        }
+    }
+    return *this;
+}
+
+Sample& Sample::fadeStereo(double ampStartL, double ampEndL, double ampStartR, double ampEndR) {
+    if (fxLength() > 0) {
+        double dLen = (double) fxLength();
+
+        ampEndL = (ampEndL - ampStartL) / dLen;
+        ampEndR = (ampEndR - ampStartR) / dLen;
+
+        for (int i = fxIStart; i < fxIEnd; i++) {
+            dataL[i] *= ampStartL;
+            dataR[i] *= ampStartR;
+
+            ampStartL += ampEndL;
+            ampStartR += ampEndR;
         }
     }
     return *this;
@@ -321,22 +342,34 @@ Sample& Sample::fadeAntiClick(int fadeLength) {
     return *this;
 }
 
-double Sample::maxAmplitude() {
-    double ampMax = 0;
+void Sample::maxAmplitude(double &maxL, double &maxR) {
+    maxL = 0;
+    maxR = 0;
+
     for (int i = fxIStart; i < fxIEnd; i++) {
-        if (dataL[i] > ampMax) {
-            ampMax = dataL[i];
-        } else if ((-dataL[i]) > ampMax) {
-            ampMax = -dataL[i];
+        if (dataL[i] > maxL) {
+            maxL = dataL[i];
+        } else if ((-dataL[i]) > maxL) {
+            maxL = -dataL[i];
+        }
+
+        if (dataR[i] > maxR) {
+            maxR = dataR[i];
+        } else if ((-dataR[i]) > maxR) {
+            maxR = -dataR[i];
         }
     }
-    return ampMax;
+
 }
 
 Sample& Sample::normalize(double amplitude) {
-    double ampMax = maxAmplitude();
-    if (ampMax > 0) {
-        amplify(amplitude / ampMax);
+
+    double maxL, maxR;
+
+    maxAmplitude(maxL, maxR);
+
+    if (maxL > 0 && maxR > 0) {
+        amplify(amplitude / maxL, amplitude / maxR);
     }
     return *this;
 }

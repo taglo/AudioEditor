@@ -55,14 +55,17 @@ public:
     Sample& cut();
     Sample& reverse();
 
-    Sample& amplify(double amplitude);
+    Sample& amplify(double amplitudeL, double amplitudeR);
 
     //File
     Sample& saveToFile(string filename);
     Sample& loadFromFile(string filename);
 
     Sample& normalize(double amplitude = 1);
+    
     Sample& fade(double ampStart, double ampEnd);
+    Sample& fadeStereo(double ampStartL, double ampEndL,double ampStartR, double ampEndR);
+    
     Sample& fadeIn();
     Sample& fadeOut();
     Sample& fadeAntiClick(int fadeLength = 100);
@@ -104,7 +107,7 @@ public:
     Sample& filterNotch(double f = 220, double q = 1, int nPass = 1);
     Sample& filterNotchEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
 
-    double maxAmplitude();
+    void maxAmplitude(double &maxL, double &maxR);
 
     Sample & mix(Sample& splIn, double amplitude = 1);
 
