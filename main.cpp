@@ -64,7 +64,8 @@ int main(int argc, char** argv) {
 
 
      GenSounds gSnd;
-     gSnd.testStereoA();
+     //gSnd.testStereoA();
+     gSnd.testStereoB();
      
      //gSnd.testDelay2();
 

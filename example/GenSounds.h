@@ -24,37 +24,67 @@ public:
         spl.genSine(220, 0, 0.1, 1);
 
         spl.saveToFile("test stereo 1.wav");
-        
+
         Sample spl2;
         spl2.loadFromFile("test stereo 1.wav").saveToFile("test load stereo.wav");
-        
-        spl.fadeStereo(0,1,1,0).saveToFile("test fade stereo.wav");
-        
+
+        spl.fadeStereo(0, 1, 1, 0).saveToFile("test fade stereo.wav");
+
         spl.reverse().saveToFile("test reverse.wav");
-        
-        Sample splStrech(44100*2);
-        
+
+        Sample splStrech(44100 * 2);
+
         spl.strech(splStrech);
         splStrech.saveToFile("test strech.wav");
-        
-        splStrech.fxIEnd=44100/2;
+
+        splStrech.fxIEnd = 44100 / 2;
         splStrech.fadeAntiClick(1000);
-        
+
         spl.strech(splStrech);
         splStrech.saveToFile("test strech 2.wav");
 
-        splStrech.fxIEnd=44100/4;
+        splStrech.fxIEnd = 44100 / 4;
         splStrech.fadeAntiClick(1000);
-        
+
         spl.strech(splStrech);
-        splStrech.saveToFile("test strech 3.wav"); 
-        
-        splStrech.fxRangeReset().saveToFile("test fadeAntiClick.wav"); 
-        
+        splStrech.saveToFile("test strech 3.wav");
+
+        splStrech.fxRangeReset().saveToFile("test fadeAntiClick.wav");
+
         splStrech.normalize(0.5).saveToFile("test normalize.wav");
-        
-        splStrech.amplify(2,0.5).saveToFile("test amplify.wav");
-        
+
+        splStrech.amplify(2, 0.5).saveToFile("test amplify.wav");
+
+
+    }
+
+    void testStereoB() {
+
+        Sample splWn;
+        splWn.init(44100 * 2);
+        splWn.genWhiteNoise(0.5, 1501).saveToFile("test white noise.wav");
+
+        Sample spl;
+        splWn.copy(spl);
+        spl.filterBandPass(440, 0.5, 1).saveToFile("band pass 440 05 1.wav");
+        splWn.copy(spl);
+        spl.filterBandPass(440, 0.5, 2).saveToFile("band pass 440 05 2.wav");
+        splWn.copy(spl);
+        spl.filterBandPass(440, 0.5, 4).saveToFile("band pass 440 05 4.wav");
+        splWn.copy(spl);
+        spl.filterBandPass(440, 1, 1).saveToFile("band pass 440 1 1.wav");
+        splWn.copy(spl);
+        spl.filterBandPass(440, 1, 2).saveToFile("band pass 440 1 2.wav");
+        splWn.copy(spl);
+        spl.filterBandPass(440, 1, 4).saveToFile("band pass 440 1 4.wav");
+        splWn.copy(spl);
+        spl.filterBandPass(440, 2, 1).saveToFile("band pass 440 2 1.wav");
+        splWn.copy(spl);
+        spl.filterBandPass(440, 2, 2).saveToFile("band pass 440 2 2.wav");
+        splWn.copy(spl);
+        spl.filterBandPass(440, 2, 4).saveToFile("band pass 440 2 4.wav");
+
+
     }
 
     void testReverse() {

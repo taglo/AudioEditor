@@ -6,7 +6,7 @@ Sample& Sample::copy(Sample& splOut) {
     splOut.length = fxLength();
 
     splOut.dataL = new double[splOut.length];
-        splOut.dataR = new double[splOut.length];
+    splOut.dataR = new double[splOut.length];
 
     int j = 0;
     for (int i = fxIStart; i < fxIEnd; i++) {
@@ -25,7 +25,7 @@ Sample& Sample::reverse() {
     int hLnt = fxIStart + (length >> 1) + 1;
 
     for (int i = fxIStart; i < hLnt; i++) {
-        
+
         bf = dataL[i];
         dataL[i] = dataL[j];
         dataL[j] = bf;
@@ -33,7 +33,7 @@ Sample& Sample::reverse() {
         bf = dataR[i];
         dataR[i] = dataR[j];
         dataR[j--] = bf;
-        
+
     }
 
 

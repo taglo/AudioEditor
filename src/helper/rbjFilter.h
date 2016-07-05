@@ -28,25 +28,43 @@ public:
         a2a0 = 0.0;
 
         // reset in/out history
-        ou1 = 0.0;
-        ou2 = 0.0;
-        in1 = 0.0;
-        in2 = 0.0;
+        ou1L = 0.0;
+        ou2L = 0.0;
+        in1L = 0.0;
+        in2L = 0.0;
+
+        ou1R = 0.0;
+        ou2R = 0.0;
+        in1R = 0.0;
+        in2R = 0.0;
 
     };
 
-    double filter(double in0) {
+    void filter(double in0L, double in0R, double &outL, double &outR) {
         // filter
-        double yn = b0a0 * in0 + b1a0 * in1 + b2a0 * in2 - a1a0 * ou1 - a2a0*ou2;
+        double ynL = b0a0 * in0L + b1a0 * in1L + b2a0 * in2L - a1a0 * ou1L - a2a0*ou2L;
 
         // push in/out buffers
-        in2 = in1;
-        in1 = in0;
-        ou2 = ou1;
-        ou1 = yn;
+        in2L = in1L;
+        in1L = in0L;
+        ou2L = ou1L;
+        ou1L = ynL;
 
         // return output
-        return yn;
+        outL= ynL;
+        
+        // filter
+        double ynR = b0a0 * in0R + b1a0 * in1R + b2a0 * in2R - a1a0 * ou1R - a2a0*ou2R;
+
+        // push in/out buffers
+        in2R = in1R;
+        in1R = in0R;
+        ou2R = ou1R;
+        ou1R = ynR;
+
+        // return output
+        outR= ynR;
+        
     };
 
     void copy_filter_coeffs(RbjFilter filterIn) {
@@ -193,5 +211,6 @@ private:
 
 
     // in/out history
-    double ou1, ou2, in1, in2;
+    double ou1L, ou2L, in1L, in2L;
+    double ou1R, ou2R, in1R, in2R;
 };

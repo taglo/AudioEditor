@@ -24,7 +24,7 @@ Sample& Sample::clip(double maxValue, double minValue) {
 Sample& Sample::strech(Sample& splOut) {
 
 
-    double okLength = ((double) fxLength()) - 2;    //todo : pitch faux de 3/fxLength
+    double okLength = ((double) fxLength()) - 2; //todo : pitch faux de 3/fxLength
     double pitch = okLength / ((double) splOut.fxLength());
 
     double jRead = ((double) fxIStart) + 2;
@@ -101,7 +101,7 @@ Sample& Sample::filterUtlRBJ(int type, double f, double q, int nPass) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         for (int j = 0; j < nPass; j++) {
-            dataL[i] = rbjFilter[j].filter(dataL[i]);
+            rbjFilter[j].filter(dataL[i], dataR[i], dataL[i], dataR[i]);
         }
     }
 
@@ -127,7 +127,7 @@ Sample& Sample::filterUtlRBJFEnv(int type, double f, Sample& fEnv, double fAmp, 
         }
 
         for (int j = 0; j < nPass; j++) {
-            dataL[i] = rbjFilter[j].filter(dataL[i]);
+            rbjFilter[j].filter(dataL[i], dataR[i], dataL[i], dataR[i]);
         }
     }
 

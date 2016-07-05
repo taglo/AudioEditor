@@ -142,7 +142,8 @@ Sample& Sample::genWhiteNoise(double amplitude,int seed) {
     std::mt19937_64 re(seed);
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        Sample::dataL[i] += unif(re);
+        dataL[i] += unif(re);
+        dataR[i] += unif(re);
     }
     return *this;
 }
