@@ -18,6 +18,82 @@ using namespace std;
 class GenSounds {
 public:
 
+    void testEnvGen() {
+        Sample spl(44100*11);
+        
+        for(double speed=0;speed<1;speed+=0.1){
+            
+            spl.fxIEnd=spl.fxIStart+44100;
+            spl.genEnvExp(-1,1,speed);
+            
+            spl.fxIStart+=44100;
+            
+        }
+        
+        spl.fxRangeReset().saveToFile("testEnvGen.wav");
+        
+    }
+    
+    void testEnv() {
+
+        Sample spl(44100);
+
+        Sample splA(1);
+
+
+        double vs, vm, vend, vamp, speed;
+        double dLnt = 44100.0;
+        int bInv = false;
+
+       // for (double sspeed = 0; sspeed <= 1.0; sspeed += 0.05) {
+            double sspeed = 1;
+            vs = 1;
+            
+            speed=sspeed;
+            
+            if(speed<=0.01){
+                speed=0.01;
+            }else if(speed>=0.99){
+                speed=0.99;
+            }
+            
+            speed = speed * 2;
+
+            if (speed > 1) {
+                bInv = true;
+                speed = 2 - speed;
+            }
+           // speed += 0.01;
+            vm = pow(0.5, 1 / (1 + dLnt * speed * speed));
+
+            vend = pow(vm, dLnt);
+            vamp = 1 / (1 - vend);
+            if (bInv) {
+                for (int i = 44099; i >= 0; i--) {
+                    vs *= vm;
+                    spl.dataL[i] = (vs - vend) * vamp;
+                    spl.dataR[i] = spl.dataL[i];
+                }                
+
+
+            } else {
+                for (int i = 0; i < 44100; i++) {
+                    vs *= vm;
+                    spl.dataL[i] = 1 - ((vs - vend) * vamp);
+
+
+
+                    spl.dataR[i] = spl.dataL[i];
+                }
+            }
+            splA.mix(spl, 1, 1);
+            splA.fxIStart += 44100;
+
+       // }
+        splA.fxRangeReset().saveToFile("test env.wav");
+
+    }
+
     void testStereoA() {
         Sample spl(44100);
         spl.genSine(110, 0, 1, 0.1);
@@ -83,6 +159,132 @@ public:
         spl.filterBandPass(440, 2, 2).saveToFile("band pass 440 2 2.wav");
         splWn.copy(spl);
         spl.filterBandPass(440, 2, 4).saveToFile("band pass 440 2 4.wav");
+
+
+    }
+
+    void testStereoC() {
+
+        Sample splWn;
+
+        Sample::tempo = 125;
+
+        splWn.init(splWn.stepToInt(4.0));
+
+        splWn.genWhiteNoise(0.5, 4501).fadeAntiClick(250);
+        splWn.saveToFile("test stc 1.wav");
+
+        Sample spl(splWn.stepToInt(256));
+        Sample splBt(splWn.stepToInt(4));
+
+        double f = 50;
+        double fm = pow(20000.0 / f, 4.0 / 256.0);
+        double vol = 2;
+        double volm = (0.05 - vol) / (256 / 4);
+
+        for (double s = 0; s < 256; s += 4) {
+            splWn.copy(splBt);
+            splBt.filterLowPass(f, 2, 3);
+            f = f*fm;
+            splBt.fadeOut().fadeAntiClick(250);
+
+            spl.fxIStart = splWn.stepToInt(s);
+            spl.mix(splBt, vol, vol);
+            vol += volm;
+
+        }
+
+        spl.fxRangeReset().fadeOut().saveToFile("test stereo c low pass.wav");
+
+
+    }
+
+    void testSwoosh() {
+
+        Sample splWn, splEnv;
+
+        Sample::tempo = 125;
+
+        splWn.init(splWn.stepToInt(4.0));
+        splEnv.init(splWn.stepToInt(4.0));
+
+
+
+        splWn.genWhiteNoise(0.25, 4501).fadeAntiClick(250);
+        splWn.fadeOut().fadeOut();
+
+        splWn.genSaw(440, 0.5, 0.9, 1).fadeOut();
+        splWn.genSaw(220, 0.9, 0.5, 1).fadeOut();
+
+        splWn.genSaw(55, 2, 2, 1).fadeOut();
+
+        //todo enveloppe mieux
+        splEnv.setConstant(1).fadeOut().fadeOut().fadeOut().fadeOut();
+
+        splWn.filterLowPassFEnv(100, splEnv, 19000, 1, 4);
+        splWn.normalize(0.9);
+
+        splWn.saveToFile("bass A wn src.wav");
+
+        Sample spl(splWn.stepToInt(1024));
+        Sample splBt(splWn.stepToInt(4));
+
+        double note1 = spl.fqtoMidiNote(100.0);
+        double note2 = spl.fqtoMidiNote(10000.0);
+
+        double notep = (note2 - note1) / 256;
+
+        int cnt = 0;
+
+        double smp = 0.31;
+
+        for (double s = 0; s < 990; s += 4) {
+
+            splWn.swapChannel();
+
+            splWn.copy(splBt);
+
+            double fq = spl.midiNoteToFq(note1);
+
+            double sm = 3;
+
+            if ((cnt % 16) == 0) {
+                smp += 0.3;
+
+            }
+
+            for (int i = 1; i < 6; i++) {
+
+                splBt.normalize(1).clip(0.9, -0.9);
+                splBt.filterNotch(fq, 3, 4).fadeAntiClick(500);
+
+
+                fq += 1000;
+                splBt.fxIStart = spl.stepToInt(round(sm));
+                splBt.mix(splWn, -0.35, -0.35).fxRangeReset();
+
+                sm += smp;
+
+            }
+
+            note1 += notep;
+
+            splBt.fadeOut().fadeAntiClick(250);
+
+            double sok = s;
+            if ((cnt % 4) == 3) {
+                sok += 1.0;
+            }
+            spl.fxIStart = splWn.stepToInt(sok);
+
+            spl.mix(splBt, 1, 1);
+
+            cnt++;
+            std::cout << cnt << "/256" << std::endl;
+
+        }
+
+        spl.fxRangeReset().saveToFile("testSwoosh.wav");
 
 
     }

@@ -30,7 +30,7 @@ public:
     Sample& operator=(const Sample& other);
 
     Sample& init(int length);
-    
+
     //void init(int length);
 
     Sample& fxRange(int iStart, int iEnd);
@@ -57,25 +57,27 @@ public:
 
     Sample& amplify(double amplitudeL, double amplitudeR);
 
+    Sample& swapChannel();
+    
     //File
     Sample& saveToFile(string filename);
     Sample& loadFromFile(string filename);
 
     Sample& normalize(double amplitude = 1);
-    
+
     Sample& fade(double ampStart, double ampEnd);
-    Sample& fadeStereo(double ampStartL, double ampEndL,double ampStartR, double ampEndR);
-    
+    Sample& fadeStereo(double ampStartL, double ampEndL, double ampStartR, double ampEndR);
+
     Sample& fadeIn();
     Sample& fadeOut();
     Sample& fadeAntiClick(int fadeLength = 100);
 
     //Generator
-    Sample& genSine(double f = 440.0, double phase = 0.5, double ampL= 1, double ampR= 1);
-    
+    Sample& genSine(double f = 440.0, double phase = 0.5, double ampL = 1, double ampR = 1);
+
     Sample& genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, double amplitude);
     Sample& genSineSplFM(Sample& splIn, double f = 440.0, double phase = 0.5, double amplitude = 1, double fmAmp = 0.10);
-    Sample& genSaw(double f = 440.0, double phase = 0.5, double amplitude = 1);
+    Sample& genSaw(double f = 440.0, double phase = 0.5, double ampL = 1.0, double ampR = 1.0);
     Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width = 0.5);
 
     Sample& genWhiteNoise(double amplitude, int seed);
@@ -87,6 +89,8 @@ public:
     Sample& genWaveform(Sample& splWf, double f = 110, double phase = 0, double amplitude = 1);
     Sample& genWaveformEnv(Sample& splWf, Sample& splEnv, double f = 110, double fmAmp = 55, double phase = 0, double amplitude = 1);
 
+    Sample& genEnvExp(double vStart , double vEnd, double speed);
+    
     //Effect
     Sample& clip(double maxValue = 1, double minValue = -1);
 
@@ -109,10 +113,15 @@ public:
 
     void maxAmplitude(double &maxL, double &maxR);
 
-    Sample & mix(Sample& splIn, double amplitude = 1);
+    Sample& mix(Sample& splIn, double ampL = 1, double ampR = 1);
 
 
+    //util
+    int stepToInt(double step);
 
+    double midiNoteToFq(double midi_note);
+    double fqtoMidiNote(double fq);
+    
     ~Sample();
 
 private:
@@ -122,7 +131,7 @@ private:
 
     //Buffer
     void copyToBuffer(Sample splIn, int iIn, int iBuffer, int copyLength);
-    void copyFromBuffer(Sample splOut, int iOut, int iBuffer, int copyLength);
+    void copyFromBuffer(Sample& splOut, int iOut, int iBuffer, int copyLength);
     void setBufferMinLength(int minLength);
     Sample& prepareForSplIn(Sample& splIn, int& jRead, int& iMixEnd);
 
@@ -131,8 +140,7 @@ private:
     double hermite4(double frac_pos, double xm1, double x0, double x1, double x2);
 
     Sample& filterRbj(int type, double f = 220, double q = 1, int nPass = 1);
-    //util
-    int stepToInt(double step);
+
 
 
     Sample& filterUtlRBJ(int type, double f, double q, int nPass);

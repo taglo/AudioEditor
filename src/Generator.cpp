@@ -73,14 +73,15 @@ Sample& Sample::genSineSplFM(Sample& splIn, double f, double phase, double ampli
     return *this;
 }
 
-Sample& Sample::genSaw(double fq, double phase, double amplitude) {
+Sample& Sample::genSaw(double fq, double phase, double ampL, double ampR) {
 
     double phaseInc = fq * 2 / samplerate;
     phase *= 2;
     //phase -= 1;
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        Sample::dataL[i] += phase * amplitude;
+        dataL[i] += phase * ampL;
+        dataR[i] += phase * ampR;
         phase += phaseInc;
         if (phase > 1) {
             phase -= 2;
@@ -133,7 +134,7 @@ Sample& Sample::genSquare(double fq, double phase, double amplitude, double widt
 
 //http://www.firstpr.com.au/dsp/pink-noise/
 
-Sample& Sample::genWhiteNoise(double amplitude,int seed) {
+Sample& Sample::genWhiteNoise(double amplitude, int seed) {
 
     double lower_bound = -amplitude;
     double upper_bound = amplitude;
@@ -248,6 +249,66 @@ Sample& Sample::genWaveform(Sample& splWf, double f, double phase, double amplit
     }
 
     return *this;
+}
+
+/**
+ * 
+ * @param vStart
+ * @param vEnd
+ * @param speed [0,1] 0 : lent, 1 : rapide
+ * @return 
+ */
+Sample& Sample::genEnvExp(double vStart, double vEnd, double speed) {
+
+    double envStart = 1, envMult, envEnd;
+    double envAmp, vOk;
+
+    double dLnt = (double) fxLength();
+
+    int bInv = false;
+
+    speed = speed * 2;
+    if (speed > 1) {
+        bInv = true;
+        speed = 2 - speed;
+    }
+    
+    if (speed <= 0.01) {
+        speed = 0.01;
+    } else if (speed >= 0.99) {
+        speed = 0.99;
+    }
+
+
+
+    envMult = pow(0.5, 1 / (1 + dLnt * speed * speed));
+
+    envEnd = pow(envMult, dLnt);
+    envAmp = 1 / (1 - envEnd);
+
+    if (bInv) {
+        for (int i = fxIEnd - 1; i >= fxIStart; i--) {
+
+            envStart *= envMult;
+            vOk = (envStart - envEnd) * envAmp;
+            vOk = vStart + (vEnd - vStart) * vOk;
+            dataL[i] += vOk;
+            dataR[i] += vOk;
+        }
+
+
+    } else {
+        for (int i = fxIStart; i < fxIEnd; i++) {
+            envStart *= envMult;
+            vOk = (envStart - envEnd) * envAmp;
+            vOk = vEnd + (vStart - vEnd) * vOk;
+            
+            dataL[i] += vOk;
+            dataR[i] += vOk;
+            
+        }
+    }
+
 }
 
 Sample& Sample::genPinkNoise(double amplitude) {

@@ -141,10 +141,14 @@ Sample& Sample::changeLength(int newLength) {
         delete[] dataL;
         dataL = new double[newLength];
 
+        delete[] dataR;
+        dataR = new double[newLength];
+
         copyFromBuffer(*this, 0, 0, length);
 
         for (int i = length; i < newLength; i++) {
             dataL[i] = 0;
+            dataR[i] = 0;
         }
     } else {
         //on raccourcis
@@ -153,6 +157,9 @@ Sample& Sample::changeLength(int newLength) {
 
         delete[] dataL;
         dataL = new double[newLength];
+
+        delete[] dataR;
+        dataR = new double[newLength];
 
         copyFromBuffer(*this, 0, 0, newLength);
 
@@ -169,10 +176,10 @@ Sample& Sample::changeLength(int newLength) {
     return *this;
 }
 
-Sample& Sample::mix(Sample& splIn, double amplitude) {
+Sample& Sample::mix(Sample& splIn, double ampL, double ampR) {
     /*
             on mixe sur la longueur de splIn.fxLength
-            si �a d�passe : on allonge Sample
+            si ça dépasse : on allonge Sample
      */
 
     /*
@@ -187,7 +194,8 @@ Sample& Sample::mix(Sample& splIn, double amplitude) {
     prepareForSplIn(splIn, jRead, iMixEnd);
 
     for (int i = fxIStart; i < iMixEnd; i++) {
-        Sample::dataL[i] += splIn.dataL[jRead++] * amplitude;
+        dataL[i] += splIn.dataL[jRead] * ampL;
+        dataR[i] += splIn.dataR[jRead++] * ampR;
     }
 
     return *this;
@@ -209,6 +217,14 @@ Sample& Sample::fxRangeStep(double stepStart, double stepEnd) {
 int Sample::stepToInt(double step) {
 
     return (int) ((240 / tempo)*((double) samplerate) *(step / 16));
+}
+
+double Sample::midiNoteToFq(double midi_note) {
+    return 440.0 * pow(2.0, (midi_note - 69.0) / 12.0);
+}
+
+double Sample::fqtoMidiNote(double fq) {
+    return 69.0 + 12.0 * log2(fq / 440.0);
 }
 
 Sample& Sample::fxRangeReset() {
@@ -239,6 +255,7 @@ Sample& Sample::setConstant(double cst) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         dataL[i] = cst;
+        dataR[i] = cst;
     }
     return *this;
 }
@@ -263,13 +280,23 @@ Sample& Sample::addConstant(double cst) {
     return *this;
 }
 
-Sample& Sample::amplify(double amplitudeL,double amplitudeR) {
+Sample& Sample::amplify(double amplitudeL, double amplitudeR) {
     for (int i = fxIStart; i < fxIEnd; i++) {
         dataL[i] *= amplitudeL;
         dataR[i] *= amplitudeR;
     }
     return *this;
 }
+
+Sample& Sample::swapChannel() {
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        double bf = dataL[i];
+        dataL[i] = dataR[i];
+        dataR[i] = bf;
+    }
+    return *this;
+}
+//swapChannel
 
 Sample& Sample::fade(double ampStart, double ampEnd) {
     if (fxLength() > 0) {

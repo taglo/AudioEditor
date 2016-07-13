@@ -19,7 +19,7 @@ void Sample::copyToBuffer(Sample splIn, int iIn, int iBuffer, int copyLength) {
     }
 }
 
-void Sample::copyFromBuffer(Sample splOut, int iOut, int iBuffer, int copyLength) {
+void Sample::copyFromBuffer(Sample& splOut, int iOut, int iBuffer, int copyLength) {
     int iEnd = iOut + copyLength;
     for (int i = iOut; i < iEnd; i++) {
         splOut.dataL[i] = bufferL[iBuffer];
