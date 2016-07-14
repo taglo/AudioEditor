@@ -18,22 +18,130 @@ using namespace std;
 class GenSounds {
 public:
 
-    void testEnvGen() {
-        Sample spl(44100*11);
-        
-        for(double speed=0;speed<1;speed+=0.1){
+    void multiSinEnv() {
+
+
+        Sample::tempo = 125;
+        //Sample::
+        double lSong = 128 * 16;
+        Sample splTrack(Sample::stepToInt(lSong));
+        Sample splEnvF(Sample::stepToInt(16));
+        Sample splNote(Sample::stepToInt(16));
+        //cout<<splTrack.fxLength();
+
+        double f, fAmp, ampL, ampR, bf, ev, ntH,ampHFade;
+        int cnt = 0;
+
+        for (double s = 0; s < lSong; s += 16) {
+            // splNote.amplify(0.2,0.2);
+            ev = s / lSong;
+
+
+            cout << "prog : " << round(ev * 100) << "%" << endl;
+
+            //A
+            f = 220;
+            ntH = 1;
+            if ((cnt % 8) > 5) {
+                //C
+
+                ntH = 1.2;
+            }
+            if ((cnt % 23) < 7) {
+                //E G
+                ntH *= 1.5;
+                cout << "mod : " << (cnt % 23) << endl;
+            }
+            f *= ntH;
+
+            fAmp = 5;
+
+
+            if ((cnt % 11) == 5) {
+                fAmp = 1;
+            }
+            if((s>800) && (s<1024)) {
+                fAmp*=1-(s-800)/(1024-800);
+                splNote.amplify(fAmp,fAmp);
+            }
             
-            spl.fxIEnd=spl.fxIStart+44100;
-            spl.genEnvExp(-1,1,speed);
+            if(s>1800) {
+                ampHFade=1+pow((s-1800)/(2048-1800),2);
+            }else{
+                ampHFade=1;
+            }
             
-            spl.fxIStart+=44100;
-            
+            ampL = 0.1;
+            ampR = 0.2;
+            splEnvF.genEnvExp(0.5, -0.5, 0.3 - ev * 0.31);
+            splEnvF.genSine(4 + 2 * sin(ev * 17), 0.5, 0.1);
+
+            splEnvF.normalize(1).swapChannel();
+
+            for (int k = 0; k < 7; k++) {
+
+                splNote.genSineFEnv(f, splEnvF, fAmp, 0, ampL, ampR);
+
+                f += 220 * ntH;
+                if (k == (2 + cnt % 5)) {
+                    f += 440 * ntH;
+                }
+
+                if ((k == 5) && ((cnt % 2) == 0)) {
+                    splEnvF.reverse();
+                }
+                if (k == 5) {
+                    f *= 2.0;
+                }
+                if (((cnt * 7 + k) % 73) == 12) {
+                    splEnvF.amplify(-1.0, -1.0);
+                }
+                if (((cnt * 7 + k) % 201) == 12) {
+                    splNote.fadeOut();
+                }
+                if (((cnt * 7 + k) % 303) < 12) {
+                    splEnvF.genSine(10 + 4 * sin(ev * 11), 0.5, 0.2);
+                }
+                //splEnvF.genSine(1 + 0.2 * sin(ev * 7), 0.5, 0.1);
+                bf = ampR * 0.85;
+                ampR = ampL;
+                ampL = bf;
+
+                ampL/=ampHFade;
+                ampR/=ampHFade;
+                
+                fAmp *= 1.9;
+            }
+
+            splNote.fadeOut().fadeAntiClick(450);
+            splNote.normalize(1);
+            //splNote.normalize(1).clip(0.9,-0.9).normalize(1);
+
+            splTrack.fxIStart = Sample::stepToInt(s);
+            splTrack.mix(splNote, 1, 1);
+
+            cnt++;
         }
-        
-        spl.fxRangeReset().saveToFile("testEnvGen.wav");
-        
+        splTrack.fxRangeReset().amplify(0.75, 0.75).saveToFile("A multi sin.wav");
+
     }
-    
+
+    void testEnvGen() {
+        Sample spl(44100 * 11);
+
+        for (double speed = 0; speed < 1; speed += 0.1) {
+
+            spl.fxIEnd = spl.fxIStart + 44100;
+            spl.genEnvExp(-1, 1, speed);
+
+            spl.fxIStart += 44100;
+
+        }
+
+        spl.fxRangeReset().saveToFile("testEnvGen.wav");
+
+    }
+
     void testEnv() {
 
         Sample spl(44100);
@@ -45,51 +153,51 @@ public:
         double dLnt = 44100.0;
         int bInv = false;
 
-       // for (double sspeed = 0; sspeed <= 1.0; sspeed += 0.05) {
-            double sspeed = 1;
-            vs = 1;
-            
-            speed=sspeed;
-            
-            if(speed<=0.01){
-                speed=0.01;
-            }else if(speed>=0.99){
-                speed=0.99;
+        // for (double sspeed = 0; sspeed <= 1.0; sspeed += 0.05) {
+        double sspeed = 1;
+        vs = 1;
+
+        speed = sspeed;
+
+        if (speed <= 0.01) {
+            speed = 0.01;
+        } else if (speed >= 0.99) {
+            speed = 0.99;
+        }
+
+        speed = speed * 2;
+
+        if (speed > 1) {
+            bInv = true;
+            speed = 2 - speed;
+        }
+        // speed += 0.01;
+        vm = pow(0.5, 1 / (1 + dLnt * speed * speed));
+
+        vend = pow(vm, dLnt);
+        vamp = 1 / (1 - vend);
+        if (bInv) {
+            for (int i = 44099; i >= 0; i--) {
+                vs *= vm;
+                spl.dataL[i] = (vs - vend) * vamp;
+                spl.dataR[i] = spl.dataL[i];
             }
-            
-            speed = speed * 2;
 
-            if (speed > 1) {
-                bInv = true;
-                speed = 2 - speed;
+
+        } else {
+            for (int i = 0; i < 44100; i++) {
+                vs *= vm;
+                spl.dataL[i] = 1 - ((vs - vend) * vamp);
+
+
+
+                spl.dataR[i] = spl.dataL[i];
             }
-           // speed += 0.01;
-            vm = pow(0.5, 1 / (1 + dLnt * speed * speed));
+        }
+        splA.mix(spl, 1, 1);
+        splA.fxIStart += 44100;
 
-            vend = pow(vm, dLnt);
-            vamp = 1 / (1 - vend);
-            if (bInv) {
-                for (int i = 44099; i >= 0; i--) {
-                    vs *= vm;
-                    spl.dataL[i] = (vs - vend) * vamp;
-                    spl.dataR[i] = spl.dataL[i];
-                }                
-
-
-            } else {
-                for (int i = 0; i < 44100; i++) {
-                    vs *= vm;
-                    spl.dataL[i] = 1 - ((vs - vend) * vamp);
-
-
-
-                    spl.dataR[i] = spl.dataL[i];
-                }
-            }
-            splA.mix(spl, 1, 1);
-            splA.fxIStart += 44100;
-
-       // }
+        // }
         splA.fxRangeReset().saveToFile("test env.wav");
 
     }

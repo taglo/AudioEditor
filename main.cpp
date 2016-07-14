@@ -67,8 +67,9 @@ int main(int argc, char** argv) {
      //gSnd.testStereoA();
     // gSnd.testStereoB();
       //gSnd.testStereoC();
-     gSnd.testEnvGen();
-     
+     //gSnd.testEnvGen();
+     gSnd.multiSinEnv();
+             
      // gSnd.testSwoosh();
      //gSnd.testDelay2();
 

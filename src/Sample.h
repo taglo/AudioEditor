@@ -75,7 +75,8 @@ public:
     //Generator
     Sample& genSine(double f = 440.0, double phase = 0.5, double ampL = 1, double ampR = 1);
 
-    Sample& genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, double amplitude);
+    Sample& genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, double ampL=1, double ampR = 1);
+    
     Sample& genSineSplFM(Sample& splIn, double f = 440.0, double phase = 0.5, double amplitude = 1, double fmAmp = 0.10);
     Sample& genSaw(double f = 440.0, double phase = 0.5, double ampL = 1.0, double ampR = 1.0);
     Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width = 0.5);
@@ -117,7 +118,7 @@ public:
 
 
     //util
-    int stepToInt(double step);
+    static int stepToInt(double step);
 
     double midiNoteToFq(double midi_note);
     double fqtoMidiNote(double fq);
