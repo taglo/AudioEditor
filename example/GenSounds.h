@@ -18,6 +18,169 @@ using namespace std;
 class GenSounds {
 public:
 
+    void vatBssNorm() {
+        Sample::tempo = 125;
+
+        double lSong = 1024;
+        int lnt = Sample::stepToInt(lSong);
+        int lnt16 = Sample::stepToInt(16);
+        Sample splTrack(lnt);
+
+        Sample splSndSrc(lnt16);
+        Sample splSnd(lnt16);
+
+        double es = 0, f = 100;
+        for (int k = 0; k < 16; k++) {
+            es += 0.945;
+            splSndSrc.genSaw(
+                    f + 2 * sin(es + 0.78),
+                    0.5 + sin(es * 7.23 + 3.78),
+                    1 + sin(es * 3.78 + 0.98),
+                    1 + sin(es * 5.78 + 0.3));
+            f += 110;
+        }
+
+        splSndSrc.normalize(1);
+
+        Sample splEnv(lnt16);
+        splEnv.genEnvExp(1, 0, 0.2);
+
+        splSndSrc.modulate(splEnv);
+        splSndSrc.saveToFile("sound src bss nrm.wav");
+
+        double n1=Sample::fqtoMidiNote(500);
+        double n2=Sample::fqtoMidiNote(5000);
+        
+        for (double s = lSong - 16; s >= 0; s -= 16) {
+            double ev = s / lSong;
+
+            splSnd.copy(splSndSrc);
+
+            splSnd.filterNotch(Sample::midiNoteToFq(n1+(n2-n1)*ev), 3, 3);
+            
+            splSnd.filterNotch(Sample::midiNoteToFq(120 - s / 10), 3, 3);
+
+            splSnd.filterLowPass(220 + 6000 * pow(s, 3) / pow(1024, 3), 1, 3);
+
+            splTrack.fxRangeStep(s, s + 16);
+            
+            splSnd.normalizeRmsW();
+            
+            splTrack.mix(splSnd, 1, 1);
+
+        }
+        splTrack.fxRangeReset().saveToFile("A var syn s.wav");
+
+    }
+
+    void genWnSteckOctFilter() {
+        cout << "genWnSteckOctFilter" << endl;
+
+        Sample::tempo = 125;
+
+        int lnt = Sample::stepToInt(512);
+
+        Sample spl(lnt);
+        Sample splBout(lnt);
+        Sample splBout2(lnt);
+        spl.genSaw(110, 0.5, 0.5, 0.15).genWhiteNoise(0.25, 1106);
+
+        spl.fadeIn().fadeOut();
+
+        spl.saveToFile("source 1.wav");
+        double es = 0, smix = 0, ps;
+
+        for (int k = 0; k < 20; k++) {
+            cout << k;
+
+            //on prend un bout
+            smix = smix + 147;
+            if (smix > 384) smix -= 384;
+
+
+            es += 0.953;
+
+            spl.fxRangeStep(smix, smix + 128);
+            splBout.mix(spl, 1, 1);
+            splBout.fxRangeStep(0, 128);
+
+            //splBout.saveToFile("bout 1.wav");
+            spl.fxRangeReset();
+
+            splBout.fadeAntiClick(Sample::stepToInt(48));
+
+            //splBout.saveToFile("bout 2.wav");
+            //on le filtre
+            double f = 2050.0 + 2000 * sin(es);
+            if ((k % 5) > 2) {
+                f = f * 2;
+            }
+            splBout.filterLowPass(f, 2 + 1.5 * sin(es * 7), 3);
+            splBout.normalize(1);
+
+            //splBout.saveToFile("bout 3.wav");
+
+            //on le strech
+            splBout2.fxRangeStep(0, 64);
+            splBout.strech(splBout2);
+            splBout2.swapChannel();
+
+            //splBout2.saveToFile("bout2 1.wav");
+
+            //on le mix ailleurs
+            for (int l = 0; l < 3; l++) {
+                smix = smix + 17 + ps;
+                if (smix > 384) smix -= 384;
+
+                spl.fxRangeStep(smix, smix + 64);
+                spl.mix(splBout2, 0.5 + sin(es), 0.5 + cos(es));
+                es += 1.207;
+                ps = ps + 1;
+            }
+
+
+        }
+        spl.fxRangeReset().normalize(0.75);
+        spl.saveToFile("stren strech.wav");
+
+    }
+
+    void genKick() {
+
+        cout << "genKick" << endl;
+
+        Sample::tempo = 125;
+
+        int lnt = Sample::stepToInt(4.0);
+
+        Sample splSrc(1031);
+
+        for (int i = 0; i < splSrc.fxIEnd; i++) {
+            double di = ((double) i) / 31;
+            splSrc.dataL[i] = 1 / (1 + di * di);
+        }
+        splSrc.saveToFile("env src strech.wav");
+        Sample splEnv(lnt);
+        splSrc.strech(splEnv);
+
+        splEnv.normalize(1).fadeOut();
+
+        splEnv.saveToFile("spl env strech.wav");
+
+        Sample splKick(lnt);
+
+
+        splKick.genSineFEnv(50, splEnv, 390, 0, 1);
+
+        splKick.fadeOut();
+        splKick.fxRangeStep(1, 4).fadeOut();
+
+        splKick.fxRangeStep(2, 4).fadeOut().fxRangeReset();
+
+        splKick.saveToFile("kick.wav");
+
+    }
+
     void multiSinEnv() {
 
 
@@ -29,7 +192,7 @@ public:
         Sample splNote(Sample::stepToInt(16));
         //cout<<splTrack.fxLength();
 
-        double f, fAmp, ampL, ampR, bf, ev, ntH,ampHFade;
+        double f, fAmp, ampL, ampR, bf, ev, ntH, ampHFade;
         int cnt = 0;
 
         for (double s = 0; s < lSong; s += 16) {
@@ -60,17 +223,17 @@ public:
             if ((cnt % 11) == 5) {
                 fAmp = 1;
             }
-            if((s>800) && (s<1024)) {
-                fAmp*=1-(s-800)/(1024-800);
-                splNote.amplify(fAmp,fAmp);
+            if ((s > 800) && (s < 1024)) {
+                fAmp *= 1 - (s - 800) / (1024 - 800);
+                splNote.amplify(fAmp, fAmp);
             }
-            
-            if(s>1800) {
-                ampHFade=1+pow((s-1800)/(2048-1800),2);
-            }else{
-                ampHFade=1;
+
+            if (s > 1800) {
+                ampHFade = 1 + pow((s - 1800) / (2048 - 1800), 2);
+            } else {
+                ampHFade = 1;
             }
-            
+
             ampL = 0.1;
             ampR = 0.2;
             splEnvF.genEnvExp(0.5, -0.5, 0.3 - ev * 0.31);
@@ -107,9 +270,9 @@ public:
                 ampR = ampL;
                 ampL = bf;
 
-                ampL/=ampHFade;
-                ampR/=ampHFade;
-                
+                ampL /= ampHFade;
+                ampR /= ampHFade;
+
                 fAmp *= 1.9;
             }
 
@@ -337,8 +500,8 @@ public:
         Sample spl(splWn.stepToInt(1024));
         Sample splBt(splWn.stepToInt(4));
 
-        double note1 = spl.fqtoMidiNote(100.0);
-        double note2 = spl.fqtoMidiNote(10000.0);
+        double note1 = Sample::fqtoMidiNote(100.0);
+        double note2 = Sample::fqtoMidiNote(10000.0);
 
         double notep = (note2 - note1) / 256;
 
@@ -352,7 +515,7 @@ public:
 
             splWn.copy(splBt);
 
-            double fq = spl.midiNoteToFq(note1);
+            double fq = Sample::midiNoteToFq(note1);
 
             double sm = 3;
 

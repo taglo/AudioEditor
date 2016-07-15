@@ -201,6 +201,31 @@ Sample& Sample::mix(Sample& splIn, double ampL, double ampR) {
     return *this;
 }
 
+Sample& Sample::modulate(Sample& splIn) {
+    /*
+            on mixe sur la longueur de splIn.fxLength
+            si ça dépasse : on allonge Sample
+     */
+
+    /*
+    int jRead=splIn.fxIStart;
+    int iMixEnd = fxIStart + splIn.fxLength();
+
+    if (iMixEnd > length){
+            changeLength(iMixEnd);
+    }
+     */
+    int jRead, iMixEnd;
+    prepareForSplIn(splIn, jRead, iMixEnd);
+
+    for (int i = fxIStart; i < iMixEnd; i++) {
+        dataL[i] = dataL[i] * splIn.dataL[jRead];
+        dataR[i] = dataR[i] * splIn.dataR[jRead++];
+    }
+
+    return *this;
+}
+
 Sample& Sample::fxRange(int iStart, int iEnd) {
     fxIStart = iStart;
     fxIEnd = iEnd;
@@ -225,6 +250,14 @@ double Sample::midiNoteToFq(double midi_note) {
 
 double Sample::fqtoMidiNote(double fq) {
     return 69.0 + 12.0 * log2(fq / 440.0);
+}
+
+double Sample::dbToLin(double db) {
+    return pow(10, db / 20);
+}
+
+double Sample::linToDb(double lin) {
+    return 20.0 * log(lin) / log(10.0);
 }
 
 Sample& Sample::fxRangeReset() {
@@ -389,6 +422,50 @@ void Sample::maxAmplitude(double &maxL, double &maxR) {
 
 }
 
+void Sample::maxRmsW(double &maxL, double &maxR, int lntRms) {
+
+    double sSumL = 0, sSumR = 0;
+
+    Sample buf(lntRms);
+    maxL = 0;
+    maxR = 0;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+
+        sSumL -= buf.dataL[buf.fxIStart];
+        sSumR -= buf.dataR[buf.fxIStart];
+
+        buf.dataL[buf.fxIStart] += dataL[i] * dataL[i];
+        buf.dataR[buf.fxIStart] += dataR[i] * dataR[i];
+
+        sSumL += buf.dataL[buf.fxIStart];
+        sSumR += buf.dataR[buf.fxIStart];
+
+        if (sSumL > maxL) maxL = sSumL;
+        if (sSumR > maxR) maxR = sSumR;
+        buf.fxIStart = (buf.fxIStart + 1) % buf.fxIEnd;
+    }
+
+    maxL = sqrt(maxL / (double) lntRms);
+    maxR = sqrt(maxR / (double) lntRms);
+
+}
+
+
+Sample& Sample::normalizeRmsW(double dbNorm, int lntRms) {
+
+    double maxL, maxR;
+
+    maxRmsW(maxL, maxR, lntRms);
+
+    double amplitude=dbToLin(dbNorm);
+    
+    if (maxL > 0 && maxR > 0) {
+        amplify(amplitude / maxL, amplitude / maxR);
+    }
+    return *this;
+}
+ 
 Sample& Sample::normalize(double amplitude) {
 
     double maxL, maxR;

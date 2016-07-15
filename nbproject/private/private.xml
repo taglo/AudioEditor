@@ -8,15 +8,17 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.h</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Edit.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/old/Noise.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Buffer.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/helper/rbjFilter.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/example/GenSounds.h</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Generator.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/main.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/File.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/README.md</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Generator.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/old/SongHardTech.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/old/Noise.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/helper/Delay.h</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Helper.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/example/old/test/Test1.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Effect.cpp</file>
         </group>
     </open-files>

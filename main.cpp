@@ -9,11 +9,12 @@
 #include <iostream>
 
 #include "src/Sample.h"
-#include "example/AdditiveSinus.h"
-#include "example/GranularSquare.h"
-#include "test/Test1.h"
+
+//#include "example/AdditiveSinus.h"
+//#include "example/GranularSquare.h"
+//#include "test/Test1.h"
 #include "example/GenSounds.h"
-#include "example/SongHardTech.h"
+//#include "example/SongHardTech.h"
 
 //#include "Tests.cpp"
 
@@ -68,8 +69,11 @@ int main(int argc, char** argv) {
     // gSnd.testStereoB();
       //gSnd.testStereoC();
      //gSnd.testEnvGen();
-     gSnd.multiSinEnv();
-             
+     //gSnd.multiSinEnv();
+      // gSnd.genKick();
+    // gSnd.genWnSteckOctFilter();
+     gSnd.vatBssNorm();
+     
      // gSnd.testSwoosh();
      //gSnd.testDelay2();
 
@@ -142,8 +146,6 @@ std::default_random_engine re(rd());
 
        rng.seed(100);
      */
-    GranularSquare granularSquare;
-    granularSquare.generate();
 
     /*
     Test1 test;

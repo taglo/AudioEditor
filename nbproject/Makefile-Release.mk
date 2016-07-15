@@ -35,8 +35,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/example/AdditiveSinus.o \
-	${OBJECTDIR}/example/GranularSquare.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/Buffer.o \
 	${OBJECTDIR}/src/Edit.o \
@@ -44,8 +42,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/File.o \
 	${OBJECTDIR}/src/Generator.o \
 	${OBJECTDIR}/src/Helper.o \
-	${OBJECTDIR}/src/Sample.o \
-	${OBJECTDIR}/test/Test1.o
+	${OBJECTDIR}/src/Sample.o
 
 
 # C Compiler Flags
@@ -71,16 +68,6 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/audioeditor.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/audioeditor ${OBJECTFILES} ${LDLIBSOPTIONS}
-
-${OBJECTDIR}/example/AdditiveSinus.o: example/AdditiveSinus.cpp 
-	${MKDIR} -p ${OBJECTDIR}/example
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example/AdditiveSinus.o example/AdditiveSinus.cpp
-
-${OBJECTDIR}/example/GranularSquare.o: example/GranularSquare.cpp 
-	${MKDIR} -p ${OBJECTDIR}/example
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example/GranularSquare.o example/GranularSquare.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -121,11 +108,6 @@ ${OBJECTDIR}/src/Sample.o: src/Sample.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sample.o src/Sample.cpp
-
-${OBJECTDIR}/test/Test1.o: test/Test1.cpp 
-	${MKDIR} -p ${OBJECTDIR}/test
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/test/Test1.o test/Test1.cpp
 
 # Subprojects
 .build-subprojects:

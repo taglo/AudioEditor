@@ -1,19 +1,22 @@
 //#pragma once
 #include "Sample.h"
 
-Sample& Sample::copy(Sample& splOut) {
+Sample& Sample::copy(Sample& splIn) {
 
-    splOut.length = fxLength();
+    delete[] dataL;
+    delete[] dataR;
+    
+    length = splIn.fxLength();
 
-    splOut.dataL = new double[splOut.length];
-    splOut.dataR = new double[splOut.length];
+    dataL = new double[length];
+    dataR = new double[length];
 
     int j = 0;
-    for (int i = fxIStart; i < fxIEnd; i++) {
-        splOut.dataL[j] = dataL[i];
-        splOut.dataR[j++] = dataR[i];
+    for (int i = splIn.fxIStart; i < splIn.fxIEnd; i++) {
+        dataL[j] = splIn.dataL[i];
+        dataR[j++] = splIn.dataR[i];
     }
-    splOut.fxRangeReset();
+    fxRangeReset();
 
     return *this;
 }
@@ -59,10 +62,10 @@ Sample& Sample::cut() {
     return *this;
 }
 
-Sample& Sample::cut(Sample& splOut) {
+Sample& Sample::cut(Sample& splIn) {
 
-    copy(splOut);
-    cut();
+    copy(splIn);
+    splIn.cut();
 
     return *this;
 }

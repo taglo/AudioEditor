@@ -50,21 +50,23 @@ public:
     Sample& changeLengthStep(double step);
 
     //Edit
-    Sample& copy(Sample& splOut);
-    Sample& cut(Sample& splOut);
+    Sample& copy(Sample& splIn);
+    Sample& cut(Sample& splIn);
     Sample& cut();
     Sample& reverse();
 
     Sample& amplify(double amplitudeL, double amplitudeR);
 
     Sample& swapChannel();
-    
+
     //File
     Sample& saveToFile(string filename);
     Sample& loadFromFile(string filename);
 
     Sample& normalize(double amplitude = 1);
-
+    Sample& normalizeRmsW(double dbNorm=-6, int lntRms=2048);
+    
+//normalizeRmsW
     Sample& fade(double ampStart, double ampEnd);
     Sample& fadeStereo(double ampStartL, double ampEndL, double ampStartR, double ampEndR);
 
@@ -75,8 +77,8 @@ public:
     //Generator
     Sample& genSine(double f = 440.0, double phase = 0.5, double ampL = 1, double ampR = 1);
 
-    Sample& genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, double ampL=1, double ampR = 1);
-    
+    Sample& genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, double ampL = 1, double ampR = 1);
+
     Sample& genSineSplFM(Sample& splIn, double f = 440.0, double phase = 0.5, double amplitude = 1, double fmAmp = 0.10);
     Sample& genSaw(double f = 440.0, double phase = 0.5, double ampL = 1.0, double ampR = 1.0);
     Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width = 0.5);
@@ -90,8 +92,8 @@ public:
     Sample& genWaveform(Sample& splWf, double f = 110, double phase = 0, double amplitude = 1);
     Sample& genWaveformEnv(Sample& splWf, Sample& splEnv, double f = 110, double fmAmp = 55, double phase = 0, double amplitude = 1);
 
-    Sample& genEnvExp(double vStart , double vEnd, double speed);
-    
+    Sample& genEnvExp(double vStart, double vEnd, double speed);
+
     //Effect
     Sample& clip(double maxValue = 1, double minValue = -1);
 
@@ -113,15 +115,19 @@ public:
     Sample& filterNotchEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
 
     void maxAmplitude(double &maxL, double &maxR);
+    void maxRmsW(double &maxL, double &maxR, int lntRms);
 
     Sample& mix(Sample& splIn, double ampL = 1, double ampR = 1);
-
+    Sample& modulate(Sample& splIn);
 
     //util
     static int stepToInt(double step);
 
-    double midiNoteToFq(double midi_note);
-    double fqtoMidiNote(double fq);
+    static double midiNoteToFq(double midi_note);
+    static double fqtoMidiNote(double fq);
+
+    static double dbToLin(double db);
+    static double linToDb(double lin);
     
     ~Sample();
 

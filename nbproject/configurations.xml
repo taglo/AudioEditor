@@ -9,12 +9,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f3" displayName="example" projectFiles="true">
-        <itemPath>example/AdditiveSinus.cpp</itemPath>
-        <itemPath>example/AdditiveSinus.h</itemPath>
         <itemPath>example/GenSounds.h</itemPath>
-        <itemPath>example/GranularSquare.cpp</itemPath>
-        <itemPath>example/GranularSquare.h</itemPath>
-        <itemPath>example/SongHardTech.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="src" projectFiles="true">
         <logicalFolder name="f1" displayName="helper" projectFiles="true">
@@ -32,8 +27,6 @@
         <itemPath>src/Sample.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="test" projectFiles="true">
-        <itemPath>test/Test1.cpp</itemPath>
-        <itemPath>test/Test1.h</itemPath>
       </logicalFolder>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -65,17 +58,7 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
-      <item path="example/AdditiveSinus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="example/AdditiveSinus.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="example/GenSounds.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="example/GranularSquare.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="example/GranularSquare.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="example/SongHardTech.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -100,10 +83,6 @@
       <item path="src/helper/Rng.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/helper/rbjFilter.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="test/Test1.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="test/Test1.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -126,17 +105,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="example/AdditiveSinus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="example/AdditiveSinus.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="example/GenSounds.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="example/GranularSquare.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="example/GranularSquare.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="example/SongHardTech.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -161,10 +130,6 @@
       <item path="src/helper/Rng.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/helper/rbjFilter.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="test/Test1.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="test/Test1.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
