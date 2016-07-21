@@ -42,7 +42,7 @@ Sample& Sample::genSine(double fq, double phase, double ampL, double ampR) {
 
 Sample& Sample::genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, double ampL, double ampR) {
 
-    double vSin=0;
+    double vSin = 0;
     int jRead = fEnv.fxIStart;
 
 
@@ -52,12 +52,12 @@ Sample& Sample::genSineFEnv(double f, Sample& fEnv, double fAmp, double phase, d
     double phaseF = fAmp * 2 * M_PI / samplerate;
 
     for (int i = fxIStart; i < fxIEnd; i++) {
-        
-        vSin=sin(phase);
-        
+
+        vSin = sin(phase);
+
         dataL[i] += vSin * ampL;
         dataR[i] += vSin * ampR;
-        
+
         phase += phaseInc + phaseF * fEnv.dataL[jRead++];
     }
     return *this;
@@ -220,30 +220,38 @@ Sample& Sample::genWaveformEnv(Sample& splWf, Sample& splEnv, double f, double f
     return *this;
 }
 
-Sample& Sample::genWaveform(Sample& splWf, double f, double phase, double amplitude) {
+Sample& Sample::genWaveform(Sample& splWf, double f, double phase, double ampL, double ampR) {
 
-    double y0 = 0, y1 = 0, y2 = 0, y3 = 0;
 
     //double pitch = ((double) fxLength()) / ((double) splOut.fxLength());
 
+    int lnt = splWf.fxLength();
+
     double jRead = (double) splWf.fxIStart;
-    double period = (double) splWf.fxLength();
+    double period = (double) lnt;
 
     double pitch = period / (((double) samplerate) / f);
 
     jRead += period*phase;
-    int iRead = 0;
+
+
+
+    int lntm1 = lnt - 1;
+    int lnt1 = lnt + 1;
+    int lnt2 = lnt + 2;
 
     for (int i = fxIStart; i < fxIEnd; i++) {
 
-        y3 = y2;
-        y2 = y1;
-        y1 = y0;
+        int x0 = (int) jRead;
 
-        iRead = (int) jRead;
-        y0 = splWf.dataL[iRead];
+        double frac_pos = jRead - ((double) x0);
 
-        dataL[i] += hermite1(jRead - (double) iRead, y0, y1, y2, y3) * amplitude;
+        int xm1 = (x0 + lntm1) % lnt;
+        int x1 = (x0 + lnt1) % lnt;
+        int x2 = (x1 + lnt2) % lnt;
+
+        dataL[i] += hermite4(frac_pos, splWf.dataL[xm1], splWf.dataL[x0], splWf.dataL[x1], splWf.dataL[x2]) * ampL;
+        dataR[i] += hermite4(frac_pos, splWf.dataR[xm1], splWf.dataR[x0], splWf.dataR[x1], splWf.dataR[x2]) * ampR;
 
         jRead += pitch;
 
@@ -277,7 +285,7 @@ Sample& Sample::genEnvExp(double vStart, double vEnd, double speed) {
         bInv = true;
         speed = 2 - speed;
     }
-    
+
     if (speed <= 0.01) {
         speed = 0.01;
     } else if (speed >= 0.99) {
@@ -307,10 +315,10 @@ Sample& Sample::genEnvExp(double vStart, double vEnd, double speed) {
             envStart *= envMult;
             vOk = (envStart - envEnd) * envAmp;
             vOk = vEnd + (vStart - vEnd) * vOk;
-            
+
             dataL[i] += vOk;
             dataR[i] += vOk;
-            
+
         }
     }
 

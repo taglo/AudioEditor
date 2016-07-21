@@ -28,6 +28,7 @@ Sample::Sample() {
 
     samplerate = 44100;
 
+    
     setConstant(0);
 }
 
@@ -47,6 +48,9 @@ Sample::Sample(int length) {
 
 Sample& Sample::init(int length) {
 
+    delete[] dataL;
+    delete[] dataR;
+    
     Sample::length = length;
 
     dataL = new double[length];
@@ -203,7 +207,7 @@ Sample& Sample::mix(Sample& splIn, double ampL, double ampR) {
 
 Sample& Sample::modulate(Sample& splIn) {
     /*
-            on mixe sur la longueur de splIn.fxLength
+            on module sur la longueur de splIn.fxLength
             si ça dépasse : on allonge Sample
      */
 

@@ -14,6 +14,8 @@
 //#include "example/GranularSquare.h"
 //#include "test/Test1.h"
 #include "example/GenSounds.h"
+#include "src/TestInner.h"
+//#include "src/TestClass.h"
 //#include "example/SongHardTech.h"
 
 //#include "Tests.cpp"
@@ -60,24 +62,35 @@ int main(int argc, char** argv) {
      */
 
 
-   ///SongHardTech sng;
-   //sng.generate();
+    ///SongHardTech sng;
+    //sng.generate();
 
 
-     GenSounds gSnd;
-     //gSnd.testStereoA();
+    /*
+     Sample spl;
+     spl.changeLength(1000);
+     spl.dataL[0]=0.12345;
+     spl.test->testMethod();
+     */
+
+    GenSounds gSnd;
+    gSnd.genWaveForm();
+
+
+    //gSnd.testStereoA();
     // gSnd.testStereoB();
-      //gSnd.testStereoC();
-     //gSnd.testEnvGen();
-     //gSnd.multiSinEnv();
-      // gSnd.genKick();
+    //gSnd.testStereoC();
+    //gSnd.testEnvGen();
+    //gSnd.multiSinEnv();
+    // gSnd.genKick();
     // gSnd.genWnSteckOctFilter();
-     gSnd.vatBssNorm();
-     
-     // gSnd.testSwoosh();
-     //gSnd.testDelay2();
+    //  gSnd.vatBssNorm();
+    //gSnd.pulseFilt();
 
-      //gSnd.testReverse();
+    // gSnd.testSwoosh();
+    //gSnd.testDelay2();
+
+    //gSnd.testReverse();
     //gSnd.testLoad();
     //gSnd.genKickA();
 

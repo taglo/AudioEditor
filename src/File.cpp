@@ -30,15 +30,20 @@ Sample& Sample::saveToFile(std::string filename) {
     header.AudioFormat = 3;
     header.NumOfChan = 2;
     header.SamplesPerSec = Sample::samplerate;
-    header.bytesPerSec = header.NumOfChan*4 * Sample::samplerate;
+    header.bytesPerSec = header.NumOfChan * 4 * Sample::samplerate;
     header.blockAlign = 4;
     header.bitsPerSample = 32;
 
     header.Subchunk2Size = header.NumOfChan * fxLength()*4;
 
+    //vérifie extension
+    if (!(filename.substr(filename.find_last_of(".") + 1) == "wav")) {
+        filename += ".wav";
+    }
+
     dataF = new float[header.NumOfChan * fxLength()];
 
-    int j=0;
+    int j = 0;
     for (int i = fxIStart; i < fxIEnd; i++) {
         dataF[j++] = (float) dataL[i];
         dataF[j++] = (float) dataR[i];
@@ -50,7 +55,7 @@ Sample& Sample::saveToFile(std::string filename) {
 
     outfile.write(reinterpret_cast<char*> (&header), sizeof (RiffHeader));
 
-    outfile.write((char*) dataF,2* fxLength() * sizeof (float));
+    outfile.write((char*) dataF, 2 * fxLength() * sizeof (float));
 
     outfile.close();
 
@@ -88,7 +93,7 @@ Sample& Sample::loadFromFile(std::string filename) {
 
         infile.read((char*) &dataF, sizeof (float));
         dataR[i] = (double) dataF;
-        
+
     }
 
 

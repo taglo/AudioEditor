@@ -18,6 +18,110 @@ using namespace std;
 class GenSounds {
 public:
 
+    void genWaveForm() {
+
+        int lnt = 44100 * 10;
+        int lntWf = 10000;
+
+        Sample test(lnt);
+        Sample wf(lntWf);
+
+        double fqWf = 44100 / ((double) lntWf);
+
+        wf.genSaw(fqWf, 0, 0, 1);
+        wf.genSine(fqWf, 0, 1, 0);
+        wf.saveToFile("test wf");
+        wf.saveToFile("test wfb.wav");
+
+        double fBase=110;
+        
+        for (int i = 1; i < 50; i++) {
+            double ev = (double) i / 50.0;
+
+            double f = fBase + 10 * sin(ev * 11);
+            double phase = 0.5 + 0.5 * sin(ev * 13.2);
+            double ampL = 0.5 + sin(ev * 14.2);
+            double ampR = 0.5 + sin(ev * 15.2);
+
+            test.genWaveform(wf, f, phase, ampL, ampR);
+            wf.swapChannel();
+            if((i%10)==9) {
+                fBase+=110;
+            }
+        }
+
+        test.normalizeRmsW();
+        test.saveToFile("genWaveForm");
+
+    }
+
+    void pulseFilt() {
+        Sample::tempo = 125;
+
+        double lSong = 2048;
+        int lnt = Sample::stepToInt(lSong);
+        int lnt16 = Sample::stepToInt(16);
+        int lnt2 = Sample::stepToInt(2);
+        int lnt1 = Sample::stepToInt(2);
+
+        Sample splTrack(lnt);
+
+        Sample splSndSrc(lnt16);
+        Sample splSnd(lnt2);
+        Sample splTmp;
+
+        for (double s = 0; s < lSong; s += 32) {
+
+
+            double ev = s / lSong;
+
+            cout << s << endl;
+
+            splSnd.init(lnt2);
+            splSnd.dataL[0] = 1;
+            splSnd.dataR[30 + (int) fmod(s / 31, 104)] = -0.01;
+
+            if (fmod(s, 256 > 239)) {
+                splSnd.dataR[lnt1] = -1;
+            }
+
+            double f = 110;
+            for (double k = 0; k < 12; k++) {
+
+                splTmp.copy(splSnd);
+
+                splTmp.clip(0.8, -0.9);
+                splTmp.filterBandPass(f * (1 + 0.1 * sin(((k / 6) + 7) * ev + k / 6.5))
+                        ,
+                        20
+                        + 8 * sin(((k / 8.5) + 6) * ev + k / 9.5)
+                        , 1);
+
+                splTmp.normalize(1);
+
+                splSnd.mix(splTmp, 1, 1);
+                splTmp.swapChannel();
+
+                splSnd.fxRangeStep(1 + fmod(k, 3), 20);
+
+                splSnd.mix(splTmp, 0.2, -1);
+                splSnd.fxRangeReset();
+
+                f += 110;
+                if (fmod(k, 5) > 3) {
+                    f += 440;
+                }
+            }
+
+            splSnd.normalizeRmsW();
+            splTrack.fxRangeStep(s, s + 32);
+            splTrack.mix(splSnd, 1, 1);
+        }
+        splTrack.fxRangeReset();
+        splTrack.saveToFile("A plus pluse pulse.wav");
+
+    }
+
     void vatBssNorm() {
         Sample::tempo = 125;
 
@@ -48,24 +152,24 @@ public:
         splSndSrc.modulate(splEnv);
         splSndSrc.saveToFile("sound src bss nrm.wav");
 
-        double n1=Sample::fqtoMidiNote(500);
-        double n2=Sample::fqtoMidiNote(5000);
-        
+        double n1 = Sample::fqtoMidiNote(500);
+        double n2 = Sample::fqtoMidiNote(5000);
+
         for (double s = lSong - 16; s >= 0; s -= 16) {
             double ev = s / lSong;
 
             splSnd.copy(splSndSrc);
 
-            splSnd.filterNotch(Sample::midiNoteToFq(n1+(n2-n1)*ev), 3, 3);
-            
+            splSnd.filterNotch(Sample::midiNoteToFq(n1 + (n2 - n1) * ev), 3, 3);
+
             splSnd.filterNotch(Sample::midiNoteToFq(120 - s / 10), 3, 3);
 
             splSnd.filterLowPass(220 + 6000 * pow(s, 3) / pow(1024, 3), 1, 3);
 
             splTrack.fxRangeStep(s, s + 16);
-            
+
             splSnd.normalizeRmsW();
-            
+
             splTrack.mix(splSnd, 1, 1);
 
         }

@@ -8,6 +8,9 @@
 #include "helper/Delay.h"
 #include "helper/Rng.h"
 
+//#include "TestClass.h"
+
+
 using namespace std;
 
 class Sample {
@@ -23,6 +26,8 @@ public:
     static double tempo;
     static string filePath;
 
+
+    
     Sample();
     Sample(int length);
     //Sample(double nStep);
@@ -31,6 +36,11 @@ public:
 
     Sample& init(int length);
 
+
+
+    class TestInner;
+    TestInner* test;
+    
     //void init(int length);
 
     Sample& fxRange(int iStart, int iEnd);
@@ -64,9 +74,9 @@ public:
     Sample& loadFromFile(string filename);
 
     Sample& normalize(double amplitude = 1);
-    Sample& normalizeRmsW(double dbNorm=-6, int lntRms=2048);
-    
-//normalizeRmsW
+    Sample& normalizeRmsW(double dbNorm = -6, int lntRms = 2048);
+
+    //normalizeRmsW
     Sample& fade(double ampStart, double ampEnd);
     Sample& fadeStereo(double ampStartL, double ampEndL, double ampStartR, double ampEndR);
 
@@ -89,7 +99,7 @@ public:
 
     Sample& genPulse(double fq, double phase, double amplitude);
 
-    Sample& genWaveform(Sample& splWf, double f = 110, double phase = 0, double amplitude = 1);
+    Sample& genWaveform(Sample& splWf, double f = 110, double phase = 0, double ampL = 1, double ampR = 1);
     Sample& genWaveformEnv(Sample& splWf, Sample& splEnv, double f = 110, double fmAmp = 55, double phase = 0, double amplitude = 1);
 
     Sample& genEnvExp(double vStart, double vEnd, double speed);
@@ -128,7 +138,7 @@ public:
 
     static double dbToLin(double db);
     static double linToDb(double lin);
-    
+
     ~Sample();
 
 private:
