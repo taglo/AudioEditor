@@ -18,6 +18,163 @@ using namespace std;
 class GenSounds {
 public:
 
+    void genSndShepard() {
+        Sample::tempo = 125;
+
+        
+        Sample spl(Sample::stepToInt(16));
+        
+        double f=110.0/8.0;
+        while(f<22050){
+            spl.genSine(f,1,1);
+            f=f*2;
+            
+        }
+        
+        spl.fadeOut().fadeAntiClick(250);
+        spl.normalize(0.8);
+        spl.saveToFile("snd shepard");
+        
+    }
+    void genSndCristal() {
+
+        Sample::tempo = 125;
+
+        Sample spl(Sample::stepToInt(64));
+        int lntWf = 20000;
+        Sample wf(lntWf);
+
+        double fqWf = 44100 / ((double) lntWf);
+
+        //wf.genSaw(fqWf, 0, 0, 0.2);
+        wf.genSine(fqWf, 0, 1, 1);
+        
+        wf.saveToFile("test wf");
+        wf.saveToFile("test wfb.wav");
+
+
+        double fBase = 110.0;
+
+        for (int i = 1; i < 50; i++) {
+
+            double di = (double) i;
+            double f = fBase * di;
+
+            double phase = 0.5;
+
+            double ampL = 1;
+            double ampR = 1;
+
+            int nadd = 0;
+
+            cout << "harmo : " << i << endl;
+
+            int ci = i;
+            int cdiv = 2;
+            while (cdiv <= ci) {
+                if ((ci % cdiv) == 0) {
+                    cout << "(" << ci << "," << cdiv << ") ";
+
+                    ci = ci / cdiv;
+                    nadd++;
+                    ampL = ampL * 2;
+                    ampR = ampR * 2;
+
+                } else {
+                    ampL = ampL / 2;
+                    ampR = ampR / 2;                    
+                    cdiv = cdiv + 1;
+                }
+
+            }
+            cout << endl;
+
+            ampL = ampL / di;
+            ampR = ampR / di;
+
+            cout << " nadd : " << nadd << ", ampL : " << ampL << endl;
+            cout << endl;
+
+            spl.genWaveform(wf, f, phase, ampL, ampR);
+            wf.swapChannel();
+
+
+        }
+
+        spl.normalizeRmsW();
+        spl.saveToFile("genSndCristal");
+
+    }
+
+    void wfHarmo() {
+
+        Sample::tempo = 125;
+
+        int lnt = 44100 * 10;
+        int lntWf = 10000;
+        double lSong = 2048;
+
+        Sample spl(Sample::stepToInt(64));
+        Sample track(Sample::stepToInt(lSong));
+        Sample wf(lntWf);
+
+        double fqWf = 44100 / ((double) lntWf);
+
+        wf.genSaw(fqWf, 0, 0, 1);
+        wf.genSine(fqWf, 0, 1, 0);
+        wf.saveToFile("test wf");
+        wf.saveToFile("test wfb.wav");
+
+        int cnt = 0;
+
+        for (double s = 0; s < lSong; s += 64) {
+            double evs = s / lSong;
+            cout << round(100 * evs) << "%" << endl;
+            int hcnt = 5 + (cnt % 4);
+            int hcnte = cnt % hcnt;
+
+            double fBase = 110;
+
+            int ifqb = 16 + (cnt % 32);
+            double harmo = 2;
+
+            for (int i = 1; i < 50; i++) {
+                double ev = (double) i / 50.0;
+
+                double f = fBase * harmo * (1000 + sin(ev * (11 + evs * 3.5))) / 1000;
+                double phase = 0.5 + 0.5 * sin(ev * (13.2 + evs * 3.8));
+                double ampL = 0.5 + sin(ev * (14.2 + evs * 6.5));
+                double ampR = 0.5 + sin(ev * (15.2 + evs * 7.5));
+
+                spl.genWaveform(wf, f, phase, ampL, ampR);
+                wf.swapChannel();
+
+                if ((i % hcnt) == hcnte) {
+                    harmo += 1.0;
+                }
+                if (i == ifqb) {
+                    fBase *= 1.2;
+                }
+            }
+
+            cout << "harmo fin " << harmo << endl;
+            cout << "fBase " << fBase << endl;
+            cout << "hcnt " << hcnt << endl;
+            cout << "hcnte " << hcnte << endl;
+            cout << "ifqb " << ifqb << endl;
+
+            spl.fadeOut().fadeAntiClick(650);
+            spl.normalizeRmsW();
+            track.fxRangeStep(s, s + 64);
+            track.mix(spl, 1, 1);
+
+            cnt++;
+        }
+
+        track.fxRangeReset().saveToFile("wfHarmo");
+
+    }
+
     void genWaveForm() {
 
         int lnt = 44100 * 10;
@@ -33,8 +190,8 @@ public:
         wf.saveToFile("test wf");
         wf.saveToFile("test wfb.wav");
 
-        double fBase=110;
-        
+        double fBase = 110;
+
         for (int i = 1; i < 50; i++) {
             double ev = (double) i / 50.0;
 
@@ -45,8 +202,8 @@ public:
 
             test.genWaveform(wf, f, phase, ampL, ampR);
             wf.swapChannel();
-            if((i%10)==9) {
-                fBase+=110;
+            if ((i % 10) == 9) {
+                fBase += 110;
             }
         }
 

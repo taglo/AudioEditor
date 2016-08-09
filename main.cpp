@@ -74,9 +74,12 @@ int main(int argc, char** argv) {
      */
 
     GenSounds gSnd;
-    gSnd.genWaveForm();
-
-
+    //gSnd.genWaveForm();
+    //gSnd.wfHarmo();
+    gSnd.genSndShepard();
+    
+    //gSnd.genSndCristal();
+    
     //gSnd.testStereoA();
     // gSnd.testStereoB();
     //gSnd.testStereoC();

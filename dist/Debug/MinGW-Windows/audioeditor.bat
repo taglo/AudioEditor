@@ -1,1 +1,1 @@
-audioeditor.exe
+start cmd.exe "audioeditor" /k 

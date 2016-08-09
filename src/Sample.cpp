@@ -257,7 +257,7 @@ double Sample::fqtoMidiNote(double fq) {
 }
 
 double Sample::dbToLin(double db) {
-    return pow(10, db / 20);
+    return pow(10.0, db / 20.0);
 }
 
 double Sample::linToDb(double lin) {
@@ -431,6 +431,7 @@ void Sample::maxRmsW(double &maxL, double &maxR, int lntRms) {
     double sSumL = 0, sSumR = 0;
 
     Sample buf(lntRms);
+    
     maxL = 0;
     maxR = 0;
 
