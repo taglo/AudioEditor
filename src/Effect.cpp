@@ -193,3 +193,18 @@ Sample& Sample::filterNotchEnv(double f, Sample& fEnv, double fAmp, double q, in
     return *this;
 
 }
+
+Sample& Sample::filterAllPass(double f, double q, int nPass) {
+
+    filterUtlRBJ(5, f, q, nPass);
+    return *this;
+
+}
+
+Sample& Sample::filterAllPassEnv(double f, Sample& fEnv, double fAmp, double q, int nPass) {
+
+    filterUtlRBJFEnv(5, f, fEnv, fAmp, q, nPass);
+
+    return *this;
+
+}

@@ -18,24 +18,70 @@ using namespace std;
 class GenSounds {
 public:
 
+    void genSndAllPass() {
+        Sample::tempo = 125;
+
+
+        Sample spl(Sample::stepToInt(16));
+        Sample splEnv(Sample::stepToInt(16));
+        Sample splTmp;
+
+        double f = 55.0;
+        spl.genSaw(f, 0.5, 1, 0.3).fadeAntiClick(500);
+        splEnv.setConstantDynamic(1, 0);
+
+        double fAmp = 4000.0;
+        double fSine = 0.23;
+
+        for (int i = 0; i < 10; i++) {
+
+            splEnv.changeLength(spl.fxLength());
+            splEnv.genSine(fSine, 0.1, 0.1, 0.5);
+            splEnv.fxIStart=splEnv.fxIEnd-Sample::stepToInt(1);
+            splEnv.fadeOut().fxRangeReset().normalize(1.0);
+            splEnv.amplify(-1,-1).swapChannel();
+            
+            fSine=fSine*1.03+0.075;
+            
+            splTmp.copy(spl).filterAllPassEnv(f*2+50, splEnv, f, 1.2, 3).normalize(0.8);
+
+            f = f * 1.2 + 150.2;
+            cout << "i : " << i << ", f : " << f << endl;
+
+            spl.fxRangeReset();
+            spl.mix(splTmp, -0.8, -0.1).swapChannel();
+                        
+            spl.fxIStart =Sample::stepToInt(3);//5-i%4);// + 100 + i * 114;
+            spl.mix(splTmp, -0.93, -0.1).swapChannel();
+            spl.fxRangeReset();
+        }
+
+        splEnv.saveToFile("env end");
+
+        spl.normalize(0.8);
+        spl.saveToFile("genSndAllPass");
+
+    }
+
     void genSndShepard() {
         Sample::tempo = 125;
 
-        
+
         Sample spl(Sample::stepToInt(16));
-        
-        double f=110.0/8.0;
-        while(f<22050){
-            spl.genSine(f,1,1);
-            f=f*2;
-            
+
+        double f = 110.0 / 8.0;
+        while (f < 22050) {
+            spl.genSine(f, 1, 1);
+            f = f * 2;
+
         }
-        
+
         spl.fadeOut().fadeAntiClick(250);
         spl.normalize(0.8);
         spl.saveToFile("snd shepard");
-        
+
     }
+
     void genSndCristal() {
 
         Sample::tempo = 125;
@@ -48,7 +94,7 @@ public:
 
         //wf.genSaw(fqWf, 0, 0, 0.2);
         wf.genSine(fqWf, 0, 1, 1);
-        
+
         wf.saveToFile("test wf");
         wf.saveToFile("test wfb.wav");
 
@@ -82,7 +128,7 @@ public:
 
                 } else {
                     ampL = ampL / 2;
-                    ampR = ampR / 2;                    
+                    ampR = ampR / 2;
                     cdiv = cdiv + 1;
                 }
 

@@ -27,7 +27,7 @@ public:
     static string filePath;
 
 
-    
+
     Sample();
     Sample(int length);
     //Sample(double nStep);
@@ -40,7 +40,7 @@ public:
 
     class TestInner;
     TestInner* test;
-    
+
     //void init(int length);
 
     Sample& fxRange(int iStart, int iEnd);
@@ -123,6 +123,10 @@ public:
 
     Sample& filterNotch(double f = 220, double q = 1, int nPass = 1);
     Sample& filterNotchEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
+
+    Sample& filterAllPass(double f, double q, int nPass);
+    Sample& filterAllPassEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
+    
 
     void maxAmplitude(double &maxL, double &maxR);
     void maxRmsW(double &maxL, double &maxR, int lntRms);
