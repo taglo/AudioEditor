@@ -91,6 +91,8 @@ public:
 
     Sample& genSineSplFM(Sample& splIn, double f = 440.0, double phase = 0.5, double amplitude = 1, double fmAmp = 0.10);
     Sample& genSaw(double f = 440.0, double phase = 0.5, double ampL = 1.0, double ampR = 1.0);
+    Sample& genSuperSaw(double fq, int nSaw, int seed, double detune,double ampMax1Saw);
+            
     Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width = 0.5);
 
     Sample& genWhiteNoise(double amplitude, int seed);

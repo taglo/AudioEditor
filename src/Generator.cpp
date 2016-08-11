@@ -95,6 +95,32 @@ Sample& Sample::genSaw(double fq, double phase, double ampL, double ampR) {
     return *this;
 }
 
+Sample& Sample::genSuperSaw(double fq, int nSaw, int seed, double detune, double ampMax1Saw) {
+
+    std::uniform_real_distribution<double> unif(0, 1);
+    std::mt19937_64 re(seed);
+
+    double f = 0;
+    for (int i = 0; i < nSaw; i++) {
+
+        double det = 1 + unif(re) * detune;
+
+        if (unif(re) > 0.5) {
+            f = fq * det;
+        } else {
+            f = fq / det;
+        }
+
+        double phase = unif(re);
+        double ampL = unif(re) * ampMax1Saw;
+        double ampR = unif(re) * ampMax1Saw;
+
+        genSaw(f, phase, ampL, ampR);
+
+    }
+    return *this;
+}
+
 Sample& Sample::genPulse(double fq, double phase, double amplitude) {
 
     double phaseInc = fq * 2 / samplerate;

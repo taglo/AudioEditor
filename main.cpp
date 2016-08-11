@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
     GenSounds gSnd;
     //gSnd.genWaveForm();
     //gSnd.wfHarmo();
-    gSnd.genSndAllPass();
+    gSnd.genSndSuperSaw();
     
     //gSnd.genSndCristal();
     

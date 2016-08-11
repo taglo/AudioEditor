@@ -18,12 +18,30 @@ using namespace std;
 class GenSounds {
 public:
 
+    void genSndSuperSaw() {
+
+        double lPad = 256;
+
+        Sample spl(Sample::stepToInt(lPad));
+        Sample splEnv(Sample::stepToInt(lPad));
+
+        spl.genSuperSaw(55, 20, 12345, 1.0 / 50.0, 0.2);
+        spl.genSuperSaw(110, 20, 2345, 1.0 / 50.0, 0.15);
+
+        spl.genSuperSaw(165, 20, 234, 1.0 / 10.0, 0.1);
+        
+        spl.fadeAntiClick(1500);
+        spl.normalizeRmsW();
+        spl.saveToFile("genSndSuperSaw");
+
+    }
+
     void genSndAllPass() {
         Sample::tempo = 125;
 
 
-        Sample spl(Sample::stepToInt(16));
-        Sample splEnv(Sample::stepToInt(16));
+        Sample spl(Sample::stepToInt(96));
+        Sample splEnv(Sample::stepToInt(96));
         Sample splTmp;
 
         double f = 55.0;
@@ -31,35 +49,75 @@ public:
         splEnv.setConstantDynamic(1, 0);
 
         double fAmp = 4000.0;
-        double fSine = 0.23;
+        double fSine = 0.523;
 
         for (int i = 0; i < 10; i++) {
 
             splEnv.changeLength(spl.fxLength());
             splEnv.genSine(fSine, 0.1, 0.1, 0.5);
-            splEnv.fxIStart=splEnv.fxIEnd-Sample::stepToInt(1);
+            splEnv.fxIStart = splEnv.fxIEnd - Sample::stepToInt(1);
             splEnv.fadeOut().fxRangeReset().normalize(1.0);
-            splEnv.amplify(-1,-1).swapChannel();
-            
-            fSine=fSine*1.03+0.075;
-            
-            splTmp.copy(spl).filterAllPassEnv(f*2+50, splEnv, f, 1.2, 3).normalize(0.8);
+            splEnv.amplify(-1, -1).swapChannel();
+
+            if (i % 3 == 0) {
+                splEnv.reverse();
+            }
+
+            fSine = fSine * 1.03 + 0.075;
+
+            splTmp.copy(spl).filterAllPassEnv(f * 2 + 50, splEnv, f, 10.2, 3).normalize(0.8);
 
             f = f * 1.2 + 150.2;
             cout << "i : " << i << ", f : " << f << endl;
 
             spl.fxRangeReset();
             spl.mix(splTmp, -0.8, -0.1).swapChannel();
-                        
-            spl.fxIStart =Sample::stepToInt(3);//5-i%4);// + 100 + i * 114;
-            spl.mix(splTmp, -0.93, -0.1).swapChannel();
+
+            //spl.fxIStart =Sample::stepToInt(3);//5-i%4);// + 100 + i * 114;
+            //spl.mix(splTmp, -0.93, -0.1).swapChannel();
+
+            spl.swapChannel();
             spl.fxRangeReset();
+            if (i % 3 == 1) {
+                spl.reverse();
+            }
         }
 
         splEnv.saveToFile("env end");
 
         spl.normalize(0.8);
         spl.saveToFile("genSndAllPass");
+
+        //track
+        /* va mixer 16 step de sample tout les 64 step sur track en décalant la lecture de 1 step à chque fois*/
+        double lSong = 2048;
+
+        Sample splC(Sample::stepToInt(16));
+        Sample splTrack(Sample::stepToInt(lSong));
+
+        double sread = 0;
+        int iCnt = 0;
+        for (double s = 0; s < lSong; s += 64) {
+
+            spl.fxRangeStep(sread, sread + 16.0);
+            splC.copy(spl);
+            if (iCnt % 2 == 0) {
+                splC.swapChannel();
+            }
+            //splC.saveToFile("spl C");
+
+            splC.fxRangeStep(0, 8).fadeIn();
+            splC.fxRangeStep(8, 16).fadeOut();
+            splC.fxRangeReset();
+
+            //splC.saveToFile("spl C b");
+
+            sread = sread + 1;
+            splTrack.fxRangeStep(s, s + 16).mix(splC, 1, 1);
+
+            iCnt++;
+        }
+        splTrack.fxRangeReset().saveToFile("A snd all pass track");
 
     }
 
