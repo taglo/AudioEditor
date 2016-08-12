@@ -56,6 +56,7 @@ public:
     Sample& setConstant(double cst = 0);
     Sample& setConstantDynamic(double cstStart = 1, double cstEnd = 0);
     Sample& addConstant(double cst = 0);
+    Sample& addConstantDynamic(double cstStart = 1, double cstEnd = 0);
     Sample& changeLength(int newLength);
     Sample& changeLengthStep(double step);
 
@@ -91,8 +92,8 @@ public:
 
     Sample& genSineSplFM(Sample& splIn, double f = 440.0, double phase = 0.5, double amplitude = 1, double fmAmp = 0.10);
     Sample& genSaw(double f = 440.0, double phase = 0.5, double ampL = 1.0, double ampR = 1.0);
-    Sample& genSuperSaw(double fq, int nSaw, int seed, double detune,double ampMax1Saw);
-            
+    Sample& genSuperSaw(double fq, int nSaw, int seed, double detune, double ampMax1Saw);
+
     Sample& genSquare(double fq = 440.0, double phase = 0.5, double amplitude = 1, double width = 0.5);
 
     Sample& genWhiteNoise(double amplitude, int seed);
@@ -108,6 +109,7 @@ public:
 
     //Effect
     Sample& clip(double maxValue = 1, double minValue = -1);
+    Sample& distoWaveShape(Sample& splWS, double ampL, double ampR);
 
     Sample& strech(Sample & splOut);
 
@@ -128,7 +130,7 @@ public:
 
     Sample& filterAllPass(double f, double q, int nPass);
     Sample& filterAllPassEnv(double f, Sample& fEnv, double fAmp, double q, int nPass);
-    
+
 
     void maxAmplitude(double &maxL, double &maxR);
     void maxRmsW(double &maxL, double &maxR, int lntRms);
@@ -161,6 +163,8 @@ private:
     void getSampleForHermite(double iRead, int iMin, int iMax, double *dataIn, double& x, double& y0, double& y1, double& y2, double& y3);
     double hermite1(double x, double y0, double y1, double y2, double y3);
     double hermite4(double frac_pos, double xm1, double x0, double x1, double x2);
+
+    double distoWS(double val, double *WS, double rl, double rc);
 
     Sample& filterRbj(int type, double f = 220, double q = 1, int nPass = 1);
 

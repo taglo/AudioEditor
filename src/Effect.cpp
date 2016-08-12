@@ -21,6 +21,48 @@ Sample& Sample::clip(double maxValue, double minValue) {
     return *this;
 }
 
+Sample& Sample::distoWaveShape(Sample& splWS, double ampL, double ampR) {
+
+    double rl = ((double) splWS.fxLength()) / 2;
+    double rc = ((double) splWS.fxIStart) + rl;
+
+
+    double val;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+
+
+
+        dataL[i] = distoWS(dataL[i] * ampL, splWS.dataL, rl, rc);
+        dataR[i] = distoWS(dataR[i] * ampL, splWS.dataR, rl, rc);
+
+    }
+
+    return *this;
+}
+
+double Sample::distoWS(double val, double *WS, double rl, double rc) {
+    double pread, frac_pos;
+    int x0, xm1, x1, x2;
+
+    if (val > 0.95) {
+        val = 0.95;
+    } else if (val<-0.95) {
+        val = -0.95;
+    }
+
+    pread = rc + val*rl;
+
+    x0 = (int) pread;
+
+    frac_pos = pread - ((double) x0);
+    xm1 = x0 - 1;
+    x1 = x0 + 1;
+    x2 = x1 + 2;
+
+    return hermite4(frac_pos, WS[xm1], WS[x0], WS[x1], WS[x2]);
+}
+
 Sample& Sample::strech(Sample& splOut) {
 
 

@@ -18,8 +18,51 @@ using namespace std;
 class GenSounds {
 public:
 
+    void testWaveShape() {
+
+        Sample::tempo = 125;
+        double lSound = 256;
+
+        Sample spl(Sample::stepToInt(lSound));
+        
+        Sample splWS(44100);
+
+        /*
+        splWS.setConstantDynamic(-1, 1).clip(0.8, -0.8);
+        splWS.addConstantDynamic(-0.2, 0.2);
+        splWS.genSine(7.31, 0.5, 0.03, 0.01);
+        splWS.genSine(7.71, 0.15, 0.01, 0.03);
+        
+        splWS.fxIEnd=10000;
+        splWS.fadeOut();
+        splWS.fxRangeReset();
+        splWS.fxIStart=10000;
+        splWS.fadeIn().fxRangeReset();
+        */
+        splWS.genSine(0.5,0.75,1,1);
+        
+        splWS.genSine(16,0,0.1,0.1);
+        
+        splWS.normalize(0.9);
+        
+        splWS.saveToFile("testWaveShape splWS");
+        
+        spl.genSuperSaw(55,21,7145,0.005,0.3);
+        
+        spl.filterLowPass(220,3,2);
+        spl.filterLowPass(880,1,4);
+        
+        spl.normalize(1);
+        spl.saveToFile("super saw src");
+        
+        spl.distoWaveShape(splWS,1,1);
+        spl.saveToFile("super saw WS");
+    }
+    
+
     void genSndSuperSaw() {
 
+        Sample::tempo = 125;
         double lPad = 256;
 
         Sample spl(Sample::stepToInt(lPad));
@@ -29,7 +72,7 @@ public:
         spl.genSuperSaw(110, 20, 2345, 1.0 / 50.0, 0.15);
 
         spl.genSuperSaw(165, 20, 234, 1.0 / 10.0, 0.1);
-        
+
         spl.fadeAntiClick(1500);
         spl.normalizeRmsW();
         spl.saveToFile("genSndSuperSaw");

@@ -28,7 +28,7 @@ Sample::Sample() {
 
     samplerate = 44100;
 
-    
+
     setConstant(0);
 }
 
@@ -50,7 +50,7 @@ Sample& Sample::init(int length) {
 
     delete[] dataL;
     delete[] dataR;
-    
+
     Sample::length = length;
 
     dataL = new double[length];
@@ -304,6 +304,7 @@ Sample& Sample::setConstantDynamic(double cstStart, double cstEnd) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         dataL[i] = cst;
+        dataR[i] = cst;
         cst += cstInc;
     }
     return *this;
@@ -313,6 +314,19 @@ Sample& Sample::addConstant(double cst) {
 
     for (int i = fxIStart; i < fxIEnd; i++) {
         dataL[i] += cst;
+    }
+    return *this;
+}
+
+Sample& Sample::addConstantDynamic(double cstStart, double cstEnd) {
+
+    double cstInc = (cstEnd - cstStart) / ((double) fxLength());
+    double cst = cstStart;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        dataL[i] += cst;
+        dataR[i] += cst;
+        cst += cstInc;
     }
     return *this;
 }
@@ -431,7 +445,7 @@ void Sample::maxRmsW(double &maxL, double &maxR, int lntRms) {
     double sSumL = 0, sSumR = 0;
 
     Sample buf(lntRms);
-    
+
     maxL = 0;
     maxR = 0;
 
@@ -456,21 +470,20 @@ void Sample::maxRmsW(double &maxL, double &maxR, int lntRms) {
 
 }
 
-
 Sample& Sample::normalizeRmsW(double dbNorm, int lntRms) {
 
     double maxL, maxR;
 
     maxRmsW(maxL, maxR, lntRms);
 
-    double amplitude=dbToLin(dbNorm);
-    
+    double amplitude = dbToLin(dbNorm);
+
     if (maxL > 0 && maxR > 0) {
         amplify(amplitude / maxL, amplitude / maxR);
     }
     return *this;
 }
- 
+
 Sample& Sample::normalize(double amplitude) {
 
     double maxL, maxR;
