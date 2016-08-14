@@ -6,7 +6,7 @@
  */
 //#pragma once
 
-#include <iostream>
+
 
 #include "src/Sample.h"
 
@@ -73,11 +73,16 @@ int main(int argc, char** argv) {
      spl.test->testMethod();
      */
 
+    Sample test(44100);
+    test.saveToFile("test gen");
+    
+    test.loadFromFile("test.wav");
+    
     GenSounds gSnd;
     //gSnd.genWaveForm();
     //gSnd.wfHarmo();
     //gSnd.genSndSuperSaw();
-    gSnd.testWaveShape();
+    gSnd.testWaveShapeB();
     
     //gSnd.genSndCristal();
     

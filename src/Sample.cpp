@@ -205,6 +205,19 @@ Sample& Sample::mix(Sample& splIn, double ampL, double ampR) {
     return *this;
 }
 
+Sample& Sample::mixChannel(double ampLToL, double ampLToR, double ampRToL, double ampRToR) {
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+        double vL = dataL[i], vR = dataR[i];
+
+        dataL[i] = vL * ampLToL + vR*ampRToL;
+        dataR[i] = vL * ampLToR + vR*ampRToR;
+    }
+
+    return *this;
+
+}
+
 Sample& Sample::modulate(Sample& splIn) {
     /*
             on module sur la longueur de splIn.fxLength

@@ -18,13 +18,50 @@ using namespace std;
 class GenSounds {
 public:
 
+    void testWaveShapeB() {
+        
+        Sample::tempo = 125;
+        
+        Sample splWS(200);
+
+        Sample spl(Sample::stepToInt(256));
+        
+        splWS.setConstantDynamic(-1, 1);
+        int j = 100;
+        for (int i = 100; i < 200; i++) {
+
+            splWS.dataL[i] = pow(splWS.dataL[i], 0.5 - splWS.dataL[i] / 3.0);
+            splWS.dataL[j] = -splWS.dataL[i];
+            j--;
+        }
+        splWS.mixChannel(1,1,0,0);
+        splWS.saveToFile("splWS b");
+
+        spl.genSine(55,0.5,1,1).fadeOut();
+        spl.genSine(110,0.5,1,1).fadeIn();
+        
+        spl.fxRangeStep(230,256).fadeOut().fxRangeReset();
+        
+        spl.distoWaveShape(splWS,1,1);
+        
+        Sample splEnv(Sample::stepToInt(256));
+        splEnv.setConstantDynamic(1,0);
+        spl.filterNotchEnv(110,splEnv,5000,1,3);
+        
+        spl.distoWaveShape(splWS,1,1);
+        spl.filterNotchEnv(220,splEnv,10000,1,3);
+        
+        spl.saveToFile("testWaveShapeB");
+        
+    }
+
     void testWaveShape() {
 
         Sample::tempo = 125;
         double lSound = 256;
 
         Sample spl(Sample::stepToInt(lSound));
-        
+
         Sample splWS(44100);
 
         /*
@@ -38,27 +75,26 @@ public:
         splWS.fxRangeReset();
         splWS.fxIStart=10000;
         splWS.fadeIn().fxRangeReset();
-        */
-        splWS.genSine(0.5,0.75,1,1);
-        
-        splWS.genSine(16,0,0.1,0.1);
-        
+         */
+        splWS.genSine(0.5, 0.75, 1, 1);
+
+        splWS.genSine(16, 0, 0.1, 0.1);
+
         splWS.normalize(0.9);
-        
+
         splWS.saveToFile("testWaveShape splWS");
-        
-        spl.genSuperSaw(55,21,7145,0.005,0.3);
-        
-        spl.filterLowPass(220,3,2);
-        spl.filterLowPass(880,1,4);
-        
+
+        spl.genSuperSaw(55, 21, 7145, 0.005, 0.3);
+
+        spl.filterLowPass(220, 3, 2);
+        spl.filterLowPass(880, 1, 4);
+
         spl.normalize(1);
         spl.saveToFile("super saw src");
-        
-        spl.distoWaveShape(splWS,1,1);
+
+        spl.distoWaveShape(splWS, 1, 1);
         spl.saveToFile("super saw WS");
     }
-    
 
     void genSndSuperSaw() {
 

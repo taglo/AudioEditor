@@ -1,5 +1,6 @@
 #pragma once
 #define _USE_MATH_DEFINES
+#include <iostream>
 #include <cmath>
 #include <random>
 #include <ctime>
@@ -7,6 +8,7 @@
 #include "helper/rbjFilter.h"
 #include "helper/Delay.h"
 #include "helper/Rng.h"
+#include "helper/RiffHeader.h"
 
 //#include "TestClass.h"
 
@@ -138,6 +140,8 @@ public:
     Sample& mix(Sample& splIn, double ampL = 1, double ampR = 1);
     Sample& modulate(Sample& splIn);
 
+    Sample& mixChannel(double ampLToL,double ampLToR,double ampRToL,double ampRToR);
+    
     //util
     static int stepToInt(double step);
 
@@ -169,7 +173,9 @@ private:
     Sample& filterRbj(int type, double f = 220, double q = 1, int nPass = 1);
 
 
-
+    void debugWavFileHeader(RiffHeader header);
+    void loadWavFileHeader(ifstream &infile, RiffHeader &header);
+    
     Sample& filterUtlRBJ(int type, double f, double q, int nPass);
     Sample& filterUtlRBJFEnv(int type, double f, Sample& fEnv, double fAmp, double q, int nPass);
 
