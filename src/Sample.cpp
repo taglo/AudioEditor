@@ -261,6 +261,12 @@ int Sample::stepToInt(double step) {
     return (int) ((240 / tempo)*((double) samplerate) *(step / 16));
 }
 
+double Sample::intToStep(int lnt) {
+
+    //(lnt) / (SAMPLERATE * 15 / tempo)
+    return (tempo * (double) lnt) / (15.0 * (double) samplerate);
+}
+
 double Sample::midiNoteToFq(double midi_note) {
     return 440.0 * pow(2.0, (midi_note - 69.0) / 12.0);
 }
@@ -480,6 +486,25 @@ void Sample::maxRmsW(double &maxL, double &maxR, int lntRms) {
 
     maxL = sqrt(maxL / (double) lntRms);
     maxR = sqrt(maxR / (double) lntRms);
+
+}
+
+void Sample::avgRms(double &rmsL, double &rmsR) {
+
+
+    rmsL = 0;
+    rmsR = 0;
+
+    for (int i = fxIStart; i < fxIEnd; i++) {
+
+
+        rmsL += dataL[i] * dataL[i];
+        rmsR += dataR[i] * dataR[i];
+
+    }
+
+    rmsL = sqrt(rmsL / (double) fxLength());
+    rmsR = sqrt(rmsR / (double) fxLength());
 
 }
 

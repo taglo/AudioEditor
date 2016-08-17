@@ -73,16 +73,19 @@ int main(int argc, char** argv) {
      spl.test->testMethod();
      */
 
-    Sample test(44100);
-    test.saveToFile("test gen");
+    //Sample test(44100);
+   // test.saveToFile("test gen");
     
-    test.loadFromFile("test.wav");
+   // test.loadFromFile("test.wav");
     
     GenSounds gSnd;
+    
+    gSnd.testVocoder();
+    
     //gSnd.genWaveForm();
     //gSnd.wfHarmo();
     //gSnd.genSndSuperSaw();
-    gSnd.testWaveShapeB();
+   // gSnd.testWaveShapeB();
     
     //gSnd.genSndCristal();
     

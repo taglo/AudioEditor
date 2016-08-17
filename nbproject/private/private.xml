@@ -11,8 +11,10 @@
             <file>file:/F:/dev/c++netbeans/AudioEditor/example/GenSounds.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Generator.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/main.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/File.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/helper/RiffHeader.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Effect.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Helper.cpp</file>
         </group>
     </open-files>
 </project-private>

@@ -97,6 +97,11 @@ Sample& Sample::loadFromFile(std::string filename) {
 
     float dataF;
 
+    //vérifie extension
+    if (!(filename.substr(filename.find_last_of(".") + 1) == "wav")) {
+        filename += ".wav";
+    }
+    
     string fIn = filePath + filename;
 
     ifstream infile(fIn, ios::binary);

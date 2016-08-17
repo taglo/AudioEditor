@@ -136,7 +136,8 @@ public:
 
     void maxAmplitude(double &maxL, double &maxR);
     void maxRmsW(double &maxL, double &maxR, int lntRms);
-
+    void avgRms(double &rmsL, double &rmsR);
+    
     Sample& mix(Sample& splIn, double ampL = 1, double ampR = 1);
     Sample& modulate(Sample& splIn);
 
@@ -144,6 +145,7 @@ public:
     
     //util
     static int stepToInt(double step);
+    static double intToStep(int lnt);
 
     static double midiNoteToFq(double midi_note);
     static double fqtoMidiNote(double fq);

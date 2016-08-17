@@ -18,14 +18,100 @@ using namespace std;
 class GenSounds {
 public:
 
-    void testWaveShapeB() {
-        
+    void testVocoder() {
+
+        const int nSine = 24, nHarmo = 6;
+        const double sInc = 0.5;
+
+        double dSInc = sInc * 2;
+
+        double fBase = 220;
+
         Sample::tempo = 125;
-        
+
+        Sample splSrc(Sample::stepToInt(64));
+        splSrc.loadFromFile("speech test"); //.saveToFile("speech test out");
+        //splSrc.genSine(20,0.5,1,1);
+
+        double lFile = Sample::intToStep(splSrc.fxIEnd);
+
+        cout << "lFile : " << lFile << " step " << endl;
+
+        double harmo[nHarmo] = {
+            9.0 / 8.0,
+            6.0 / 5.0,
+            5.0 / 4.0,
+            4.0 / 3.0,
+            3.0 / 2.0,
+            2.0
+        };
+        double rh = 1;
+        for (int i = 0; i < nHarmo; i++) {
+            cout << harmo[i] << endl;
+            harmo[i] = harmo[i] / rh;
+            rh = rh * harmo[i];
+            cout << harmo[i] << endl;
+        }
+
+        Sample splC(Sample::stepToInt(0.5));
+        Sample splD(Sample::stepToInt(1));
+        Sample splOut(splSrc.fxIEnd);
+        Sample splSine[nSine];
+
+        double f = fBase;
+        for (int i = 0; i < nSine; i++) {
+            splSine[i].init(Sample::stepToInt(dSInc));
+            splSine[i].genSine(f, 0.5, 1, 1);
+            splSine[i].fxRangeStep(0, sInc).fadeIn();
+            splSine[i].fxRangeStep(sInc, dSInc).fadeOut();
+            splSine[i].fxRangeReset();
+
+            cout << i << ", f : " << f << endl;
+
+            f = f * harmo[i % nHarmo];
+
+
+        }
+        double rmsL, rmsR;
+
+        for (double s = 0; s < (lFile - 1.0); s += sInc) {
+            //parcours la source quart de step par quart de step
+            splSrc.fxRangeStep(s, s + dSInc);
+
+            splC.copy(splSrc);
+            splC.fxRangeStep(0, sInc).fadeIn();
+            splC.fxRangeStep(sInc, dSInc).fadeOut();
+            splC.fxRangeReset();
+            //splC.reverse();
+
+            f = fBase;
+            for (int i = 0; i < nSine; i++) {
+
+                splD.copy(splC).filterBandPass(f, 3, 2);
+
+                splD.avgRms(rmsL, rmsR);
+
+                double sMix = s; // + (double) i;
+                splOut.fxRangeStep(sMix, sMix + 1).mix(splSine[i], rmsL,rmsR);
+
+                f = f * harmo[i % nHarmo];
+            }
+
+            cout << 100 * s / lFile << "%" << endl;
+
+        }
+        splOut.fxRangeReset().saveToFile("testVocoder a");
+
+    }
+
+    void testWaveShapeB() {
+
+        Sample::tempo = 125;
+
         Sample splWS(200);
 
         Sample spl(Sample::stepToInt(256));
-        
+
         splWS.setConstantDynamic(-1, 1);
         int j = 100;
         for (int i = 100; i < 200; i++) {
@@ -34,25 +120,25 @@ public:
             splWS.dataL[j] = -splWS.dataL[i];
             j--;
         }
-        splWS.mixChannel(1,1,0,0);
+        splWS.mixChannel(1, 1, 0, 0);
         splWS.saveToFile("splWS b");
 
-        spl.genSine(55,0.5,1,1).fadeOut();
-        spl.genSine(110,0.5,1,1).fadeIn();
-        
-        spl.fxRangeStep(230,256).fadeOut().fxRangeReset();
-        
-        spl.distoWaveShape(splWS,1,1);
-        
+        spl.genSine(55, 0.5, 1, 1).fadeOut();
+        spl.genSine(110, 0.5, 1, 1).fadeIn();
+
+        spl.fxRangeStep(230, 256).fadeOut().fxRangeReset();
+
+        spl.distoWaveShape(splWS, 1, 1);
+
         Sample splEnv(Sample::stepToInt(256));
-        splEnv.setConstantDynamic(1,0);
-        spl.filterNotchEnv(110,splEnv,5000,1,3);
-        
-        spl.distoWaveShape(splWS,1,1);
-        spl.filterNotchEnv(220,splEnv,10000,1,3);
-        
+        splEnv.setConstantDynamic(1, 0);
+        spl.filterNotchEnv(110, splEnv, 5000, 1, 3);
+
+        spl.distoWaveShape(splWS, 1, 1);
+        spl.filterNotchEnv(220, splEnv, 10000, 1, 3);
+
         spl.saveToFile("testWaveShapeB");
-        
+
     }
 
     void testWaveShape() {
