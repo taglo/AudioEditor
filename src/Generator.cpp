@@ -294,10 +294,10 @@ Sample& Sample::genWaveform(Sample& splWf, double f, double phase, double ampL, 
  * 
  * @param vStart
  * @param vEnd
- * @param speed [0,1] 0 : lent, 1 : rapide
+ * @param speed [0,1] 0 : rapide, 1 : lent
  * @return 
  */
-Sample& Sample::genEnvExp(double vStart, double vEnd, double speed) {
+Sample& Sample::addEnvExp(double vStart, double vEnd, double speed) {
 
     double envStart = 1, envMult, envEnd;
     double envAmp, vOk;

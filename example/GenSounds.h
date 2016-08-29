@@ -18,6 +18,244 @@ using namespace std;
 class GenSounds {
 public:
 
+    void tInstrum() {
+        Sample::tempo = 125;
+
+        double lSong = 2048;
+        Sample splSong(Sample::stepToInt(lSong));
+
+        int nSpl = 11;
+        int lnt16 = Sample::stepToInt(16);
+
+        Sample splSrc[nSpl];
+
+        for (double s = 0; s < lSong; s += 16.0) {
+            double evS = s / lSong;
+
+            cout << 100 * evS << endl;
+
+            for (int i = 0; i < nSpl; i++) {
+                double ev = i / nSpl;
+
+                splSrc[i].init(lnt16);
+
+                double f = 110.0 * (double) i;
+
+                double phase = sin(ev * 13 + evS * 13.413 + 7.412)*0.5 + 0.5;
+                double ampBase = 15 / (double) (i + 5);
+
+                double ampL = ampBase * (1 + 0.7 * sin(ev * 13.412 + evS * 13.413 + 0.751));
+                double ampR = ampBase * (1 + 0.7 * sin(ev * 17.412 + evS * 11.413 + 1.751));
+
+                //                splSrc[i].genSine(f, phase, ampL, ampR);
+
+                f = f * (100 + sin(ev * 37.912 + evS * 14.813 + 7.751)) / 100;
+
+                splSrc[i].genSaw(f, phase, ampL, ampR);
+
+                double fFilter = 10000.0 / ((double) i + 1);
+
+                fFilter = fFilter * (1 + 0.7 * sin(ev * 27.412 + evS * (19.913 + ev * 7) + 1.751));
+
+                splSrc[i].fade(1, 0);
+                splSrc[i].fade(1, 0);
+
+                if (i < 3) {
+                    splSrc[i].filterHiPass(fFilter, 3, 3);
+                } else if(i>8) {
+                    splSrc[i].filterBandPass(fFilter, 3, 3);
+                }else{
+                    splSrc[i].filterLowPass(fFilter, 3, 3);
+                }
+
+                
+                splSrc[i].fade(1, 0);
+                splSrc[i].fxRangeStep(8 + 7 * sin(ev * 13 + evS * 19.7413 + 2.0123), 16).fadeOut();
+                splSrc[i].fxRangeReset();
+                
+                splSrc[i].normalizeRmsW();
+
+            }
+
+            for (int i = 1; i < nSpl; i++) {
+
+                splSrc[0].mix(splSrc[i], 1, 1);
+
+            }
+
+            splSrc[0].normalizeRmsW();
+
+            splSong.fxRangeStep(s, s + 16);
+            splSong.mix(splSrc[0]);
+        }
+
+        splSong.fxRangeReset();
+        splSong.saveToFile("tInstrum");
+        //splSrc[0].saveToFile("tInstrum");
+
+    }
+
+    void testVoco2() {
+
+        const int nSine = 15, nHarmo = 3;
+
+        double fBase = 220;
+
+        Sample::tempo = 125;
+
+        Sample splSrc(Sample::stepToInt(64));
+
+        splSrc.loadFromFile("speech test");
+
+        Sample splEnv, splSine(splSrc.fxIEnd), splOut;
+
+        double harmo[nHarmo] = {
+
+
+            5.0 / 4.0,
+
+            3.0 / 2.0,
+            2.0
+        };
+
+        double rh = 1;
+        for (int i = 0; i < nHarmo; i++) {
+            cout << harmo[i] << endl;
+            harmo[i] = harmo[i] / rh;
+            rh = rh * harmo[i];
+            cout << harmo[i] << endl;
+        }
+
+        double f = fBase;
+        for (int i = 0; i < nSine; i++) {
+            splEnv.copy(splSrc).filterBandPass(f, 3, 2);
+            splEnv.extractEnvelope_old(2000);
+
+
+            splSine.setConstant(0).genSine(f, 0, 1, 1);
+            splSine.modulate(splEnv);
+
+            splOut.mix(splSine, 1, 1);
+
+
+            f *= harmo[i % nHarmo];
+            cout << i << " : " << f << endl;
+        }
+
+        splOut.normalizeRmsW();
+        splOut.fxRangeReset().saveToFile("testVoco2");
+
+    }
+
+    void khhEvol() {
+
+        Sample::tempo = 125;
+        double lSong = 2048;
+
+        Sample spl(Sample::stepToInt(lSong));
+        Sample splHHSrc, splHH(Sample::stepToInt(4));
+        Sample splFEnv(Sample::stepToInt(4));
+
+        splHHSrc.loadFromFile("hh src").fadeAntiClick(200).changeLengthStep(4.0);
+
+        double phz1 = 0, phz2 = 0;
+
+        double fAmp;
+        for (double s = 0; s < lSong; s += 4) {
+            double ev = s / lSong;
+
+            if (fmod(s, 256) == 0) {
+
+                phz1 = 13 * sin(ev * 71 + 43);
+                phz2 = 14 * sin(ev * 51 + 31);
+
+                cout << s << endl;
+                cout << 100 * ev << "%" << endl;
+            }
+
+            fAmp = 7000;
+
+            if (s >= (1024 - 200) && s < 1024) {
+                double vFade = 1 - ((s - (1024 - 200)) / 200);
+                fAmp = fAmp*vFade;
+            }
+
+            double smix = s;
+
+            splFEnv.setConstant(0);
+            splFEnv.addEnvExp(1, 0, 0.02 + 0.004 * sin(ev * 25.123 + phz1));
+
+            if (s >= (2048 - 256) && s < 2048) {
+                double vFade = (s - (2048 - 256)) / 256;
+                vFade = 0.2 * vFade*vFade;
+                cout << vFade << endl;
+                splFEnv.addConstantDynamic(vFade, 0);
+                //fAmp = fAmp*vFade;
+            }
+
+            splHHSrc.fxIStart = (int) 3000.0 + 199 * sin(ev * 14.101 + phz2);
+
+            splHH.setConstant(0);
+            splHH.mix(splHHSrc, 1, 1).fadeAntiClick(460);
+
+            splHH.filterLowPassFEnv(90, splFEnv, fAmp, 1.5, 3);
+
+            splHH.normalizeRmsW(-12, 1024);
+
+            spl.fxRangeStep(smix, smix + 4).mix(splHH);
+        }
+
+        splFEnv.saveToFile("test env");
+
+        spl.fxRangeReset().saveToFile("khhEvol");
+
+    }
+
+    void testEnvelope() {
+        int lnt = 441000;
+
+        Sample spl(lnt);
+
+        spl.genSine(322.895, 0.5, 0.5, 0.5);
+
+        spl.genSine(320.135, 0.5, 0.5, 0.5);
+
+        spl.genSine(221.553, 0.5, 0.5, 0.5);
+        spl.genSine(223.553, 0.5, 0.5, 0.5);
+
+        spl.normalize(0.8);
+        spl.saveToFile("testEnvelope src");
+
+        spl.extractEnvelope(4000);
+
+        spl.saveToFile("testEnvelope");
+
+        spl.filterLowPass(10.0, 1, 1);
+
+        spl.saveToFile("testEnvelopeLP");
+    }
+
+    void testXPEnvelope() {
+        //xp low fi
+        int lnt = 441000;
+
+        Sample spl(lnt);
+
+        //Sample& Sample::genSuperSaw(double fq, int nSaw, int seed, double detune, double ampMax1Saw) {
+        //spl.genSuperSaw(110,10,1234,1.0/100.0,0.2);
+
+        spl.loadFromFile("speech test");
+        spl.saveToFile("testXPEnvelope a");
+
+        spl.extractEnvelopeNoFilter(10);
+
+        spl.saveToFile("testXPEnvelope b");
+        spl.filterHiPass(20, 1, 2);
+
+        spl.saveToFile("testXPEnvelope c");
+
+    }
+
     void testVocoder() {
 
         const int nSine = 24, nHarmo = 6;
@@ -92,7 +330,7 @@ public:
                 splD.avgRms(rmsL, rmsR);
 
                 double sMix = s; // + (double) i;
-                splOut.fxRangeStep(sMix, sMix + 1).mix(splSine[i], rmsL,rmsR);
+                splOut.fxRangeStep(sMix, sMix + 1).mix(splSine[i], rmsL, rmsR);
 
                 f = f * harmo[i % nHarmo];
             }
@@ -573,7 +811,7 @@ public:
         splSndSrc.normalize(1);
 
         Sample splEnv(lnt16);
-        splEnv.genEnvExp(1, 0, 0.2);
+        splEnv.addEnvExp(1, 0, 0.2);
 
         splSndSrc.modulate(splEnv);
         splSndSrc.saveToFile("sound src bss nrm.wav");
@@ -766,7 +1004,7 @@ public:
 
             ampL = 0.1;
             ampR = 0.2;
-            splEnvF.genEnvExp(0.5, -0.5, 0.3 - ev * 0.31);
+            splEnvF.addEnvExp(0.5, -0.5, 0.3 - ev * 0.31);
             splEnvF.genSine(4 + 2 * sin(ev * 17), 0.5, 0.1);
 
             splEnvF.normalize(1).swapChannel();
@@ -825,7 +1063,7 @@ public:
         for (double speed = 0; speed < 1; speed += 0.1) {
 
             spl.fxIEnd = spl.fxIStart + 44100;
-            spl.genEnvExp(-1, 1, speed);
+            spl.addEnvExp(-1, 1, speed);
 
             spl.fxIStart += 44100;
 

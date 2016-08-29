@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/src/Analysis.o \
 	${OBJECTDIR}/src/Buffer.o \
 	${OBJECTDIR}/src/Edit.o \
 	${OBJECTDIR}/src/Effect.o \
@@ -73,6 +74,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/src/Analysis.o: src/Analysis.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Analysis.o src/Analysis.cpp
 
 ${OBJECTDIR}/src/Buffer.o: src/Buffer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

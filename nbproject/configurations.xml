@@ -18,6 +18,7 @@
           <itemPath>src/helper/Rng.h</itemPath>
           <itemPath>src/helper/rbjFilter.h</itemPath>
         </logicalFolder>
+        <itemPath>src/Analysis.cpp</itemPath>
         <itemPath>src/Buffer.cpp</itemPath>
         <itemPath>src/Edit.cpp</itemPath>
         <itemPath>src/Effect.cpp</itemPath>
@@ -62,6 +63,8 @@
       <item path="example/GenSounds.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Analysis.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Buffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -111,6 +114,8 @@
       <item path="example/GenSounds.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Analysis.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Buffer.cpp" ex="false" tool="1" flavor2="0">
       </item>

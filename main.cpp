@@ -80,7 +80,10 @@ int main(int argc, char** argv) {
     
     GenSounds gSnd;
     
-    gSnd.testVocoder();
+    //gSnd.testXPEnvelope();
+    gSnd.tInstrum();
+    
+    //gSnd.khhEvol();
     
     //gSnd.genWaveForm();
     //gSnd.wfHarmo();

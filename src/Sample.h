@@ -107,8 +107,16 @@ public:
     Sample& genWaveform(Sample& splWf, double f = 110, double phase = 0, double ampL = 1, double ampR = 1);
     Sample& genWaveformEnv(Sample& splWf, Sample& splEnv, double f = 110, double fmAmp = 55, double phase = 0, double amplitude = 1);
 
-    Sample& genEnvExp(double vStart, double vEnd, double speed);
+    Sample& addEnvExp(double vStart, double vEnd, double speed);
 
+    
+    
+    //analysis
+    Sample& extractEnvelope_old(int halfLifeLength);
+    Sample& extractEnvelope(int oneToZeroLength);
+    Sample& extractEnvelopeNoFilter(int oneToZeroLength);
+    
+    
     //Effect
     Sample& clip(double maxValue = 1, double minValue = -1);
     Sample& distoWaveShape(Sample& splWS, double ampL, double ampR);
