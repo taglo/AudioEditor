@@ -1,11 +1,14 @@
 #pragma once
+#ifndef SAMPLE_H
+#define SAMPLE_H
+
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <cmath>
 #include <random>
 #include <ctime>
 #include <string>
-#include "helper/rbjFilter.h"
+#include "helper/RbjFilter.h"
 #include "helper/Delay.h"
 #include "helper/Rng.h"
 #include "helper/RiffHeader.h"
@@ -104,8 +107,8 @@ public:
 
     Sample& genPulse(double fq, double phase, double amplitude);
 
-    Sample& genWaveform(Sample& splWf, double f = 110, double phase = 0, double ampL = 1, double ampR = 1);
-    Sample& genWaveformEnv(Sample& splWf, Sample& splEnv, double f = 110, double fmAmp = 55, double phase = 0, double amplitude = 1);
+    Sample& genWaveForm(Sample& splWf, double f = 110, double phase = 0, double ampL = 1, double ampR = 1);
+    Sample& genWaveFormEnv(Sample& splWf, Sample& splEnv, double f = 110, double fmAmp = 55, double phase = 0, double amplitude = 1);
 
     Sample& addEnvExp(double vStart, double vEnd, double speed);
 
@@ -191,3 +194,5 @@ private:
 
 
 };
+
+#endif //#ifndef SAMPLE_H

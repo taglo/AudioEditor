@@ -1,4 +1,3 @@
-//#pragma once
 #include "Sample.h"
 
 Sample& Sample::copy(Sample& splIn) {

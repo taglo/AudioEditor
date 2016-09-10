@@ -196,9 +196,9 @@ void testWf() {
 
     Sample spla(44100);
 
-    spla.genWaveform(splWf, 10, 0, 0.5).saveToFile("test wf 10hz.wav").setConstant(0);
+    spla.genWaveForm(splWf, 10, 0, 0.5).saveToFile("test wf 10hz.wav").setConstant(0);
 
-    spla.genWaveform(splWf, 100, 0, 0.5).saveToFile("test wf 100hz.wav");
+    spla.genWaveForm(splWf, 100, 0, 0.5).saveToFile("test wf 100hz.wav");
 
 }
 
@@ -212,7 +212,7 @@ void testWfMultiFun() {
 
         splWf.genSaw(44.1 + v * 3.2, 0, 0.2).normalize(0.7);
 
-        spla.genWaveform(splWf, 50 + v * (1.2 + v * 0.31), v, 0.5);
+        spla.genWaveForm(splWf, 50 + v * (1.2 + v * 0.31), v, 0.5);
 
     }
 
@@ -252,12 +252,12 @@ void testWfEnv() {
 
     Sample spla(441000);
 
-    spla.genWaveformEnv(splWf, splEnv, 110, 55, 0, 0.75).saveToFile("testWfEnv.wav");
+    spla.genWaveFormEnv(splWf, splEnv, 110, 55, 0, 0.75).saveToFile("testWfEnv.wav");
 
 
     splEnv.setConstant(1).fadeOut();
 
-    spla.setConstant(0).genWaveformEnv(splWf, splEnv, 110, 110, 0, 0.75).saveToFile("testWfEnv220v110.wav");
+    spla.setConstant(0).genWaveFormEnv(splWf, splEnv, 110, 110, 0, 0.75).saveToFile("testWfEnv220v110.wav");
 }
 
 void testFilter() {

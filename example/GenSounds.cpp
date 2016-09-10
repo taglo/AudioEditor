@@ -586,7 +586,7 @@ void GenSounds::genSndCristal() {
         cout << " nadd : " << nadd << ", ampL : " << ampL << endl;
         cout << endl;
 
-        spl.genWaveform(wf, f, phase, ampL, ampR);
+        spl.genWaveForm(wf, f, phase, ampL, ampR);
         wf.swapChannel();
 
 
@@ -637,7 +637,7 @@ void GenSounds::wfHarmo() {
             double ampL = 0.5 + sin(ev * (14.2 + evs * 6.5));
             double ampR = 0.5 + sin(ev * (15.2 + evs * 7.5));
 
-            spl.genWaveform(wf, f, phase, ampL, ampR);
+            spl.genWaveForm(wf, f, phase, ampL, ampR);
             wf.swapChannel();
 
             if ((i % hcnt) == hcnte) {
@@ -691,7 +691,7 @@ void GenSounds::genWaveForm() {
         double ampL = 0.5 + sin(ev * 14.2);
         double ampR = 0.5 + sin(ev * 15.2);
 
-        test.genWaveform(wf, f, phase, ampL, ampR);
+        test.genWaveForm(wf, f, phase, ampL, ampR);
         wf.swapChannel();
         if ((i % 10) == 9) {
             fBase += 110;

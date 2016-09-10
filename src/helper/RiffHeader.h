@@ -4,13 +4,13 @@
  *
  * Created on 14 août 2016, 10:17
  */
-
+#pragma once
 #ifndef RIFFHEADER_H
 #define	RIFFHEADER_H
 
 
 
-#endif	/* RIFFHEADER_H */
+
 
 /*
  [Bloc de déclaration d'un fichier au format WAVE]
@@ -88,3 +88,5 @@ struct RiffHeader {
     /** DataSize        (4 octets) : Nombre d'octets des données (i.e. "Data[]", i.e. taille_du_fichier - taille_de_l'entête  (qui fait 44 octets normalement). */
     int DataSize; // Sampled data length
 };
+
+#endif	/* RIFFHEADER_H */

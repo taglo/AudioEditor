@@ -9,14 +9,16 @@
         <group>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/EffetFactory.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/GenSine.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/GenSaw.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Sound.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/LoopGenerator.h</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Effet.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/LoopGenerator.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/main.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Effet.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Sound.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/GenSine.h</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Effect.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Effet.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/EffetFactory.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Effet.cpp</file>
         </group>
     </open-files>
 </project-private>

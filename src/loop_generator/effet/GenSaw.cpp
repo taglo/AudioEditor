@@ -13,6 +13,8 @@ bool GenSaw::ajoute(){
     
     if(ajoute) {
         test=rand()%100;
+        
+        process();
     }
     return ajoute;
 }
@@ -20,6 +22,12 @@ bool GenSaw::ajoute(){
 
 void GenSaw::process(){
     
+    Sound spl;
+    spl.init(10000);
+    spl.genSaw();
+    
+    soundVector->push_back(spl);
+    cout << soundVector->size() << endl;
     cout << "GenSaw" << test << endl;
     //return 0;
 }

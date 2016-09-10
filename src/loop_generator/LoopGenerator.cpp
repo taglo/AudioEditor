@@ -20,22 +20,32 @@ void LoopGenerator::process() {
     
     
     while(effetVector.size() < nEffet) {
+        
         cEffet=effetFactory.getNew();
-        bool test=cEffet->ajoute();
         
-        //std::cout<<test<<endl;
+        //cEffet->soundVector=soundVector;
         
-        if(test){
+        cEffet->setSoundVector(soundVector);
+
+        if(cEffet->ajoute()){
+            
+            std::cout<<soundVector.size()<<endl;
             effetVector.push_back(cEffet);
-            cEffet->process();
         }
         
         //effetVector[0]->
     }
     
+    std::cout<<soundVector.size()<<endl;
+    
+    soundVector.clear();
+    
     for(int i=0; i<effetVector.size();i++){
+        effetVector[i]->setSoundVector(soundVector);
         effetVector[i]->process();
     }
+    
+    std::cout<<soundVector.size()<<endl;
     
     /*
     Sound snd;

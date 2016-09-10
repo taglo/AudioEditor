@@ -209,7 +209,7 @@ int inline CTZ(int num) {
 
 //Sample& fEnv, double fmAmp,
 
-Sample& Sample::genWaveformEnv(Sample& splWf, Sample& splEnv, double f, double fmAmp, double phase, double amplitude) {
+Sample& Sample::genWaveFormEnv(Sample& splWf, Sample& splEnv, double f, double fmAmp, double phase, double amplitude) {
 
     double y0 = 0, y1 = 0, y2 = 0, y3 = 0;
 
@@ -246,7 +246,7 @@ Sample& Sample::genWaveformEnv(Sample& splWf, Sample& splEnv, double f, double f
     return *this;
 }
 
-Sample& Sample::genWaveform(Sample& splWf, double f, double phase, double ampL, double ampR) {
+Sample& Sample::genWaveForm(Sample& splWf, double f, double phase, double ampL, double ampR) {
 
 
     //double pitch = ((double) fxLength()) / ((double) splOut.fxLength());

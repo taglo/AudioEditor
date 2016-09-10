@@ -5,12 +5,9 @@
  * Created on 1 juin 2016, 13:48
  */
 
+#pragma once
 #ifndef GENSSOUNDS_H
 #define	GENSSOUNDS_H
-
-
-
-#endif	/* GENSSOUNDS_H */
 
 #include "../src/Sample.h"
 using namespace std;
@@ -62,3 +59,5 @@ public:
 
     void testLoad();
 };
+
+#endif	/* GENSSOUNDS_H */

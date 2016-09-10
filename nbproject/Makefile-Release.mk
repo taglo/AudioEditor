@@ -45,6 +45,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Generator.o \
 	${OBJECTDIR}/src/Helper.o \
 	${OBJECTDIR}/src/Sample.o \
+	${OBJECTDIR}/src/helper/Delay.o \
+	${OBJECTDIR}/src/helper/RbjFilter.o \
 	${OBJECTDIR}/src/loop_generator/Effet.o \
 	${OBJECTDIR}/src/loop_generator/EffetFactory.o \
 	${OBJECTDIR}/src/loop_generator/LoopGenerator.o \
@@ -126,6 +128,16 @@ ${OBJECTDIR}/src/Sample.o: src/Sample.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sample.o src/Sample.cpp
+
+${OBJECTDIR}/src/helper/Delay.o: src/helper/Delay.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/helper
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/helper/Delay.o src/helper/Delay.cpp
+
+${OBJECTDIR}/src/helper/RbjFilter.o: src/helper/RbjFilter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/helper
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/helper/RbjFilter.o src/helper/RbjFilter.cpp
 
 ${OBJECTDIR}/src/loop_generator/Effet.o: src/loop_generator/Effet.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator

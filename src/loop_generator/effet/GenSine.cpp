@@ -13,6 +13,8 @@ bool GenSine::ajoute(){
     
     if(ajoute) {
         test=rand()%100;
+        
+        process();
     }
     return ajoute;
 }
@@ -20,6 +22,12 @@ bool GenSine::ajoute(){
 
 void GenSine::process(){
     
+    Sound spl;
+    spl.init(10000);
+    spl.genSine();
+    
+    soundVector->push_back(spl);
+    cout << soundVector->size() << endl;
     cout << "GenSine" << test << endl;
     //return 0;
 }

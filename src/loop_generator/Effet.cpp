@@ -2,6 +2,10 @@
 #include "Effet.h"
 
 
-Effet::Effet(){
+Effet::Effet(){    
+}
 
+
+void Effet::setSoundVector(std::vector<Sound> &soundVectorIn){
+    soundVector=&soundVectorIn;
 }
