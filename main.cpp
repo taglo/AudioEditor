@@ -15,6 +15,7 @@
 //#include "test/Test1.h"
 #include "example/GenSounds.h"
 #include "src/TestInner.h"
+#include "src/loop_generator/LoopGenerator.h"
 //#include "src/TestClass.h"
 //#include "example/SongHardTech.h"
 
@@ -78,10 +79,13 @@ int main(int argc, char** argv) {
     
    // test.loadFromFile("test.wav");
     
-    GenSounds gSnd;
+    LoopGenerator lg;
+    lg.process();
+    
+    //GenSounds gSnd;
     
     //gSnd.testXPEnvelope();
-    gSnd.tInstrum();
+    //gSnd.tInstrum();
     
     //gSnd.khhEvol();
     

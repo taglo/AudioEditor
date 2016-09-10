@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/example/GenSounds.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/Analysis.o \
 	${OBJECTDIR}/src/Buffer.o \
@@ -43,7 +44,13 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/File.o \
 	${OBJECTDIR}/src/Generator.o \
 	${OBJECTDIR}/src/Helper.o \
-	${OBJECTDIR}/src/Sample.o
+	${OBJECTDIR}/src/Sample.o \
+	${OBJECTDIR}/src/loop_generator/Effet.o \
+	${OBJECTDIR}/src/loop_generator/EffetFactory.o \
+	${OBJECTDIR}/src/loop_generator/LoopGenerator.o \
+	${OBJECTDIR}/src/loop_generator/Sound.o \
+	${OBJECTDIR}/src/loop_generator/effet/GenSaw.o \
+	${OBJECTDIR}/src/loop_generator/effet/GenSine.o
 
 
 # C Compiler Flags
@@ -69,6 +76,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/audioeditor.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/audioeditor ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/example/GenSounds.o: example/GenSounds.cpp 
+	${MKDIR} -p ${OBJECTDIR}/example
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example/GenSounds.o example/GenSounds.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -114,6 +126,36 @@ ${OBJECTDIR}/src/Sample.o: src/Sample.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sample.o src/Sample.cpp
+
+${OBJECTDIR}/src/loop_generator/Effet.o: src/loop_generator/Effet.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/Effet.o src/loop_generator/Effet.cpp
+
+${OBJECTDIR}/src/loop_generator/EffetFactory.o: src/loop_generator/EffetFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/EffetFactory.o src/loop_generator/EffetFactory.cpp
+
+${OBJECTDIR}/src/loop_generator/LoopGenerator.o: src/loop_generator/LoopGenerator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/LoopGenerator.o src/loop_generator/LoopGenerator.cpp
+
+${OBJECTDIR}/src/loop_generator/Sound.o: src/loop_generator/Sound.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/Sound.o src/loop_generator/Sound.cpp
+
+${OBJECTDIR}/src/loop_generator/effet/GenSaw.o: src/loop_generator/effet/GenSaw.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/GenSaw.o src/loop_generator/effet/GenSaw.cpp
+
+${OBJECTDIR}/src/loop_generator/effet/GenSine.o: src/loop_generator/effet/GenSine.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/GenSine.o src/loop_generator/effet/GenSine.cpp
 
 # Subprojects
 .build-subprojects:
