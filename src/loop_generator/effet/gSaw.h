@@ -7,19 +7,19 @@
 
 
 
-#ifndef GENSINE_H
-#define	GENSINE_H
+#ifndef GENSAW_H
+#define	GENSAW_H
 
 #include "../Effet.h"
 
 
-class GenSine : public Effet {
+class gSaw : public Effet {
 public:
-    GenSine();
+    gSaw();
     virtual bool ajoute();
     virtual void process();
     int test;
 };
 
-#endif	/* GENSINE_H */
+#endif	/* GENSAW_H */
 

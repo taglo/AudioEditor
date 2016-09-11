@@ -8,10 +8,10 @@ void EffetFactory::setNew(vector<Effet*> *effetVector,vector<Sound> *soundVector
 
     switch (count) {
         case 0:
-            cEffet = new GenSine;
+            cEffet = new gSine;
             break;
         case 1:
-            cEffet = new GenSaw;
+            cEffet = new gSaw;
             break;           
         case 2:
             cEffet = new eClip;

@@ -1,14 +1,15 @@
 
-#include "GenSaw.h"
+#include "gSaw.h"
 #include <stdlib.h>
 #include <iostream>
 using namespace std;
 
-GenSaw::GenSaw(){
+gSaw::gSaw(){
+    
 }
 
 
-bool GenSaw::ajoute(){
+bool gSaw::ajoute(){
     bool ajoute=(rand()%3)>1;
     
     if(ajoute) {
@@ -20,7 +21,7 @@ bool GenSaw::ajoute(){
 }
 
 
-void GenSaw::process(){
+void gSaw::process(){
     
     Sound spl;
     
@@ -32,6 +33,6 @@ void GenSaw::process(){
     
     soundVector->push_back(spl);
     cout << soundVector->size() << endl;
-    cout << "GenSaw" << test << endl;
+    cout << "gSaw" << test << endl;
     //return 0;
 }

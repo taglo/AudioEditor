@@ -8,8 +8,8 @@
 #ifndef EFFETFACTORY_H
 #define	EFFETFACTORY_H
 
-#include "effet/GenSine.h"
-#include "effet/GenSaw.h"
+#include "effet/gSine.h"
+#include "effet/gSaw.h"
 #include "effet/eClip.h"
 
 class EffetFactory{

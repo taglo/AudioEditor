@@ -1,14 +1,14 @@
 
-#include "GenSine.h"
+#include "gSine.h"
 #include <stdlib.h>
 #include <iostream>
 using namespace std;
 
-GenSine::GenSine(){
+gSine::gSine(){
 }
 
 
-bool GenSine::ajoute(){
+bool gSine::ajoute(){
     bool ajoute=(rand()%3)>1;
     
     if(ajoute) {
@@ -20,7 +20,7 @@ bool GenSine::ajoute(){
 }
 
 
-void GenSine::process(){
+void gSine::process(){
     
     Sound spl;
     
@@ -30,5 +30,5 @@ void GenSine::process(){
     
     soundVector->push_back(spl);
     cout << soundVector->size() << endl;
-    cout << "GenSine" << test << endl;
+    cout << "gSine" << test << endl;
 }

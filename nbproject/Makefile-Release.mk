@@ -51,9 +51,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/loop_generator/EffetFactory.o \
 	${OBJECTDIR}/src/loop_generator/LoopGenerator.o \
 	${OBJECTDIR}/src/loop_generator/Sound.o \
-	${OBJECTDIR}/src/loop_generator/effet/GenSaw.o \
-	${OBJECTDIR}/src/loop_generator/effet/GenSine.o \
-	${OBJECTDIR}/src/loop_generator/effet/eClip.o
+	${OBJECTDIR}/src/loop_generator/effet/eClip.o \
+	${OBJECTDIR}/src/loop_generator/effet/gSaw.o \
+	${OBJECTDIR}/src/loop_generator/effet/gSine.o
 
 
 # C Compiler Flags
@@ -160,20 +160,20 @@ ${OBJECTDIR}/src/loop_generator/Sound.o: src/loop_generator/Sound.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/Sound.o src/loop_generator/Sound.cpp
 
-${OBJECTDIR}/src/loop_generator/effet/GenSaw.o: src/loop_generator/effet/GenSaw.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/GenSaw.o src/loop_generator/effet/GenSaw.cpp
-
-${OBJECTDIR}/src/loop_generator/effet/GenSine.o: src/loop_generator/effet/GenSine.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/GenSine.o src/loop_generator/effet/GenSine.cpp
-
 ${OBJECTDIR}/src/loop_generator/effet/eClip.o: src/loop_generator/effet/eClip.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/eClip.o src/loop_generator/effet/eClip.cpp
+
+${OBJECTDIR}/src/loop_generator/effet/gSaw.o: src/loop_generator/effet/gSaw.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/gSaw.o src/loop_generator/effet/gSaw.cpp
+
+${OBJECTDIR}/src/loop_generator/effet/gSine.o: src/loop_generator/effet/gSine.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/gSine.o src/loop_generator/effet/gSine.cpp
 
 # Subprojects
 .build-subprojects:
