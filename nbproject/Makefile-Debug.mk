@@ -52,7 +52,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/loop_generator/LoopGenerator.o \
 	${OBJECTDIR}/src/loop_generator/Sound.o \
 	${OBJECTDIR}/src/loop_generator/effet/GenSaw.o \
-	${OBJECTDIR}/src/loop_generator/effet/GenSine.o
+	${OBJECTDIR}/src/loop_generator/effet/GenSine.o \
+	${OBJECTDIR}/src/loop_generator/effet/eClip.o
 
 
 # C Compiler Flags
@@ -168,6 +169,11 @@ ${OBJECTDIR}/src/loop_generator/effet/GenSine.o: src/loop_generator/effet/GenSin
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/GenSine.o src/loop_generator/effet/GenSine.cpp
+
+${OBJECTDIR}/src/loop_generator/effet/eClip.o: src/loop_generator/effet/eClip.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/eClip.o src/loop_generator/effet/eClip.cpp
 
 # Subprojects
 .build-subprojects:

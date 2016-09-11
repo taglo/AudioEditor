@@ -23,11 +23,12 @@ bool GenSine::ajoute(){
 void GenSine::process(){
     
     Sound spl;
+    
     spl.init(10000);
-    spl.genSine();
+    spl.genSine().fadeOut().fadeAntiClick(500);
+    
     
     soundVector->push_back(spl);
     cout << soundVector->size() << endl;
     cout << "GenSine" << test << endl;
-    //return 0;
 }

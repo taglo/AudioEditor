@@ -16,6 +16,7 @@
 #include "example/GenSounds.h"
 #include "src/TestInner.h"
 #include "src/loop_generator/LoopGenerator.h"
+#include "Process.h"
 //#include "src/TestClass.h"
 //#include "example/SongHardTech.h"
 
@@ -78,6 +79,11 @@ int main(int argc, char** argv) {
    // test.saveToFile("test gen");
     
    // test.loadFromFile("test.wav");
+    
+    /*
+    Process p;
+    p.gen();
+    */
     
     LoopGenerator lg;
     lg.process();

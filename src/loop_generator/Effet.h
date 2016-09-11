@@ -15,16 +15,19 @@ class Effet {
 public:
     Effet();
 
-    void setSoundVector(std::vector<Sound> &soundVectorIn);
+    void setSoundVector(std::vector<Sound> *soundVectorIn);
     
     /*
      * calcule si l'effet peut être ajouté
      * si c'est le cas ça le prépare
      */
     virtual bool ajoute( )=0;
+    
+    
     virtual void process( )=0;
 
-    std::vector<Sound> * soundVector;
+    //create empty vector of "pointer-to-object"
+    std::vector<Sound>  *soundVector;
     
 };
 

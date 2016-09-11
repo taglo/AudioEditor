@@ -52,7 +52,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/loop_generator/LoopGenerator.o \
 	${OBJECTDIR}/src/loop_generator/Sound.o \
 	${OBJECTDIR}/src/loop_generator/effet/GenSaw.o \
-	${OBJECTDIR}/src/loop_generator/effet/GenSine.o
+	${OBJECTDIR}/src/loop_generator/effet/GenSine.o \
+	${OBJECTDIR}/src/loop_generator/effet/eClip.o
 
 
 # C Compiler Flags
@@ -82,92 +83,97 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/audioeditor.exe: ${OBJECTFILES}
 ${OBJECTDIR}/example/GenSounds.o: example/GenSounds.cpp 
 	${MKDIR} -p ${OBJECTDIR}/example
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example/GenSounds.o example/GenSounds.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example/GenSounds.o example/GenSounds.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/src/Analysis.o: src/Analysis.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Analysis.o src/Analysis.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Analysis.o src/Analysis.cpp
 
 ${OBJECTDIR}/src/Buffer.o: src/Buffer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Buffer.o src/Buffer.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Buffer.o src/Buffer.cpp
 
 ${OBJECTDIR}/src/Edit.o: src/Edit.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Edit.o src/Edit.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Edit.o src/Edit.cpp
 
 ${OBJECTDIR}/src/Effect.o: src/Effect.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Effect.o src/Effect.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Effect.o src/Effect.cpp
 
 ${OBJECTDIR}/src/File.o: src/File.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/File.o src/File.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/File.o src/File.cpp
 
 ${OBJECTDIR}/src/Generator.o: src/Generator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Generator.o src/Generator.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Generator.o src/Generator.cpp
 
 ${OBJECTDIR}/src/Helper.o: src/Helper.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Helper.o src/Helper.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Helper.o src/Helper.cpp
 
 ${OBJECTDIR}/src/Sample.o: src/Sample.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sample.o src/Sample.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sample.o src/Sample.cpp
 
 ${OBJECTDIR}/src/helper/Delay.o: src/helper/Delay.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/helper
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/helper/Delay.o src/helper/Delay.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/helper/Delay.o src/helper/Delay.cpp
 
 ${OBJECTDIR}/src/helper/RbjFilter.o: src/helper/RbjFilter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/helper
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/helper/RbjFilter.o src/helper/RbjFilter.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/helper/RbjFilter.o src/helper/RbjFilter.cpp
 
 ${OBJECTDIR}/src/loop_generator/Effet.o: src/loop_generator/Effet.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/Effet.o src/loop_generator/Effet.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/Effet.o src/loop_generator/Effet.cpp
 
 ${OBJECTDIR}/src/loop_generator/EffetFactory.o: src/loop_generator/EffetFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/EffetFactory.o src/loop_generator/EffetFactory.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/EffetFactory.o src/loop_generator/EffetFactory.cpp
 
 ${OBJECTDIR}/src/loop_generator/LoopGenerator.o: src/loop_generator/LoopGenerator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/LoopGenerator.o src/loop_generator/LoopGenerator.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/LoopGenerator.o src/loop_generator/LoopGenerator.cpp
 
 ${OBJECTDIR}/src/loop_generator/Sound.o: src/loop_generator/Sound.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/Sound.o src/loop_generator/Sound.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/Sound.o src/loop_generator/Sound.cpp
 
 ${OBJECTDIR}/src/loop_generator/effet/GenSaw.o: src/loop_generator/effet/GenSaw.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/GenSaw.o src/loop_generator/effet/GenSaw.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/GenSaw.o src/loop_generator/effet/GenSaw.cpp
 
 ${OBJECTDIR}/src/loop_generator/effet/GenSine.o: src/loop_generator/effet/GenSine.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/GenSine.o src/loop_generator/effet/GenSine.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/GenSine.o src/loop_generator/effet/GenSine.cpp
+
+${OBJECTDIR}/src/loop_generator/effet/eClip.o: src/loop_generator/effet/eClip.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/eClip.o src/loop_generator/effet/eClip.cpp
 
 # Subprojects
 .build-subprojects:

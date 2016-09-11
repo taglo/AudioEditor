@@ -1,10 +1,10 @@
 
 #include "EffetFactory.h"
 
-Effet * EffetFactory::getNew() {
+void EffetFactory::setNew(vector<Effet*> *effetVector,vector<Sound> *soundVector) {
 
-    Effet *cEffet;
-    count = (count + 1) % 2;
+    Effet* cEffet;
+    count = (count + 1) %3;
 
     switch (count) {
         case 0:
@@ -12,9 +12,18 @@ Effet * EffetFactory::getNew() {
             break;
         case 1:
             cEffet = new GenSaw;
-            break;            
+            break;           
+        case 2:
+            cEffet = new eClip;
+            break;              
     }
+    
+    cEffet->setSoundVector(soundVector);
 
-    return cEffet;
+    if(cEffet->ajoute()){
+
+        std::cout<<soundVector->size()<<endl;
+        effetVector->push_back(cEffet);
+    }
 
 }

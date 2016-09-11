@@ -9,6 +9,7 @@
 #define	LOOPGENERATOR_H
 
 #include <vector>
+#include <sstream>
 #include "Sound.h"
 #include "EffetFactory.h"
 
@@ -28,8 +29,9 @@ public:
 
     void process();
 private:
-    std::vector<Sound> soundVector;
-    std::vector<Effet*> effetVector;
+    void addEffet();
+    std::vector<Sound> *soundVector;
+    std::vector<Effet*> *effetVector;
 
     EffetFactory effetFactory;
 };

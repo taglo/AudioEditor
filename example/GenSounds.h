@@ -10,6 +10,7 @@
 #define	GENSSOUNDS_H
 
 #include "../src/Sample.h"
+
 using namespace std;
 
 class GenSounds {

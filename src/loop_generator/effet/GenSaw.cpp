@@ -23,8 +23,12 @@ bool GenSaw::ajoute(){
 void GenSaw::process(){
     
     Sound spl;
+    
+    //spl=new Sound();
+    
     spl.init(10000);
-    spl.genSaw();
+    spl.genSaw().fadeOut().fadeAntiClick(500);
+    
     
     soundVector->push_back(spl);
     cout << soundVector->size() << endl;

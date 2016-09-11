@@ -6,6 +6,6 @@ Effet::Effet(){
 }
 
 
-void Effet::setSoundVector(std::vector<Sound> &soundVectorIn){
-    soundVector=&soundVectorIn;
+void Effet::setSoundVector(std::vector<Sound> *soundVectorIn){
+    soundVector=soundVectorIn;
 }

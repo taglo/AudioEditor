@@ -10,12 +10,13 @@
 
 #include "effet/GenSine.h"
 #include "effet/GenSaw.h"
+#include "effet/eClip.h"
 
 class EffetFactory{
 public :
     
     int count=0;
-    Effet* getNew();
+    void setNew(vector<Effet*> *effetVector,vector<Sound> *soundVector);
     
 };
 
