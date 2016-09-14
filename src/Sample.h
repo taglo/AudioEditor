@@ -41,11 +41,7 @@ public:
 
     Sample& init(int length);
 
-
-
-    class TestInner;
-    TestInner* test;
-
+    
     //void init(int length);
 
     Sample& fxRange(int iStart, int iEnd);

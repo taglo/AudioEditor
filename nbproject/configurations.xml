@@ -30,6 +30,10 @@
             <itemPath>src/loop_generator/effet/gSine.cpp</itemPath>
             <itemPath>src/loop_generator/effet/gSine.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="f2" displayName="parametre" projectFiles="true">
+            <itemPath>src/loop_generator/parametre/Parametre.cpp</itemPath>
+            <itemPath>src/loop_generator/parametre/Parametre.h</itemPath>
+          </logicalFolder>
           <itemPath>src/loop_generator/Effet.cpp</itemPath>
           <itemPath>src/loop_generator/Effet.h</itemPath>
           <itemPath>src/loop_generator/EffetFactory.cpp</itemPath>
@@ -50,9 +54,9 @@
         <itemPath>src/Sample.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="test" projectFiles="true">
-        <itemPath>Process.h</itemPath>
-        <itemPath>Square.h</itemPath>
-        <itemPath>SquareAdd.h</itemPath>
+        <itemPath>test/Process.h</itemPath>
+        <itemPath>test/Square.h</itemPath>
+        <itemPath>test/SquareAdd.h</itemPath>
       </logicalFolder>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -84,12 +88,6 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
-      <item path="Process.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Square.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SquareAdd.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="example/GenSounds.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="example/GenSounds.h" ex="false" tool="3" flavor2="0">
@@ -159,6 +157,22 @@
       <item path="src/loop_generator/effet/gSine.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/loop_generator/effet/gSine.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/loop_generator/parametre/Parametre.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/loop_generator/parametre/Parametre.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="test/Process.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="test/Square.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="test/SquareAdd.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -174,6 +188,7 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <standard>8</standard>
+          <commandLine>-D__NO_INLINE__</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -182,12 +197,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Process.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Square.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SquareAdd.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="example/GenSounds.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="example/GenSounds.h" ex="false" tool="3" flavor2="0">
@@ -257,6 +266,22 @@
       <item path="src/loop_generator/effet/gSine.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/loop_generator/effet/gSine.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/loop_generator/parametre/Parametre.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/loop_generator/parametre/Parametre.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="test/Process.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="test/Square.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="test/SquareAdd.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

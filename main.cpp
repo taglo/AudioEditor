@@ -14,9 +14,9 @@
 //#include "example/GranularSquare.h"
 //#include "test/Test1.h"
 #include "example/GenSounds.h"
-#include "src/TestInner.h"
+
 #include "src/loop_generator/LoopGenerator.h"
-#include "Process.h"
+//#include "Process.h"
 //#include "src/TestClass.h"
 //#include "example/SongHardTech.h"
 

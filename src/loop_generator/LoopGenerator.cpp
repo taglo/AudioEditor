@@ -6,9 +6,12 @@ LoopGenerator::LoopGenerator() {
 
 }
 
+
 void LoopGenerator::process() {
 
 
+    initParametre();
+    
     //Effet *cEffet;
     int nEffet;
 
@@ -44,3 +47,12 @@ void LoopGenerator::process() {
     }
 }
 
+void LoopGenerator::initParametre() {
+    
+    srand (time(NULL));
+    
+    parametre.typeBoucle=Parametre::arrTypeBoucle[rand()%Parametre::nTypeBoucle];
+    
+    std::cout<<parametre.typeBoucle<<endl;
+    
+}

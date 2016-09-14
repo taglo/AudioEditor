@@ -53,15 +53,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/loop_generator/Sound.o \
 	${OBJECTDIR}/src/loop_generator/effet/eClip.o \
 	${OBJECTDIR}/src/loop_generator/effet/gSaw.o \
-	${OBJECTDIR}/src/loop_generator/effet/gSine.o
+	${OBJECTDIR}/src/loop_generator/effet/gSine.o \
+	${OBJECTDIR}/src/loop_generator/parametre/Parametre.o
 
 
 # C Compiler Flags
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-D__NO_INLINE__
+CXXFLAGS=-D__NO_INLINE__
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -174,6 +175,11 @@ ${OBJECTDIR}/src/loop_generator/effet/gSine.o: src/loop_generator/effet/gSine.cp
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/effet
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/effet/gSine.o src/loop_generator/effet/gSine.cpp
+
+${OBJECTDIR}/src/loop_generator/parametre/Parametre.o: src/loop_generator/parametre/Parametre.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/parametre
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/parametre/Parametre.o src/loop_generator/parametre/Parametre.cpp
 
 # Subprojects
 .build-subprojects:

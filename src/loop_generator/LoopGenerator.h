@@ -12,6 +12,7 @@
 #include <sstream>
 #include "Sound.h"
 #include "EffetFactory.h"
+#include "parametre/Parametre.h"
 
 class LoopGenerator {
 public:
@@ -28,12 +29,21 @@ public:
 
 
     void process();
+    
 private:
-    void addEffet();
+    
     std::vector<Sound> *soundVector;
     std::vector<Effet*> *effetVector;
+    
+    Parametre parametre;
+    EffetFactory effetFactory;    
+    
+    //void addEffet();
+    void genSeq();
+    
+    void initParametre();
+    
 
-    EffetFactory effetFactory;
 };
 
 #endif	/* LOOPGENERATOR_H */

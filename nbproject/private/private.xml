@@ -8,15 +8,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.h</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/eClip.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/GenSaw.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/GenSine.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/eClip.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Parametre.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/test/Process.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/LoopGenerator.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/LoopGenerator.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/test/Square.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/main.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.cpp</file>
-            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/GenSine.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/test/SquareAdd.h</file>
         </group>
     </open-files>
 </project-private>

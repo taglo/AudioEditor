@@ -21,6 +21,9 @@ class Sound : public Sample
         Sound();  
         
         string info;
+        bool estRythmique;
+        bool estTon;
+        std::vector<int> midi_note;
         
     private:
 };
