@@ -51,8 +51,9 @@ void LoopGenerator::initParametre() {
     
     srand (time(NULL));
     
-    parametre.typeBoucle=Parametre::arrTypeBoucle[rand()%Parametre::nTypeBoucle];
+    parametre.iTypeBoucle=rand()%Parametre::nTypeBoucle;
+    parametre.typeBoucle=Parametre::arrTypeBoucle[parametre.iTypeBoucle];
     
-    std::cout<<parametre.typeBoucle<<endl;
+    //std::cout<<parametre.typeBoucle<<endl;
     
 }

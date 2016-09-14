@@ -16,6 +16,7 @@ struct Parametre{
     double tempo=125;
     
     string typeBoucle="";
+    int iTypeBoucle;
     
     static const int nTypeBoucle=6;
     static const string arrTypeBoucle[6];
