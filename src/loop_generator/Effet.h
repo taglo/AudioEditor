@@ -10,6 +10,7 @@
 #include <vector>
 #include "Sound.h"
 #include <stdlib.h> 
+#include "parametre/Parametre.h"
 
 class Effet {
 public:
@@ -26,8 +27,10 @@ public:
     
     virtual void process( )=0;
 
-    //create empty vector of "pointer-to-object"
+    
     std::vector<Sound>  *soundVector;
+    
+    Parametre *parametre;
     
 };
 

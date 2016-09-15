@@ -7,16 +7,22 @@
 
 #ifndef EFFETFACTORY_H
 #define	EFFETFACTORY_H
+#include "parametre/Parametre.h"
 
 #include "effet/gSine.h"
 #include "effet/gSaw.h"
 #include "effet/eClip.h"
 
+
 class EffetFactory{
 public :
     
     int count=0;
-    void setNew(vector<Effet*> *effetVector,vector<Sound> *soundVector);
+    void setNew(
+            vector<Effet*> *effetVector,
+            vector<Sound> *soundVector,
+            Parametre *parametre
+            );
     
 };
 

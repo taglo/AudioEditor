@@ -34,6 +34,10 @@
             <itemPath>src/loop_generator/parametre/Parametre.cpp</itemPath>
             <itemPath>src/loop_generator/parametre/Parametre.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="f3" displayName="sequence" projectFiles="true">
+            <itemPath>src/loop_generator/sequence/Sequence.h</itemPath>
+            <itemPath>src/loop_generator/sequence/Step.h</itemPath>
+          </logicalFolder>
           <itemPath>src/loop_generator/Effet.cpp</itemPath>
           <itemPath>src/loop_generator/Effet.h</itemPath>
           <itemPath>src/loop_generator/EffetFactory.cpp</itemPath>
@@ -168,6 +172,13 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/loop_generator/sequence/Sequence.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/loop_generator/sequence/Step.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="test/Process.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="test/Square.h" ex="false" tool="3" flavor2="0">
@@ -276,6 +287,13 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/loop_generator/sequence/Sequence.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/loop_generator/sequence/Step.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="test/Process.h" ex="false" tool="3" flavor2="0">
       </item>

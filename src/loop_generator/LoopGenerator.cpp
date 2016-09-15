@@ -9,19 +9,21 @@ LoopGenerator::LoopGenerator() {
 
 void LoopGenerator::process() {
 
+    soundVector = new vector<Sound>;
+    effetVector = new vector<Effet*>;    
 
+    
     initParametre();
+    
     
     //Effet *cEffet;
     int nEffet;
 
-    soundVector = new vector<Sound>;
-    effetVector = new vector<Effet*>;
-
     nEffet = 10 + rand() % 20;
 
     while (effetVector->size() < nEffet) {
-        effetFactory.setNew(effetVector, soundVector);
+        
+        effetFactory.setNew(effetVector, soundVector, &parametre);
     }
 
     std::cout << soundVector->size() << endl;

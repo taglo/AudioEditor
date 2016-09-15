@@ -1,7 +1,9 @@
 
 #include "EffetFactory.h"
 
-void EffetFactory::setNew(vector<Effet*> *effetVector,vector<Sound> *soundVector) {
+void EffetFactory::setNew(vector<Effet*> *effetVector,
+        vector<Sound> *soundVector,
+        Parametre *parametre) {
 
     Effet* cEffet;
     count = (count + 1) %3;
@@ -19,9 +21,12 @@ void EffetFactory::setNew(vector<Effet*> *effetVector,vector<Sound> *soundVector
     }
     
     cEffet->setSoundVector(soundVector);
-
+    cEffet->parametre=parametre;
+    
     if(cEffet->ajoute()){
-
+        
+        //std::cout << cEffet->parametre->typeBoucle << endl;
+        
         std::cout<<soundVector->size()<<endl;
         effetVector->push_back(cEffet);
     }
