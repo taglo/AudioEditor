@@ -8,14 +8,25 @@
 #ifndef SEQUENCE_H
 #define	SEQUENCE_H
 #include "Step.h"
+#include "../parametre/Parametre.h"
+#include <iostream> 
+#include <vector>
 
 class Sequence{
+    
+public :
+    Sequence();
+    void process(vector<Step> *stepVectorIn);    
+    void setParametre(Parametre *parametreIn);
+    
+    std::vector<Step> *stepVector;
     
 private :
     int nParam;
     
-    std::vector<Step> *seq;
     
+    
+    Parametre *parametre;
 };
 
 #endif	/* SEQUENCE_H */

@@ -11,10 +11,33 @@ void LoopGenerator::process() {
 
     soundVector = new vector<Sound>;
     effetVector = new vector<Effet*>;    
-
+    stepVector=new vector<Step>;
+    
     
     initParametre();
     
+    std::cout << parametre.typeBoucle << endl;
+    
+    sequence.setParametre(&parametre);
+    
+    sequence.process(stepVector);
+
+    
+    for (int i = 0; i < stepVector->size(); i++) {
+       
+        //std::cout <<  i << std::endl;
+        std::cout << (*stepVector)[i].position << std::endl;
+    }
+ 
+    
+    
+    /*
+for ( auto &i : sequence.seq ) {
+    std::cout << i << std::endl;
+     * (*sequence.seq)[0].position;
+     * 
+}
+    */
     
     //Effet *cEffet;
     int nEffet;

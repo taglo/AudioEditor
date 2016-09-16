@@ -7,9 +7,11 @@
 
 #ifndef STEP_H
 #define	STEP_H
+#include <vector>
 
 class Step{
-    
+public:
+    double position;
     double velocite;
     double longueur;
     
@@ -18,6 +20,8 @@ class Step{
     
     //param
     std::vector<double> *param;
+    
+    
     
 };
 

@@ -9,7 +9,10 @@ build/Debug/MinGW-Windows/src/loop_generator/LoopGenerator.o: \
  src/loop_generator/effet/gSine.h src/loop_generator/effet/../Effet.h \
  src/loop_generator/effet/../Sound.h \
  src/loop_generator/effet/../parametre/Parametre.h \
- src/loop_generator/effet/gSaw.h src/loop_generator/effet/eClip.h
+ src/loop_generator/effet/gSaw.h src/loop_generator/effet/eClip.h \
+ src/loop_generator/sequence/Sequence.h \
+ src/loop_generator/sequence/Step.h \
+ src/loop_generator/sequence/../parametre/Parametre.h
 
 src/loop_generator/LoopGenerator.h:
 
@@ -40,3 +43,9 @@ src/loop_generator/effet/../parametre/Parametre.h:
 src/loop_generator/effet/gSaw.h:
 
 src/loop_generator/effet/eClip.h:
+
+src/loop_generator/sequence/Sequence.h:
+
+src/loop_generator/sequence/Step.h:
+
+src/loop_generator/sequence/../parametre/Parametre.h:

@@ -9,14 +9,20 @@
         <group>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/Sample.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/EffetFactory.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/sequence/Sequence.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/gSine.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Sound.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/parametre/Parametre.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/test/Square.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/main.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/parametre/Parametre.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/gSaw.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/EffetFactory.cpp</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/sequence/Sequence.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/sequence/Step.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/test/Process.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/LoopGenerator.h</file>
+            <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/effet/gSine.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/LoopGenerator.cpp</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Effet.h</file>
             <file>file:/F:/dev/c++netbeans/AudioEditor/src/loop_generator/Sound.h</file>

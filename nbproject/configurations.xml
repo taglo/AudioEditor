@@ -35,6 +35,7 @@
             <itemPath>src/loop_generator/parametre/Parametre.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="sequence" projectFiles="true">
+            <itemPath>src/loop_generator/sequence/Sequence.cpp</itemPath>
             <itemPath>src/loop_generator/sequence/Sequence.h</itemPath>
             <itemPath>src/loop_generator/sequence/Step.h</itemPath>
           </logicalFolder>
@@ -172,6 +173,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/loop_generator/sequence/Sequence.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/loop_generator/sequence/Sequence.h"
             ex="false"
             tool="3"
@@ -286,6 +292,11 @@
       <item path="src/loop_generator/parametre/Parametre.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/loop_generator/sequence/Sequence.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/loop_generator/sequence/Sequence.h"

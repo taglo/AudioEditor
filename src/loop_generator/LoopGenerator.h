@@ -13,6 +13,7 @@
 #include "Sound.h"
 #include "EffetFactory.h"
 #include "parametre/Parametre.h"
+#include "sequence/Sequence.h"
 
 class LoopGenerator {
 public:
@@ -34,12 +35,14 @@ private:
     
     std::vector<Sound> *soundVector;
     std::vector<Effet*> *effetVector;
+    std::vector<Step> *stepVector;
     
     Parametre parametre;
     EffetFactory effetFactory;    
+    Sequence sequence;
     
     //void addEffet();
-    void genSeq();
+    void initSequence();
     
     void initParametre();
     

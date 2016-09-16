@@ -54,7 +54,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/loop_generator/effet/eClip.o \
 	${OBJECTDIR}/src/loop_generator/effet/gSaw.o \
 	${OBJECTDIR}/src/loop_generator/effet/gSine.o \
-	${OBJECTDIR}/src/loop_generator/parametre/Parametre.o
+	${OBJECTDIR}/src/loop_generator/parametre/Parametre.o \
+	${OBJECTDIR}/src/loop_generator/sequence/Sequence.o
 
 
 # C Compiler Flags
@@ -180,6 +181,11 @@ ${OBJECTDIR}/src/loop_generator/parametre/Parametre.o: src/loop_generator/parame
 	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/parametre
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/parametre/Parametre.o src/loop_generator/parametre/Parametre.cpp
+
+${OBJECTDIR}/src/loop_generator/sequence/Sequence.o: src/loop_generator/sequence/Sequence.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/loop_generator/sequence
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/loop_generator/sequence/Sequence.o src/loop_generator/sequence/Sequence.cpp
 
 # Subprojects
 .build-subprojects:
